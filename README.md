@@ -1,27 +1,23 @@
-# Ea5qs
+# Electron/Angular - quickstart
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.3.
+This is a blank project for Electron/Angular applications. It was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.3 and is using Electon v1.7.10 at the moment.
+
+## Features
+
+### Customizable title bar
+At the moment the main application window is frameless and there is a "titlebar" component in Angular that looks like Windows 10's default titlebar. If you don't want to use it, just set from the environment the frame of the application window to "true" and remove the component.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Run `npm build` for interactive building. The project uses the [Interactive implementation of electron-packager](https://www.npmjs.com/package/electron-packager-interactive) and
 
-## Running unit tests
+## License
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+This project is licensed under MIT license and you can do whatever you want with the code.
+## Disclaimer
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+This project is still in early development and there might be unwanted bugs. If you see any just write an [issue](https://github.com/D-LUSiON/electron-angular-quickstart/issues) so I can fix it.
