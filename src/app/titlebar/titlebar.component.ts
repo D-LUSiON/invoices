@@ -1,13 +1,14 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 
 @Component({
     selector: 'app-titlebar',
     templateUrl: './titlebar.component.html',
-    styleUrls: ['./titlebar.component.css'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./titlebar.component.css']
 })
-export class TitlebarComponent implements OnInit {
+export class TitlebarComponent {
+
+    @Output() goBack: EventEmitter<any> = new EventEmitter();
 
     app_window;
 
@@ -30,7 +31,9 @@ export class TitlebarComponent implements OnInit {
 
     }
 
-    ngOnInit() { }
+    onGoBack() {
+        this.goBack.emit();
+    }
 
     onMinimizeApp() {
         this.app_window.minimize();

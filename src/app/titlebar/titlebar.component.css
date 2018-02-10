@@ -5,6 +5,7 @@
 
 #window-titlebar {
     display: flex;
+    align-content: stretch;
     position: fixed;
     top: 0;
     left: 0;
@@ -17,6 +18,7 @@
     background-color: #fff;
     color: #333;
     font-size: 10px;
+    font-family: inherit;
 }
 
 #window-titlebar.dark {
@@ -26,7 +28,15 @@
 
 #window-titlebar > .left-items {
     order: 1;
+    display: flex;
+    align-content: center;
     -webkit-app-region: no-drag;
+}
+
+#window-titlebar > .left-items .window_title {
+    -webkit-app-region: drag;
+    padding: 6px;
+    font-size: 14px;
 }
 
 #window-titlebar > .center-drag {
@@ -49,13 +59,18 @@
 
 #window-titlebar .button {
     width: 45px;
-    height: 29px;
+    height: 32px;
     border: none;
     padding: 6px;
     background-color: transparent;
     text-align: center;
     cursor: default;
     pointer-events: all;
+}
+
+#window-titlebar .button img {
+    width: auto;
+    max-height: 100%;
 }
 
 #window-titlebar .button:hover {

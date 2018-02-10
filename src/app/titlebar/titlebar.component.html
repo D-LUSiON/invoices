@@ -1,5 +1,10 @@
 <div id="window-titlebar">
-    <div class="left-items"></div>
+    <div class="left-items">
+        <div class="button go_back" (click)="onGoBack()">
+            <img src="assets/arrow-go-back.svg" alt="">
+        </div>
+        <div class="window_title">This is a custom titlebar</div>
+    </div>
     <div class="center-drag"></div>
     <div class="right-items">
         <div class="button minimize" (click)="onMinimizeApp()">
@@ -13,16 +18,3 @@
         </div>
     </div>
 </div>
-<!-- <div id="electron-titlebar1">
-    <div style="width: 100%; height: 100%; position: absolute;">Some text in the title bar</div>
-    <div class="button button-close">
-        <img class="button-img-close" src="/assets/caption-buttons.svg#close">
-    </div>
-    <div class="button button-minimize">
-        <img class="button-img-minimize" src="/assets/caption-buttons.svg#minimize">
-    </div>
-    <div class="button button-maximize">
-        <img class="button-img-maximize" src="/assets/caption-buttons.svg#maximize">
-        <img class="button-img-restore" src="/assets/caption-buttons.svg#restore" style="display: none;">
-    </div>
-</div> -->

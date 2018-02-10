@@ -32,6 +32,10 @@ export class AppComponent implements OnInit {
         });
     }
 
+    onGoBack(){
+        alert('You can go back if you wish!');
+    }
+
     onClickSync() {
         console.log('Syncronous button clicked!');
         // Synchronous message emmiter and handler
