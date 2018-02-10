@@ -1,15 +1,15 @@
 # Electron/Angular - quickstart
 
-This is a blank project for Electron/Angular applications. It was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.3 and is using Electon v1.7.10 at the moment.
+This is a blank project for Electron/Angular applications. It was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.3 and is using Electon v1.8.2 / Angular v5.2.4 at the moment.
 
 ## Features
 
 ### Customizable title bar
-At the moment the main application window is frameless and there is a "titlebar" component in Angular that looks like Windows 10's default titlebar. If you don't want to use it, just set from the environment the frame of the application window to "true" and remove the component.
+The main application window is set to frameless and there is a "titlebar" component in Angular that looks like Windows 10's default titlebar. If you don't want to use it, just set from the environment the frame of the application window to "true" and remove the component.
 
 ## Development server
 
-Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm start` for a dev server. The Electron window will hot reload on any change.
 
 ## Build
 
