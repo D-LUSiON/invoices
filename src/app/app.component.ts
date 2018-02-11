@@ -73,6 +73,7 @@ export class AppComponent implements OnInit {
     }
 
     onExitApp() {
-        this.electron.remote.app.exit();
+        if (confirm('Are you sure?'))
+            this.electron.remote.app.exit();
     }
 }

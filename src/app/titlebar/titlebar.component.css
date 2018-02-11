@@ -29,14 +29,17 @@
 #window-titlebar > .left-items {
     order: 1;
     display: flex;
-    align-content: center;
     -webkit-app-region: no-drag;
+    font-size: 16px;
+}
+
+#window-titlebar > .left-items img {
+    max-height: 12px !important;
 }
 
 #window-titlebar > .left-items .window_title {
     -webkit-app-region: drag;
     padding: 6px;
-    font-size: 14px;
 }
 
 #window-titlebar > .center-drag {
