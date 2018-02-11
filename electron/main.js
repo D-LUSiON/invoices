@@ -19,8 +19,8 @@ let mainWindow;
 function createWindow() {
     // Initialize window state keeper
     let winState = windowStateKeeper({
-        defaultWidth: 800,
-        defaultHeight: 600
+        defaultWidth: env.default_width,
+        defaultHeight: env.default_height
     });
 
     // Create the browser window.
