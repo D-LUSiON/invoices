@@ -32,6 +32,10 @@ export class AppComponent implements OnInit {
         });
     }
 
+    onGoBack(){
+        alert('You can go back if you wish!');
+    }
+
     onClickSync() {
         console.log('Syncronous button clicked!');
         // Synchronous message emmiter and handler
@@ -69,6 +73,7 @@ export class AppComponent implements OnInit {
     }
 
     onExitApp() {
-        this.electron.remote.app.exit();
+        if (confirm('Are you sure?'))
+            this.electron.remote.app.exit();
     }
 }

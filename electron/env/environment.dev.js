@@ -6,7 +6,9 @@ const environment = {
     production: false,
     port: 4201,
     resizable: false,
-    frame: false
+    frame: false,
+    default_width: 800,
+    default_height: 600,
 };
 
 module.exports = environment;

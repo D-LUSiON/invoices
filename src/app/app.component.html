@@ -1,21 +1,19 @@
-<app-titlebar></app-titlebar>
+<app-titlebar (goBack)="onGoBack()"></app-titlebar>
 <div style="margin-top: 50px;">
     <h1>
         {{title}}
     </h1>
     <div class="container">
-        <button (click)="onClickSync()" style="margin-right: 5px;">Click to seng
-            <strong>
-                <u>syncronous</u> "ping"</strong> to Electron backend!</button>
-        <button (click)="onClickAsync()">Click to seng
-            <strong>
-                <u>a-syncronous</u> "ping"</strong> to Electron backend!</button>
+        <button (click)="onClickSync()" style="margin-right: 5px;">Click to send
+            <strong><u>syncronous</u> "ping"</strong> to Electron backend!</button>
+        <button (click)="onClickAsync()">Click to send
+            <strong><u>a-syncronous</u> "ping"</strong> to Electron backend!</button>
     </div>
     <div class="container">
         <ul>
             <li *ngFor="let message of messages">
-                <i>{{ message.time }}</i>
-                <strong class="{{ message.type }}">{{ message.type }} ({{ message.method }}):</strong> {{ message.text }}
+                <i>{{ message['time'] }}</i>
+                <strong class="{{ message['type'] }}">{{ message['type'] }} ({{ message['method'] }}):</strong> {{ message['text'] }}
             </li>
         </ul>
     </div>

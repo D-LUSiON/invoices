@@ -19,8 +19,8 @@ let mainWindow;
 function createWindow() {
     // Initialize window state keeper
     let winState = windowStateKeeper({
-        defaultWidth: 800,
-        defaultHeight: 600
+        defaultWidth: env.default_width,
+        defaultHeight: env.default_height
     });
 
     // Create the browser window.
@@ -60,13 +60,13 @@ function createWindow() {
 }
 
 // Enable Electron reload if not in production mode
-// if (!env.production)
-//     require('electron-reload')(
-//         path.join(__dirname, '..'), {
-//             ignored: /node_modules|[\/\\]\./,
-//             electron: path.join(__dirname, '..', 'node_modules', 'electron', 'dist', 'electron.exe')
-//         }
-//     );
+if (!env.production)
+    require('electron-reload')(
+        path.join(__dirname, '..'), {
+            ignored: /node_modules|[\/\\]\./,
+            electron: path.join(__dirname, '..', 'node_modules', 'electron', 'dist', 'electron.exe')
+        }
+    );
 
 // Create window on electron intialization
 app.on('ready', createWindow)
