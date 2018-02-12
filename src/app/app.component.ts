@@ -17,26 +17,32 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         // Async message handler
-        this.electron.ipcRenderer.on('asynchronous-reply', (event, response) => {
-            // use NgZone to execute code after response, otherwise the view will not be updated
-            this.ngZone.run(() => {
-                let messages = this.messages.slice().reverse();
-                messages.push({
-                    time: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}.${new Date().getMilliseconds()}`,
-                    type: 'response',
-                    method: 'async',
-                    text: response
+        if (this.electron.isElectronApp) {
+            this.electron.ipcRenderer.on('asynchronous-reply', (event, response) => {
+                // use NgZone to execute code after response, otherwise the view will not be updated
+                this.ngZone.run(() => {
+                    let messages = this.messages.slice().reverse();
+                    messages.push({
+                        time: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}.${new Date().getMilliseconds()}`,
+                        type: 'response',
+                        method: 'async',
+                        text: response
+                    });
+                    this.messages = messages.reverse();
                 });
-                this.messages = messages.reverse();
             });
-        });
+        }
     }
 
-    onGoBack(){
+    onGoBack() {
         alert('You can go back if you wish!');
     }
 
     onClickSync() {
+        if (!this.electron.isElectronApp) {
+            alert('You\'re not running Angular inside Electron!');
+            return false;
+        }
         console.log('Syncronous button clicked!');
         // Synchronous message emmiter and handler
         let messages = this.messages.slice().reverse();
@@ -56,9 +62,14 @@ export class AppComponent implements OnInit {
             text: response
         });
         this.messages = messages.reverse();
+
     }
 
     onClickAsync() {
+        if (!this.electron.isElectronApp) {
+            alert('You\'re not running Angular inside Electron!');
+            return false;
+        }
         console.log('Asyncronous button clicked!');
         // Synchronous message emmiter and handler
         let messages = this.messages.slice().reverse();
@@ -73,6 +84,10 @@ export class AppComponent implements OnInit {
     }
 
     onExitApp() {
+        if (!this.electron.isElectronApp) {
+            alert('You\'re not running Angular inside Electron!');
+            return false;
+        }
         if (confirm('Are you sure?'))
             this.electron.remote.app.exit();
     }

@@ -21,13 +21,15 @@ export class TitlebarComponent {
     constructor(
         private electron: ElectronService
     ) {
-        this.app_window = this.electron.remote.getCurrentWindow();
-
-        this.maximizable = !(!this.app_window.isMaximizable() || !this.app_window.isResizable());
-
-        this.minimizable = this.app_window.isMinimizable();
-
-        this.maximized = this.app_window.isMaximized();
+        if (this.electron.isElectronApp) {
+            this.app_window = this.electron.remote.getCurrentWindow();
+    
+            this.maximizable = !(!this.app_window.isMaximizable() || !this.app_window.isResizable());
+    
+            this.minimizable = this.app_window.isMinimizable();
+    
+            this.maximized = this.app_window.isMaximized();
+        }
 
     }
 
@@ -36,10 +38,18 @@ export class TitlebarComponent {
     }
 
     onMinimizeApp() {
+        if (!this.electron.isElectronApp) {
+            alert('You\'re not running Angular inside Electron!');
+            return false;
+        }
         this.app_window.minimize();
     }
 
     onMaximizeApp() {
+        if (!this.electron.isElectronApp) {
+            alert('You\'re not running Angular inside Electron!');
+            return false;
+        }
         if (this.maximized) {
             this.app_window.unmaximize();
             this.maximized = false;
@@ -50,6 +60,10 @@ export class TitlebarComponent {
     }
 
     onCloseApp() {
+        if (!this.electron.isElectronApp) {
+            alert('You\'re not running Angular inside Electron!');
+            return false;
+        }
         this.app_window.close();
     }
 

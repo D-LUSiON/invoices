@@ -10,7 +10,7 @@
         "build:windows": "electron-packager --platform=win32",
         "build:linux": "electron-packager --platform=linux",
         "build:macos": "electron-packager --platform=darwin",
-        "watch": "ng build --watch --dev --base-href . --output-hashing all --sourcemaps true --delete-output-path false",
+        "watch": "ng build --watch --dev --base-href= --output-hashing all --sourcemaps true --delete-output-path false",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e"
