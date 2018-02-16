@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, NgZone } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 
 @Component({
@@ -12,23 +12,35 @@ export class TitlebarComponent {
 
     app_window;
 
-    maximizable: boolean = true;
-    minimizable: boolean = true;
-    maximized: boolean = false;
+    maximizable = true;
+    minimizable = true;
+    maximized = false;
 
     drives_aside;
 
     constructor(
-        private electron: ElectronService
+        private electron: ElectronService,
+        private ngZone: NgZone
     ) {
         if (this.electron.isElectronApp) {
             this.app_window = this.electron.remote.getCurrentWindow();
-    
+
             this.maximizable = !(!this.app_window.isMaximizable() || !this.app_window.isResizable());
-    
+
             this.minimizable = this.app_window.isMinimizable();
-    
+
             this.maximized = this.app_window.isMaximized();
+
+            this.app_window.on('maximize', () => {
+                this.ngZone.run(() => {
+                    this.maximized = true;
+                });
+            });
+            this.app_window.on('unmaximize', () => {
+                this.ngZone.run(() => {
+                    this.maximized = false;
+                });
+            });
         }
 
     }

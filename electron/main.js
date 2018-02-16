@@ -5,7 +5,8 @@ const {
     ipcMain,
     Menu,
     MenuItem,
-    Tray
+    Tray,
+    globalShortcut
 } = require('electron');
 
 const path = require('path');
@@ -27,17 +28,19 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: winState.width,
         height: winState.height,
+        minWidth: env.min_width,
+        minHeight: env.min_height,
         x: winState.x,
         y: winState.y,
         resizable: env.resizable,
         frame: env.frame,
         show: false,
         backgroundColor: '#ffffff',
-        icon: `file://${path.join(__dirname, '..', 'dist', 'assets', 'app-icon-l.jpg')}`
+        icon: `file://${path.join(__dirname, '..', env.html_src, 'assets', 'app-icon-l.jpg')}`
     });
 
     mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, '..', 'dist', 'index.html'),
+        pathname: path.join(__dirname, '..', env.html_src, 'index.html'),
         protocol: 'file:',
         slashes: true,
         webPreferences: {
@@ -52,6 +55,11 @@ function createWindow() {
     // open the DevTools if not in production mode
     if (!env.production)
         mainWindow.webContents.openDevTools();
+
+    // open the DevTools with Ctrl-F12
+    globalShortcut.register('CommandOrControl+F12', () => {
+        mainWindow.webContents.openDevTools();
+    });
 
     // Event when the window is closed.
     mainWindow.on('closed', () => {

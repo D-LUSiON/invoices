@@ -5,10 +5,13 @@ const environment = {
     description: package_json.description,
     production: true,
     port: 4201,
-    resizable: false,
+    html_src: 'html_prod',
+    resizable: true,
     frame: false,
-    default_width: 800,
-    default_height: 600,
+    default_width: 1200,
+    default_height: 675,
+    min_width: 1024,
+    min_height: 675,
 };
 
 module.exports = environment;

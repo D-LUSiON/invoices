@@ -5,6 +5,8 @@
 /releases
 /tmp
 /out-tsc
+/html_dev
+/html_prod
 
 # dependencies
 /node_modules
