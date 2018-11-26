@@ -27,6 +27,9 @@
                     },
                     "configurations": {
                         "dev": {
+                            "baseHref": "",
+                            "outputPath": "./html_dev",
+                            "deleteOutputPath": false,
                             "optimization": false,
                             "outputHashing": "media",
                             "sourceMap": true,
