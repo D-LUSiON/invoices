@@ -1,6 +1,6 @@
 # Electron/Angular - quickstart
 
-This is a blank project for Electron/Angular applications. It was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.3 and is using Electon v1.8.2 / Angular v5.2.4 at the moment.
+This is a blank project for Electron/Angular applications. It was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.3 and is using Electon v3.0.10 / Angular v7.1.0 and Angular CLI v7.0.6 at the moment.
 
 ## Features
 
