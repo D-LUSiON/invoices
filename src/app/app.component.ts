@@ -4,7 +4,7 @@ import { ElectronService } from 'ngx-electron';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
     title = 'Change this text in the .ts file to see how app IS refreshing!';
@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
             this.electron.ipcRenderer.on('asynchronous-reply', (event, response) => {
                 // use NgZone to execute code after response, otherwise the view will not be updated
                 this.ngZone.run(() => {
-                    let messages = this.messages.slice().reverse();
+                    const messages = this.messages.slice().reverse();
                     messages.push({
                         time: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}.${new Date().getMilliseconds()}`,
                         type: 'response',
@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
             text: 'sync ping'
         });
         this.messages = messages.reverse();
-        let response: string = this.electron.ipcRenderer.sendSync('synchronous-message', 'sync ping');
+        const response: string = this.electron.ipcRenderer.sendSync('synchronous-message', 'sync ping');
         messages = this.messages.slice().reverse();
         messages.push({
             time: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}.${new Date().getMilliseconds()}`,
@@ -72,7 +72,7 @@ export class AppComponent implements OnInit {
         }
         console.log('Asyncronous button clicked!');
         // Synchronous message emmiter and handler
-        let messages = this.messages.slice().reverse();
+        const messages = this.messages.slice().reverse();
         messages.push({
             time: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}.${new Date().getMilliseconds()}`,
             type: 'request',
@@ -88,7 +88,8 @@ export class AppComponent implements OnInit {
             alert('You\'re not running Angular inside Electron!');
             return false;
         }
-        if (confirm('Are you sure?'))
+        if (confirm('Are you sure?')) {
             this.electron.remote.app.exit();
+        }
     }
 }
