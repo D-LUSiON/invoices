@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "ea-qs": {
+        "dpm": {
             "root": "",
             "sourceRoot": "src",
             "projectType": "application",
@@ -21,6 +21,7 @@
                             "src/favicon.ico"
                         ],
                         "styles": [
+                            "./node_modules/font-awesome/scss/font-awesome.scss",
                             "src/styles.scss"
                         ],
                         "scripts": []
@@ -45,6 +46,9 @@
                             }]
                         },
                         "production": {
+                            "baseHref": "",
+                            "outputPath": "./html_prod",
+                            "deleteOutputPath": true,
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
@@ -64,18 +68,18 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "ea-qs:build"
+                        "browserTarget": "dpm:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "ea-qs:build:production"
+                            "browserTarget": "dpm:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "ea-qs:build"
+                        "browserTarget": "dpm:build"
                     }
                 },
                 "test": {
@@ -87,6 +91,7 @@
                         "tsConfig": "src/tsconfig.spec.json",
                         "scripts": [],
                         "styles": [
+                            "./node_modules/font-awesome/scss/font-awesome.scss",
                             "src/styles.scss"
                         ],
                         "assets": [
@@ -109,7 +114,7 @@
                 }
             }
         },
-        "ea-qs-e2e": {
+        "dpm-e2e": {
             "root": "",
             "sourceRoot": "",
             "projectType": "application",
@@ -118,7 +123,7 @@
                     "builder": "@angular-devkit/build-angular:protractor",
                     "options": {
                         "protractorConfig": "./protractor.conf.js",
-                        "devServerTarget": "ea-qs:serve"
+                        "devServerTarget": "dpm:serve"
                     }
                 },
                 "lint": {
@@ -135,7 +140,7 @@
             }
         }
     },
-    "defaultProject": "ea-qs",
+    "defaultProject": "dpm",
     "schematics": {
         "@schematics/angular:component": {
             "prefix": "app",

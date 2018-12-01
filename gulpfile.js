@@ -58,16 +58,7 @@ gulp.task(
     'setup_electron_before', [
         'copy_prod_environment',
     ],
-    run(['ng build', [
-        `--prod`,
-        `--aot`,
-        `--env=electron`,
-        `--base-href=`,
-        `--output-hashing=all`,
-        `--build-optimizer`,
-        `--vendor-chunk`,
-        `--extract-css`,
-        `--sourcemaps=false`,
+    run(['ng build --configuration=production', [
         `--output-path=./${require('./electron/environment').html_src}`,
     ].join(' ')].join(' '))
 );
