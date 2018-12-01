@@ -1,6 +1,6 @@
 {
     "name": "electron-angular-quickstart",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "main": "electron/main.js",
     "scripts": {
