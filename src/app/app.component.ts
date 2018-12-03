@@ -1,5 +1,6 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
+import { MatDrawer } from '@angular/material';
 
 @Component({
     selector: 'app-root',
@@ -9,6 +10,8 @@ import { ElectronService } from 'ngx-electron';
 export class AppComponent implements OnInit {
     title = 'Change this text in the .ts file to see how app IS refreshing!';
     messages: { [key: string]: any }[] = [];
+
+    @ViewChild('sidebar') sidebar: MatDrawer;
 
     constructor(
         private electron: ElectronService,
@@ -36,6 +39,10 @@ export class AppComponent implements OnInit {
 
     onGoBack() {
         alert('You can go back if you wish!');
+    }
+
+    onToggleMenu() {
+        this.sidebar.toggle();
     }
 
     onClickSync() {

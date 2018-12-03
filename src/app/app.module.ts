@@ -4,6 +4,9 @@ import { NgxElectronModule } from 'ngx-electron';
 
 import { AppComponent } from './app.component';
 import { TitlebarComponent } from './titlebar/titlebar.component';
+import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSidenavModule, MatListModule, MatIconModule } from '@angular/material';
 
 
 @NgModule({
@@ -13,7 +16,12 @@ import { TitlebarComponent } from './titlebar/titlebar.component';
     ],
     imports: [
         BrowserModule,
-        NgxElectronModule
+        AppRoutingModule,
+        NgxElectronModule,
+        BrowserAnimationsModule,
+        MatSidenavModule,
+        MatListModule,
+        MatIconModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

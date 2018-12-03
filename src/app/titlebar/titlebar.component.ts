@@ -9,12 +9,15 @@ import { ElectronService } from 'ngx-electron';
 export class TitlebarComponent {
 
     @Output() goBack: EventEmitter<any> = new EventEmitter();
+    @Output() toggleMenu: EventEmitter<boolean> = new EventEmitter();
 
     app_window;
 
     maximizable = true;
     minimizable = true;
     maximized = false;
+
+    menu_visible = false;
 
     drives_aside;
 
@@ -47,6 +50,11 @@ export class TitlebarComponent {
 
     onGoBack() {
         this.goBack.emit();
+    }
+
+    onToggleMenu() {
+        this.menu_visible = !this.menu_visible;
+        this.toggleMenu.emit(this.menu_visible);
     }
 
     onMinimizeApp() {

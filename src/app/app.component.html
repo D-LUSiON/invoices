@@ -1,22 +1,29 @@
-<app-titlebar (goBack)="onGoBack()"></app-titlebar>
-<div style="margin-top: 50px;">
-    <h1>
-        {{title}}
-    </h1>
-    <div class="container">
-        <button (click)="onClickSync()" style="margin-right: 5px;">Click to send
-            <strong><u>syncronous</u> "ping"</strong> to Electron backend!</button>
-        <button (click)="onClickAsync()">Click to send
-            <strong><u>a-syncronous</u> "ping"</strong> to Electron backend!</button>
-    </div>
-    <div class="container">
-        <ul>
-            <li *ngFor="let message of messages">
-                <i [ngStyle]="{ 'margin-right': '5px' }">{{ message['time'] }}</i><strong class="{{ message['type'] }}">{{ message['type'] }} ({{ message['method'] }}):</strong> {{ message['text'] }}
-            </li>
-        </ul>
-    </div>
-    <div class="container">
-        <button (click)="onExitApp()">Exit application</button>
-    </div>
-</div>
+<app-titlebar
+    (goBack)="onGoBack()"
+    (toggleMenu)="onToggleMenu()"
+></app-titlebar>
+
+<mat-drawer-container
+    autosize
+    class="all-container"
+>
+    <mat-drawer
+        #sidebar
+        mode="over"
+    >
+        <mat-list>
+            <mat-list-item>
+                <mat-icon matListIcon>home</mat-icon>
+                <h3 matLine>Home</h3>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+                <mat-icon matListIcon>folder</mat-icon>
+                <h3 matLine>Invoices</h3>
+            </mat-list-item>
+        </mat-list>
+    </mat-drawer>
+    <mat-drawer-content>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>

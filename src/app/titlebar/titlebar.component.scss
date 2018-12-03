@@ -1,6 +1,9 @@
+@import 'assets/scss/variables.scss';
+
 #window-titlebar,
 #window-titlebar * {
     box-sizing: border-box;
+    background-color: $accent;
 }
 
 #window-titlebar {
@@ -62,10 +65,13 @@
 }
 
 #window-titlebar .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 45px;
     height: 32px;
     border: none;
-    padding: 6px;
+    padding: 0 6px;
     background-color: transparent;
     text-align: center;
     cursor: default;
