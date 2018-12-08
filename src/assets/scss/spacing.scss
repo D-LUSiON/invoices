@@ -1,0 +1,125 @@
+@for $i from 0 through 100 {
+    // margins
+    .m-#{$i}  { margin: #{$i}px !important; }
+    .mt-#{$i} { margin-top: #{$i}px !important;   }
+    .mr-#{$i} { margin-right: #{$i}px !important;   }
+    .mb-#{$i} { margin-bottom: #{$i}px !important;   }
+    .ml-#{$i} { margin-left: #{$i}px !important;   }
+    .mx-#{$i} { margin-right: #{$i}px !important; margin-left: #{$i}px !important; }
+    .my-#{$i} { margin-top: #{$i}px !important; margin-bottom: #{$i}px !important; }
+
+    // paddings
+    .p-#{$i}  { padding: #{$i}px !important; }
+    .pt-#{$i} { padding-top: #{$i}px !important;   }
+    .pr-#{$i} { padding-right: #{$i}px !important;   }
+    .pb-#{$i} { padding-bottom: #{$i}px !important;   }
+    .pl-#{$i} { padding-left: #{$i}px !important;   }
+    .px-#{$i} { padding-right: #{$i}px !important; padding-left: #{$i}px !important; }
+    .py-#{$i} { padding-top: #{$i}px !important; padding-bottom: #{$i}px !important; }
+}
+
+@media (max-width: 767px) {
+    @for $i from 0 through 100 {
+        // margins
+        .m-#{$i}-sm-xs { margin: #{$i}px !important; }
+        .mt-#{$i}-sm-xs { margin-top: #{$i}px !important;   }
+        .mr-#{$i}-sm-xs { margin-right: #{$i}px !important;   }
+        .mb-#{$i}-sm-xs { margin-bottom: #{$i}px !important;   }
+        .ml-#{$i}-sm-xs { margin-left: #{$i}px !important;   }
+        .mx-#{$i}-sm-xs { margin-right: #{$i}px !important; margin-left: #{$i}px !important; }
+        .my-#{$i}-sm-xs { margin-top: #{$i}px !important; margin-bottom: #{$i}px !important; }
+
+        // paddings
+        .p-#{$i}-sm-xs { padding: #{$i}px !important; }
+        .pt-#{$i}-sm-xs { padding-top: #{$i}px !important;   }
+        .pr-#{$i}-sm-xs { padding-right: #{$i}px !important;   }
+        .pb-#{$i}-sm-xs { padding-bottom: #{$i}px !important;   }
+        .pl-#{$i}-sm-xs { padding-left: #{$i}px !important;   }
+        .px-#{$i}-sm-xs { padding-right: #{$i}px !important; padding-left: #{$i}px !important; }
+        .py-#{$i}-sm-xs { padding-top: #{$i}px !important; padding-bottom: #{$i}px !important; }
+    }
+}
+@media (min-width: 768px) {
+    @for $i from 0 through 100 {
+        // margins
+        .m-#{$i}-sm { margin: #{$i}px !important; }
+        .mt-#{$i}-sm { margin-top: #{$i}px !important;   }
+        .mr-#{$i}-sm { margin-right: #{$i}px !important;   }
+        .mb-#{$i}-sm { margin-bottom: #{$i}px !important;   }
+        .ml-#{$i}-sm { margin-left: #{$i}px !important;   }
+        .mx-#{$i}-sm { margin-right: #{$i}px !important; margin-left: #{$i}px !important; }
+        .my-#{$i}-sm { margin-top: #{$i}px !important; margin-bottom: #{$i}px !important; }
+
+        // paddings
+        .p-#{$i}-sm { padding: #{$i}px !important; }
+        .pt-#{$i}-sm { padding-top: #{$i}px !important;   }
+        .pr-#{$i}-sm { padding-right: #{$i}px !important;   }
+        .pb-#{$i}-sm { padding-bottom: #{$i}px !important;   }
+        .pl-#{$i}-sm { padding-left: #{$i}px !important;   }
+        .px-#{$i}-sm { padding-right: #{$i}px !important; padding-left: #{$i}px !important; }
+        .py-#{$i}-sm { padding-top: #{$i}px !important; padding-bottom: #{$i}px !important; }
+    }
+}
+@media (min-width: 992px) {
+    @for $i from 0 through 100 {
+        // margins
+        .m-#{$i}-md { margin: #{$i}px !important; }
+        .mt-#{$i}-md { margin-top: #{$i}px !important;   }
+        .mr-#{$i}-md { margin-right: #{$i}px !important;   }
+        .mb-#{$i}-md { margin-bottom: #{$i}px !important;   }
+        .ml-#{$i}-md { margin-left: #{$i}px !important;   }
+        .mx-#{$i}-md { margin-right: #{$i}px !important; margin-left: #{$i}px !important; }
+        .my-#{$i}-md { margin-top: #{$i}px !important; margin-bottom: #{$i}px !important; }
+
+        // paddings
+        .p-#{$i}-md { padding: #{$i}px !important; }
+        .pt-#{$i}-md { padding-top: #{$i}px !important;   }
+        .pr-#{$i}-md { padding-right: #{$i}px !important;   }
+        .pb-#{$i}-md { padding-bottom: #{$i}px !important;   }
+        .pl-#{$i}-md { padding-left: #{$i}px !important;   }
+        .px-#{$i}-md { padding-right: #{$i}px !important; padding-left: #{$i}px !important; }
+        .py-#{$i}-md { padding-top: #{$i}px !important; padding-bottom: #{$i}px !important; }
+    }
+}
+@media (min-width: 1200px) {
+    @for $i from 0 through 100 {
+        // margins
+        .m-#{$i}-lg { margin: #{$i}px !important; }
+        .mt-#{$i}-lg { margin-top: #{$i}px !important;   }
+        .mr-#{$i}-lg { margin-right: #{$i}px !important;   }
+        .mb-#{$i}-lg { margin-bottom: #{$i}px !important;   }
+        .ml-#{$i}-lg { margin-left: #{$i}px !important;   }
+        .mx-#{$i}-lg { margin-right: #{$i}px !important; margin-left: #{$i}px !important; }
+        .my-#{$i}-lg { margin-top: #{$i}px !important; margin-bottom: #{$i}px !important; }
+
+        // paddings
+        .p-#{$i}-lg { padding: #{$i}px !important; }
+        .pt-#{$i}-lg { padding-top: #{$i}px !important;   }
+        .pr-#{$i}-lg { padding-right: #{$i}px !important;   }
+        .pb-#{$i}-lg { padding-bottom: #{$i}px !important;   }
+        .pl-#{$i}-lg { padding-left: #{$i}px !important;   }
+        .px-#{$i}-lg { padding-right: #{$i}px !important; padding-left: #{$i}px !important; }
+        .py-#{$i}-lg { padding-top: #{$i}px !important; padding-bottom: #{$i}px !important; }
+    }
+}
+@media print {
+    @for $i from 0 through 100 {
+        // margins
+        .m-#{$i}-print { margin: #{$i}px !important; }
+        .mt-#{$i}-print { margin-top: #{$i}px !important;   }
+        .mr-#{$i}-print { margin-right: #{$i}px !important;   }
+        .mb-#{$i}-print { margin-bottom: #{$i}px !important;   }
+        .ml-#{$i}-print { margin-left: #{$i}px !important;   }
+        .mx-#{$i}-print { margin-right: #{$i}px !important; margin-left: #{$i}px !important; }
+        .my-#{$i}-print { margin-top: #{$i}px !important; margin-bottom: #{$i}px !important; }
+
+        // paddings
+        .p-#{$i}-print { padding: #{$i}px !important; }
+        .pt-#{$i}-print { padding-top: #{$i}px !important;   }
+        .pr-#{$i}-print { padding-right: #{$i}px !important;   }
+        .pb-#{$i}-print { padding-bottom: #{$i}px !important;   }
+        .pl-#{$i}-print { padding-left: #{$i}px !important;   }
+        .px-#{$i}-print { padding-right: #{$i}px !important; padding-left: #{$i}px !important; }
+        .py-#{$i}-print { padding-top: #{$i}px !important; padding-bottom: #{$i}px !important; }
+    }
+}

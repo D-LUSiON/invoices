@@ -1,0 +1,11 @@
+<mat-card class="mb-15">
+    <mat-card-header>Редакция на фактура</mat-card-header>
+    <mat-card-actions>
+        <a [routerLink]="['/home', 'invoices']" mat-flat-button color="primary">Списък на фактури</a>
+    </mat-card-actions>
+</mat-card>
+<form [formGroup]="invoice_form" novalidate (ngSubmit)="onSubmit()">
+    <p>
+      invoice-edit works!
+    </p>
+</form>

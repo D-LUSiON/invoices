@@ -1,12 +1,9 @@
 <div id="window-titlebar">
     <div class="left-items">
-        <div class="button menu" (click)="onToggleMenu()">
-            <span class="fa fa-bars"></span>
+        <ng-container *ngTemplateOutlet="titlebar_buttons"></ng-container>
+        <div class="window_title">
+            <ng-container *ngTemplateOutlet="titlebar_title"></ng-container>
         </div>
-        <div class="button go_back" (click)="onGoBack()">
-            <img src="assets/arrow-go-back.svg" alt="">
-        </div>
-        <div class="window_title">This is a custom titlebar</div>
     </div>
     <div class="center-drag"></div>
     <div class="right-items">

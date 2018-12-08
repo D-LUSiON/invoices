@@ -7,6 +7,7 @@ import { TitlebarComponent } from './titlebar/titlebar.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule, MatListModule, MatIconModule } from '@angular/material';
+import { CoreModule } from '@app/core';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { MatSidenavModule, MatListModule, MatIconModule } from '@angular/materia
     imports: [
         BrowserModule,
         AppRoutingModule,
+        CoreModule,
         NgxElectronModule,
         BrowserAnimationsModule,
         MatSidenavModule,
