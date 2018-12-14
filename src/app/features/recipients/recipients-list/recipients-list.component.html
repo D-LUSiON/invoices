@@ -1,0 +1,89 @@
+<mat-card class="mb-15">
+    <mat-card-content>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-10">Получатели на фактури</div>
+                <div class="col-2">
+                    <button mat-flat-button color="primary" (click)="editRecipient($event, null)">Нов получател</button>
+                    <!-- <a [routerLink]="['/home', 'invoices', 'new']" mat-flat-button color="primary">Нова фактура</a> -->
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<mat-card class="mb-15">
+    <mat-card-content>
+        <div class="container-fluid mb-15">
+            <div class="row">
+                <div class="col-4">
+                    <mat-form-field>
+                        <input matInput (keyup)="filterRecipients($event.target.value)" placeholder="Филтър">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <table mat-table [dataSource]="filtered_recipients">
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Име</th>
+                <td mat-cell *matCellDef="let recipient">{{ recipient.name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="city">
+                <th mat-header-cell *matHeaderCellDef>Град</th>
+                <td mat-cell *matCellDef="let recipient">{{ recipient.city }}</td>
+            </ng-container>
+            <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef>Адрес</th>
+                <td mat-cell *matCellDef="let recipient">{{ recipient.address }}</td>
+            </ng-container>
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef>Емейл</th>
+                <td mat-cell *matCellDef="let recipient">{{ recipient.email }}</td>
+            </ng-container>
+            <ng-container matColumnDef="bank_acc">
+                <th mat-header-cell *matHeaderCellDef>Банкова сметка</th>
+                <td mat-cell *matCellDef="let recipient">{{ recipient.bank_acc }}</td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Действия</th>
+                <td mat-cell *matCellDef="let recipient">
+                    <button mat-icon-button color="primary" (click)="editRecipient($event, recipient)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary" (click)="onRemove(recipient)">
+                        <mat-icon>delete_forever</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="recipients_columns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: recipients_columns;"></tr>
+        </table>
+    </mat-card-content>
+</mat-card>
+<app-dialog
+    [(visible)]="edit_dialog_visible"
+    heading="Добавяне / редакция на получател"
+>
+    <form [formGroup]="recipient_form" novalidate (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <input matInput placeholder="Име" formControlName="name">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Град" formControlName="city">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Адрес" formControlName="address">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Е-мейл" formControlName="email">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Банкова сметка" formControlName="bank_acc">
+        </mat-form-field>
+    </form>
+    <ng-template #modal_footer>
+        <button type="button" mat-raised-button color="primary" [disabled]="recipient_form.invalid || recipient_form.pristine" (click)="onSubmit()">Запази</button>
+        <button type="button" mat-raised-button color="default" (click)="edit_dialog_visible = false">Затвори</button>
+    </ng-template>
+</app-dialog>

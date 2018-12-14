@@ -3,11 +3,11 @@ import { Invoice } from './invoice';
 export class Recipient {
     _id: string = '';
     name: string = '';
-    invoices?: Invoice[];
-    city?: string;
-    address?: string;
-    email?: string;
-    bank_acc?: string;
+    invoices: Invoice[] = [];
+    city: string = '';
+    address: string = '';
+    email: string = '';
+    bank_acc: string = '';
 
     constructor(data?) {
         if (data) {
