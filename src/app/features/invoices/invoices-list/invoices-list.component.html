@@ -1,0 +1,61 @@
+<mat-card class="mb-15">
+    <mat-card-content>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-10">Списък на фактури</div>
+                <div class="col-2">
+                    <a [routerLink]="['/home', 'invoices', 'new']" mat-flat-button color="primary">Нова фактура</a>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<mat-card class="mb-15">
+    <mat-card-content>
+        <mat-form-field>
+            <input matInput (keyup)="filterInvoices($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+
+        <table mat-table [dataSource]="invoices">
+            <ng-container matColumnDef="recipient">
+                <th mat-header-cell *matHeaderCellDef>Фактура от</th>
+                <td mat-cell *matCellDef="let invoice">{{ invoice.recipient.name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="provider">
+                <th mat-header-cell *matHeaderCellDef>Доставчик</th>
+                <td mat-cell *matCellDef="let invoice">{{ invoice.provider.organization }}</td>
+            </ng-container>
+            <ng-container matColumnDef="type_notes">
+                <th mat-header-cell *matHeaderCellDef>Описание</th>
+                <td mat-cell *matCellDef="let invoice">
+                    <strong>{{ invoice.type }}</strong>
+                    <br>
+                    <small>{{ invoice.notes }}</small>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="total_sum">
+                <th mat-header-cell *matHeaderCellDef>Сума</th>
+                <td mat-cell *matCellDef="let invoice">{{ invoice.total_sum }} лв.</td>
+            </ng-container>
+            <ng-container matColumnDef="total_vat">
+                <th mat-header-cell *matHeaderCellDef>ДДС</th>
+                <td mat-cell *matCellDef="let invoice">{{ invoice.total_vat }} лв.</td>
+            </ng-container>
+            <ng-container matColumnDef="total_total">
+                <th mat-header-cell *matHeaderCellDef>Бруто</th>
+                <td mat-cell *matCellDef="let invoice">{{ invoice.total_total }} лв.</td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Действия</th>
+                <td mat-cell *matCellDef="let invoice">
+                    <a [routerLink]="['/home', 'invoices', 'edit', invoice._id]" mat-icon-button color="primary">
+                        <mat-icon>edit</mat-icon>
+                    </a>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="invoices_columns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: invoices_columns;"></tr>
+        </table>
+    </mat-card-content>
+</mat-card>

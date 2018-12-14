@@ -1,6 +1,8 @@
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { MatDrawer } from '@angular/material';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-root',
@@ -8,95 +10,48 @@ import { MatDrawer } from '@angular/material';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-    title = 'Change this text in the .ts file to see how app IS refreshing!';
-    messages: { [key: string]: any }[] = [];
+
+    back_url: string = '';
+    current_url: string = '';
+
+    root_url: string = '/home';
 
     @ViewChild('sidebar') sidebar: MatDrawer;
 
     constructor(
         private electron: ElectronService,
-        private ngZone: NgZone
+        private _router: Router,
+        private _route: ActivatedRoute,
+        private _location: Location
     ) { }
 
     ngOnInit() {
-        // Async message handler
-        if (this.electron.isElectronApp) {
-            this.electron.ipcRenderer.on('asynchronous-reply', (event, response) => {
-                // use NgZone to execute code after response, otherwise the view will not be updated
-                this.ngZone.run(() => {
-                    const messages = this.messages.slice().reverse();
-                    messages.push({
-                        time: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}.${new Date().getMilliseconds()}`,
-                        type: 'response',
-                        method: 'async',
-                        text: response
-                    });
-                    this.messages = messages.reverse();
-                });
-            });
-        }
+        this._router.events.subscribe(change => {
+            if (change instanceof NavigationEnd) {
+                this.current_url = change.urlAfterRedirects;
+                const back_url = this.current_url.split('/');
+                back_url.pop();
+                this.back_url = back_url.join('/');
+                console.log(this.current_url, this.back_url);
+
+            }
+        });
     }
 
-    onGoBack() {
-        alert('You can go back if you wish!');
+    get show_back() {
+        return this.current_url && this.current_url !== this.root_url;
+    }
+
+    closeMenu() {
+        this.sidebar.close();
     }
 
     onToggleMenu() {
         this.sidebar.toggle();
     }
 
-    onClickSync() {
-        if (!this.electron.isElectronApp) {
-            alert('You\'re not running Angular inside Electron!');
-            return false;
-        }
-        console.log('Syncronous button clicked!');
-        // Synchronous message emmiter and handler
-        let messages = this.messages.slice().reverse();
-        messages.push({
-            time: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}.${new Date().getMilliseconds()}`,
-            type: 'request',
-            method: 'sync',
-            text: 'sync ping'
-        });
-        this.messages = messages.reverse();
-        const response: string = this.electron.ipcRenderer.sendSync('synchronous-message', 'sync ping');
-        messages = this.messages.slice().reverse();
-        messages.push({
-            time: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}.${new Date().getMilliseconds()}`,
-            type: 'response',
-            method: 'sync',
-            text: response
-        });
-        this.messages = messages.reverse();
-
+    onGoBack() {
+        this._router.navigateByUrl(this.back_url);
     }
 
-    onClickAsync() {
-        if (!this.electron.isElectronApp) {
-            alert('You\'re not running Angular inside Electron!');
-            return false;
-        }
-        console.log('Asyncronous button clicked!');
-        // Synchronous message emmiter and handler
-        const messages = this.messages.slice().reverse();
-        messages.push({
-            time: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}.${new Date().getMilliseconds()}`,
-            type: 'request',
-            method: 'async',
-            text: 'async ping'
-        });
-        this.messages = messages.reverse();
-        this.electron.ipcRenderer.send('asynchronous-message', 'async ping');
-    }
-
-    onExitApp() {
-        if (!this.electron.isElectronApp) {
-            alert('You\'re not running Angular inside Electron!');
-            return false;
-        }
-        if (confirm('Are you sure?')) {
-            this.electron.remote.app.exit();
-        }
-    }
 }

@@ -1,3 +1,66 @@
-<p>
-  home works!
-</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Фактури</mat-card-title>
+                    <mat-card-subtitle>
+                        <ng-container *ngIf="invoices.length > 0; else no_invoices">Имате {{ invoices_unsent }} неизпратени фактури</ng-container>
+                        <ng-template #no_invoices>
+                            <ng-container>Нямате неизпратени фактури</ng-container>
+                        </ng-template>
+                    </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-actions>
+                    <a
+                        [routerLink]="['/home', 'invoices', 'new']"
+                        mat-raised-button
+                        color="primary"
+                    >
+                        <span class="fa fa-plus"></span> Добави нова
+                    </a>
+                    <a [routerLink]="['/home', 'invoices']" mat-stroked-button pull-right>
+                        <span class="fa fa-list"></span> Списък
+                    </a>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+        <div class="col-sm">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Получатели</mat-card-title>
+                    <mat-card-subtitle>
+                        {{ recepients.length }} човека са ви дали фактури
+                    </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-actions>
+                    <a [routerLink]="['/home', 'recipients']" mat-stroked-button pull-right>
+                        <span class="fa fa-list"></span>
+                        Списък
+                    </a>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+        <div class="col-sm">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Фирми</mat-card-title>
+                    <mat-card-subtitle>
+                        <ng-container *ngIf="providers.length > 0; else no_providers">Имате записани {{ providers.length }} фирми</ng-container>
+                        <ng-template #no_providers>
+                            <ng-container>Нямате записани фирми</ng-container>
+                        </ng-template>
+                    </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-actions>
+                    <a [routerLink]="['/home', 'providers', 'new']" mat-raised-button color="primary">
+                        <span class="fa fa-plus"></span> Добави нова
+                    </a>
+                    <a [routerLink]="['/home', 'providers']" mat-stroked-button pull-right>
+                        <span class="fa fa-list"></span> Списък
+                    </a>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>
