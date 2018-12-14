@@ -14,9 +14,11 @@ import {
     MatNativeDateModule,
     MatAutocompleteModule,
     MatSelectModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule
 } from '@angular/material';
 import { InvoiceEditComponent } from './components';
+import { DialogModule } from './dialog/dialog.module';
 
 @NgModule({
     declarations: [
@@ -37,6 +39,9 @@ import { InvoiceEditComponent } from './components';
         MatAutocompleteModule,
         MatSelectModule,
         MatIconModule,
+        MatSnackBarModule,
+
+        DialogModule,
     ],
     exports: [
         ReactiveFormsModule,
@@ -53,6 +58,9 @@ import { InvoiceEditComponent } from './components';
         MatAutocompleteModule,
         MatSelectModule,
         MatIconModule,
+        MatSnackBarModule,
+
+        DialogModule,
 
         InvoiceEditComponent,
     ],

@@ -1,0 +1,35 @@
+<div class="modal-overlay"></div>
+<div class="modal" [class.open]="visible">
+    <div class="modal-dialog animated fadeInDown" [style.max-width]="max_width" [style.max-height]="max_height">
+        <div class="modal-content">
+            <div class="modal-header">
+                <ng-container *ngIf="modal_header; else header_tpl">
+                    <ng-container *ngTemplateOutlet="modal_header, context: { $implicit: header }"></ng-container>
+                </ng-container>
+                <ng-template #header_tpl>
+                    <h5 class="modal-title">{{ heading }}</h5>
+                </ng-template>
+                <button type="button" class="close" (click)="close()">
+                    <span class="fa fa-times"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ng-container *ngIf="modal_content; else content_tpl">
+                    <ng-container *ngTemplateOutlet="modal_content"></ng-container>
+                </ng-container>
+                <ng-template #content_tpl>
+                    <ng-content></ng-content>
+                </ng-template>
+            </div>
+            <div class="modal-footer">
+                <ng-container *ngIf="modal_footer; else footer_tpl">
+                    <ng-container *ngTemplateOutlet="modal_footer"></ng-container>
+                </ng-container>
+                <ng-template #footer_tpl>
+                    <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+
