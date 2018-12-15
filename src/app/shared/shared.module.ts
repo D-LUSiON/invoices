@@ -9,21 +9,39 @@ import {
     MatTableModule,
     MatCheckboxModule,
     MatRadioModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
+    MatAutocompleteModule,
+    MatSelectModule,
+    MatIconModule,
+    MatSnackBarModule
 } from '@angular/material';
+import { InvoiceEditComponent } from './components';
+import { DialogModule } from './dialog/dialog.module';
 
 @NgModule({
-    declarations: [],
+    declarations: [
+        InvoiceEditComponent,
+    ],
     imports: [
         CommonModule,
         ReactiveFormsModule,
         HttpClientModule,
         MatCardModule,
         MatTableModule,
+        MatInputModule,
         MatFormFieldModule,
         MatCheckboxModule,
         MatRadioModule,
         MatDatepickerModule,
+        MatNativeDateModule,
+        MatAutocompleteModule,
+        MatSelectModule,
+        MatIconModule,
+        MatSnackBarModule,
+
+        DialogModule,
     ],
     exports: [
         ReactiveFormsModule,
@@ -31,10 +49,23 @@ import {
         MatCardModule,
         MatButtonModule,
         MatTableModule,
+        MatInputModule,
         MatFormFieldModule,
         MatCheckboxModule,
         MatRadioModule,
         MatDatepickerModule,
-    ]
+        MatNativeDateModule,
+        MatAutocompleteModule,
+        MatSelectModule,
+        MatIconModule,
+        MatSnackBarModule,
+
+        DialogModule,
+
+        InvoiceEditComponent,
+    ],
+    providers: [
+        MatDatepickerModule,
+    ],
 })
 export class SharedModule { }

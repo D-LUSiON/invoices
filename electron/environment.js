@@ -3,9 +3,9 @@ const package_json = require('../package.json');
 const environment = {
     name: package_json.name,
     description: package_json.description,
-    production: false,
+    production: true,
     port: 4201,
-    html_src: 'html_dev',
+    html_src: 'html_prod',
     resizable: true,
     frame: false,
     default_width: 1200,

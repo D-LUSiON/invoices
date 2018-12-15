@@ -15,6 +15,9 @@ import { SharedModule } from '@app/shared';
         CommonModule,
         SharedModule,
         InvoicesRoutingModule
+    ],
+    exports: [
+        InvoiceEditComponent
     ]
 })
 export class InvoicesModule { }

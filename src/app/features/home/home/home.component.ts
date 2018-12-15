@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { InvoicesService, ProvidersService, RecipientsService } from '@app/core';
-import { Invoice, Provider, Recipient } from '@app/shared';
+import { Invoice, Provider, Recipient, InvoiceEditComponent } from '@app/shared';
 import { Subscription } from 'rxjs';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 
 @Component({
     selector: 'app-home',
@@ -22,6 +23,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         private _invoicesService: InvoicesService,
         private _providersService: ProvidersService,
         private _recepientsService: RecipientsService,
+        public dialog: MatDialog
     ) { }
 
     ngOnInit() {
@@ -71,6 +73,20 @@ export class HomeComponent implements OnInit, OnDestroy {
         });
         return total.toFixed(2);
     }
+
+    openDialog(): void {
+
+        const dialogConfig = new MatDialogConfig();
+
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+
+        const dialogRef = this.dialog.open(InvoiceEditComponent, dialogConfig);
+
+        dialogRef.afterClosed().subscribe(result => {
+          console.log('The dialog was closed');
+        });
+      }
 
     ngOnDestroy() {
         if (this.invoices_subs)

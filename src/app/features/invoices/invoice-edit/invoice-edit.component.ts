@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { InvoicesService, ProvidersService, RecipientsService } from '@app/core';
 import { Recipient, Invoice, Goods, Provider } from '@app/shared';
 import { Tools } from '@app/shared/tools';
+import { MatSelect } from '@angular/material';
 
 @Component({
     selector: 'app-invoice-edit',
@@ -24,6 +25,9 @@ export class InvoiceEditComponent implements OnInit {
     recipients: Recipient[] = [];
     filtered_recipients: Recipient[] = [];
     recipients_subs: Subscription;
+
+    goods_columns: Array<string> = ['number', 'title', 'measure', 'quantity', 'price', 'total'];
+    // goods_columns: Array<string> = ['№', 'Наименование на стоката/услугата', 'Мярка', 'Количество', 'Ед. цена', 'Стойност', ''];
 
     constructor(
         private _router: Router,
@@ -91,8 +95,9 @@ export class InvoiceEditComponent implements OnInit {
         });
     }
 
-    patchOrganization(org_id) {
-        const provider = this.providers.find(x => x._id === org_id);
+    patchOrganization(select: MatSelect) {
+        const new_provider = new Provider(select.value);
+        const provider = this.providers.find(x => x._id === new_provider._id);
         this.invoice_form.controls['provider'].patchValue(provider || new Provider({}));
     }
 
@@ -112,6 +117,10 @@ export class InvoiceEditComponent implements OnInit {
         });
 
         return this._fb.array(rows);
+    }
+
+    displayRecipientFn(recipient?: Recipient): string | undefined {
+        return recipient ? recipient.name : undefined;
     }
 
     addRow() {
@@ -194,21 +203,22 @@ export class InvoiceEditComponent implements OnInit {
             invoice.creation_date = Tools.formatDate(new Date(), 'yyyy-MM-ddTHH:mm:ss.mssZ');
 
         invoice.update_date = Tools.formatDate(new Date(), 'yyyy-MM-ddTHH:mm:ss.mssZ');
+        console.log(invoice);
 
-        this._invoicesService
-            .save(invoice)
-            .subscribe((upd_invoice: Invoice) => {
-                this.invoice = upd_invoice;
-                this.invoice_form.patchValue(this.invoice);
+        // this._invoicesService
+        //     .save(invoice)
+        //     .subscribe((upd_invoice: Invoice) => {
+        //         this.invoice = upd_invoice;
+        //         this.invoice_form.patchValue(this.invoice);
 
-                // this._notificationsService.success(
-                //     'Успех!',
-                //     'Успешно записахте фактурата'
-                // );
+        //         // this._notificationsService.success(
+        //         //     'Успех!',
+        //         //     'Успешно записахте фактурата'
+        //         // );
 
-                if (!invoice._id && upd_invoice._id)
-                    this._router.navigate(['/home', 'invoices', 'edit', upd_invoice._id]);
-            });
+        //         if (!invoice._id && upd_invoice._id)
+        //             this._router.navigate(['/home', 'invoices', 'edit', upd_invoice._id]);
+        //     });
     }
 
 }

@@ -8,23 +8,26 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule, MatListModule, MatIconModule } from '@angular/material';
 import { CoreModule } from '@app/core';
+import { InvoiceEditComponent, SharedModule } from './shared';
 
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        TitlebarComponent,
-    ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         CoreModule,
+        SharedModule,
         NgxElectronModule,
         BrowserAnimationsModule,
         MatSidenavModule,
         MatListModule,
         MatIconModule,
     ],
+    declarations: [
+        AppComponent,
+        TitlebarComponent,
+    ],
+    entryComponents: [InvoiceEditComponent],
     providers: [],
     bootstrap: [AppComponent]
 })

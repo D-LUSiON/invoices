@@ -29,7 +29,7 @@ export class InvoicesListComponent implements OnInit {
     send_dialog_visible: boolean = false;
     send_form: FormGroup;
 
-    displayedColumns: string[] = ['recipient', 'provider', 'type_notes', 'total_sum', 'total_vat', 'total_total'];
+    invoices_columns: string[] = ['recipient', 'provider', 'type_notes', 'total_sum', 'total_vat', 'total_total', 'actions'];
 
     constructor(
         private _fb: FormBuilder,
