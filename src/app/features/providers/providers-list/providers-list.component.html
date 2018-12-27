@@ -1,3 +1,92 @@
-<p>
-  providers-list works!
-</p>
+<mat-card class="mb-15">
+    <mat-card-content>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-10">
+                    <h5>
+                        Фирми - доставчици
+                    </h5>
+                </div>
+                <div class="col-2">
+                    <button mat-flat-button color="primary" (click)="editProvider($event, null)">Нова фирма</button>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<mat-card class="mb-15">
+    <mat-card-content>
+        <div class="container-fluid mb-15">
+            <div class="row">
+                <div class="col-4">
+                    <mat-form-field>
+                        <input matInput (keyup)="filterProviders($event.target.value)" placeholder="Филтър">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <table mat-table [dataSource]="filtered_providers">
+            <ng-container matColumnDef="organization">
+                <th mat-header-cell *matHeaderCellDef>Фирма</th>
+                <td mat-cell *matCellDef="let provider">{{ provider.organization }}</td>
+            </ng-container>
+            <ng-container matColumnDef="acc_person">
+                <th mat-header-cell *matHeaderCellDef>МОЛ</th>
+                <td mat-cell *matCellDef="let provider">{{ provider.acc_person }}</td>
+            </ng-container>
+            <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef>Адрес</th>
+                <td mat-cell *matCellDef="let provider">{{ provider.address }}</td>
+            </ng-container>
+            <ng-container matColumnDef="vat">
+                <th mat-header-cell *matHeaderCellDef>ИН по ЗДДС</th>
+                <td mat-cell *matCellDef="let provider">{{ provider.vat }}</td>
+            </ng-container>
+            <ng-container matColumnDef="vat2">
+                <th mat-header-cell *matHeaderCellDef>ИН/ЕГН</th>
+                <td mat-cell *matCellDef="let provider">{{ provider.vat2 }}</td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Действия</th>
+                <td mat-cell *matCellDef="let provider">
+                    <button mat-icon-button color="primary" (click)="editProvider($event, provider)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary" (click)="onRemove(provider)">
+                        <mat-icon>delete_forever</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="providers_columns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: providers_columns;"></tr>
+        </table>
+    </mat-card-content>
+</mat-card>
+<app-dialog
+    [(visible)]="edit_dialog_visible"
+    heading="Добавяне / редакция на получател"
+>
+    <form [formGroup]="provider_form" novalidate (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <input matInput placeholder="Фирма" formControlName="organization">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="МОЛ" formControlName="acc_person">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Адрес" formControlName="address">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="ИН по ЗДДС" formControlName="vat">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="ИН/ЕГН" formControlName="vat2">
+        </mat-form-field>
+    </form>
+    <ng-template #modal_footer>
+        <button type="button" mat-raised-button color="primary" [disabled]="provider_form.invalid || provider_form.pristine" (click)="onSubmit()">Запази</button>
+        <button type="button" mat-raised-button color="default" (click)="edit_dialog_visible = false">Затвори</button>
+    </ng-template>
+</app-dialog>

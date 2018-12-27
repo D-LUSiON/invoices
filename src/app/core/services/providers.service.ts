@@ -27,9 +27,22 @@ export class ProvidersService {
         });
     }
 
-    remove(id) {
-        return this._electron.remove('provider', id).pipe(map(response => {
-            const provider = new Provider(response);
+    save(provider: Provider) {
+        return this._electron.save('provider', provider).pipe(map(response => {
+            const provider_upd = new Provider(response);
+            if (!provider._id && response._id)
+                this._providers = [provider_upd, ...this._providers];
+            else {
+                const idx = this._providers.findIndex(x => x._id === provider._id);
+                this._providers.splice(idx, 1, provider_upd);
+            }
+            this.providers$.next(this.providers);
+            return response;
+        }));
+    }
+
+    remove(provider) {
+        return this._electron.remove('provider', provider).pipe(map(response => {
             if (provider._id) {
                 const idx = this._providers.findIndex(x => x._id === provider._id);
                 this._providers.splice(idx, 1);
