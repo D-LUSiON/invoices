@@ -43,9 +43,8 @@ export class RecipientsService {
 
     remove(recipient) {
         return this._electron.remove('recipient', recipient).pipe(map(response => {
-            const recipient_del = new Recipient(response);
-            if (recipient_del._id) {
-                const idx = this._recipients.findIndex(x => x._id === recipient_del._id);
+            if (recipient._id) {
+                const idx = this._recipients.findIndex(x => x._id === recipient._id);
                 this._recipients.splice(idx, 1);
             }
             this.recipients$.next(this.recipients);
