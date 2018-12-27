@@ -9,6 +9,12 @@ export class SettingsService {
         private _electron: ElectronClientService,
     ) { }
 
+    get(setting: string) {
+        return this._electron.get('settings', setting).pipe(map(response => {
+            return response;
+        }));
+    }
+
     getEmail() {
         return this._electron.get('settings:email').pipe(map(response => {
             return response;
