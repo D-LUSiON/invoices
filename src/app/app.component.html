@@ -18,27 +18,65 @@
         #sidebar
         mode="over"
     >
-        <mat-list>
-            <a
-                mat-list-item
-                [routerLink]="['/home', 'invoices', 'new']"
-                routerLinkActive="active"
-                (click)="closeMenu()"
-            >
-                <mat-icon matListIcon>home</mat-icon>
-                <h3 matLine>Начало</h3>
-            </a>
-            <mat-divider></mat-divider>
-            <a
-                mat-list-item
-                [routerLink]="['/home', 'invoices', 'new']"
-                routerLinkActive="active"
-                (click)="closeMenu()"
-            >
-                <mat-icon matListIcon>folder</mat-icon>
-                <h3 matLine>Фактури</h3>
-            </a>
-        </mat-list>
+        <div class="drawer-container" fxLayout="column">
+            <header fxFlex="1 1 auto">
+                <mat-list>
+                    <a
+                        mat-list-item
+                        [routerLink]="['/home']"
+                        routerLinkActive="active"
+                        (click)="closeMenu()"
+                    >
+                        <mat-icon matListIcon>home</mat-icon>
+                        <h3 matLine>Начало</h3>
+                    </a>
+                    <mat-divider></mat-divider>
+                </mat-list>
+            </header>
+            <mat-list fxFlex="3" fxFlexFill>
+                <a
+                    mat-list-item
+                    [routerLink]="['/home', 'invoices']"
+                    routerLinkActive="active"
+                    (click)="closeMenu()"
+                >
+                    <mat-icon matListIcon>receipt</mat-icon>
+                    <h3 matLine>Фактури</h3>
+                </a>
+                <a
+                    mat-list-item
+                    [routerLink]="['/home', 'recipients']"
+                    routerLinkActive="active"
+                    (click)="closeMenu()"
+                >
+                    <mat-icon matListIcon>account_circle</mat-icon>
+                    <h3 matLine>Получатели</h3>
+                </a>
+                <a
+                    mat-list-item
+                    [routerLink]="['/home', 'providers']"
+                    routerLinkActive="active"
+                    (click)="closeMenu()"
+                >
+                    <mat-icon matListIcon>account_box</mat-icon>
+                    <h3 matLine>Фирми</h3>
+                </a>
+            </mat-list>
+            <footer fxFlex="1 1 auto">
+                <mat-list>
+                    <mat-divider></mat-divider>
+                    <a
+                        mat-list-item
+                        [routerLink]="['/home', 'settings']"
+                        routerLinkActive="active"
+                        (click)="closeMenu()"
+                    >
+                        <mat-icon matListIcon>settings</mat-icon>
+                        <h3 matLine>Settings</h3>
+                    </a>
+                </mat-list>
+            </footer>
+        </div>
     </mat-drawer>
     <mat-drawer-content>
         <router-outlet></router-outlet>

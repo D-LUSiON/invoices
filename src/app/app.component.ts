@@ -32,8 +32,6 @@ export class AppComponent implements OnInit {
                 const back_url = this.current_url.split('/');
                 back_url.pop();
                 this.back_url = back_url.join('/');
-                console.log(this.current_url, this.back_url);
-
             }
         });
     }
