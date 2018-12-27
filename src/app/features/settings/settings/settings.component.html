@@ -1,0 +1,109 @@
+<mat-card class="mb-15">
+    <mat-card-content>
+        <h5>Настройки</h5>
+    </mat-card-content>
+</mat-card>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+            <mat-card>
+                <mat-card-header>
+                    <div mat-card-avatar>
+                        <mat-icon>attach_money</mat-icon>
+                    </div>
+                    <mat-card-title>
+                        Моите банкови сметки
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <ng-container *ngIf="bank_accounts.length; else no_bank_accounts">
+                        <ul class="list-group">
+                            <li class="list-group-item" *ngFor="let bank_acc of bank_accounts">
+                                <div class="button-group pull-right">
+                                    <button type="button" mat-icon-button color="primary" (click)="onEditBankAcc(bank_acc)">
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                    <button type="button" mat-icon-button color="warn" (click)="onRemoveBankAcc(bank_acc)">
+                                        <mat-icon>delete_forever</mat-icon>
+                                    </button>
+                                </div>
+                                <p>
+                                    <strong>{{ bank_acc.bank }}</strong><br>
+                                    <small>{{ bank_acc.description }}</small>
+                                </p>
+                                <p>{{ bank_acc.bank_acc }}</p>
+                            </li>
+                        </ul>
+                    </ng-container>
+                    <ng-template #no_bank_accounts>
+                        <div class="text-center">Нямате добавени банкови сметки</div>
+                    </ng-template>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button type="button" mat-raised-button color="primary" (click)="openBankAccModal()">Нова сметка</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+        <div class="col-6">
+            <mat-card class="mb-30">
+                <mat-card-header>
+                    <div mat-card-avatar>
+                        <mat-icon>email</mat-icon>
+                    </div>
+                    <mat-card-title>
+                        Е-мейл, от който ще изпращате
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <form [formGroup]="email_form" novalidate (ngSubmit)="onSubmitEmail()">
+                        <mat-form-field>
+                            <input type="email" matInput placeholder="Вашият GMail" formControlName="email">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input type="password" matInput placeholder="Парола" formControlName="password">
+                        </mat-form-field>
+                        <button type="submit" mat-raised-button color="primary" [disabled]="email_form.pristine || email_form.invalid">Запази</button>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+            <mat-card>
+                <mat-card-header>
+                    <div mat-card-avatar>
+                        <mat-icon>contact_mail</mat-icon>
+                    </div>
+                    <mat-card-title>
+                        Е-мейл на Вашия счетоводител
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <form [formGroup]="receiver_form" novalidate (ngSubmit)="onSubmitReceiver()">
+                        <mat-form-field>
+                            <input type="email" matInput placeholder="Е-мейл на счетоводителя" formControlName="email">
+                        </mat-form-field>
+                        <button type="submit" mat-raised-button color="primary" [disabled]="receiver_form.pristine || receiver_form.invalid">Запази</button>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>
+<app-dialog
+    [(visible)]="edit_bank_acc_visible"
+    heading="Добавяне / редакция на получател"
+>
+    <form [formGroup]="bank_acc_form" novalidate (ngSubmit)="onSaveBankAccounts()">
+        <mat-form-field>
+            <input matInput placeholder="Банкова сметка" formControlName="bank_acc">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Банкa" formControlName="bank">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Описание" formControlName="description">
+        </mat-form-field>
+    </form>
+    <ng-template #modal_footer>
+        <button type="button" mat-raised-button color="primary" [disabled]="bank_acc_form.invalid || bank_acc_form.pristine" (click)="onSaveBankAccounts()">Запази</button>
+        <button type="button" mat-raised-button color="default" (click)="edit_bank_acc_visible = false">Затвори</button>
+    </ng-template>
+</app-dialog>
