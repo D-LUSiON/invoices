@@ -4,6 +4,8 @@ import { Invoice } from '@app/shared';
 import { ElectronClientService } from './electron-client.service';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { RecipientsService } from './recipients.service';
+import { ProvidersService } from './providers.service';
 
 @Injectable()
 export class InvoicesService {
@@ -16,6 +18,8 @@ export class InvoicesService {
 
     constructor(
         private _electron: ElectronClientService,
+        private _recipients: RecipientsService,
+        private _providers: ProvidersService,
     ) { }
 
     get invoices() {
@@ -49,9 +53,11 @@ export class InvoicesService {
         }));
     }
 
-    save(data) {
+    save(data: Invoice) {
         return this._electron.save('invoice', data).pipe(map(response => {
             const invoice = new Invoice(response);
+            this._recipients.getAll();
+            this._providers.getAll();
             if (!data && response['_id']) {
                 this._invoices = [...this._invoices, invoice];
                 this.invoices$.next(this.invoices);
