@@ -2,7 +2,9 @@
     <mat-card-content>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-10">Списък на фактури</div>
+                <div class="col-10">
+                    <h5>Списък на фактури</h5>
+                </div>
                 <div class="col-2">
                     <a [routerLink]="['/home', 'invoices', 'new']" mat-flat-button color="primary">Нова фактура</a>
                 </div>
@@ -13,11 +15,18 @@
 
 <mat-card class="mb-15">
     <mat-card-content>
-        <mat-form-field>
-            <input matInput (keyup)="filterInvoices($event.target.value)" placeholder="Filter">
-        </mat-form-field>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-3">
+                    <mat-form-field>
+                        <input matInput (keyup)="filterInvoices($event.target.value)" placeholder="Filter">
+                    </mat-form-field>
+                </div>
+                <div class="col-9"></div>
+            </div>
+        </div>
 
-        <table mat-table [dataSource]="invoices">
+        <table mat-table [dataSource]="filtered_invoices">
             <ng-container matColumnDef="recipient">
                 <th mat-header-cell *matHeaderCellDef>Фактура от</th>
                 <td mat-cell *matCellDef="let invoice">{{ invoice.recipient.name }}</td>
