@@ -36,7 +36,13 @@
                             <!-- <input type="date" class="form-control form-control-sm" placeholder="Дата на издаване"
                                 formControlName="issue_date" [max]="today"> -->
 
-                            <input matInput [matDatepicker]="picker" placeholder="Дата на издаване" formControlName="issue_date">
+                            <input
+                                matInput
+                                [matDatepicker]="picker"
+                                [matDatepickerFilter]="maxDate"
+                                placeholder="Дата на издаване"
+                                formControlName="issue_date"
+                            >
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
@@ -98,7 +104,7 @@
                 </mat-card>
             </div>
         </div>
-        <div class="row mb-15">
+        <!-- <div class="row mb-15">
             <div class="col">
                 <mat-card>
                     <mat-card-header>
@@ -141,11 +147,10 @@
 
                             <tr mat-header-row *matHeaderRowDef="goods_columns; sticky: true"></tr>
                             <tr mat-row *matRowDef="let row; columns: goods_columns;"></tr>
-                            <!-- <tr mat-footer-row *matFooterRowDef="goods_columns; sticky: true"></tr> -->
                         </table>
                     </mat-card-content>
                 </mat-card>
             </div>
-        </div>
+        </div> -->
     </div>
 </form>

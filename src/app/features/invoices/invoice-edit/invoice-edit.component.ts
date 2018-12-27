@@ -6,6 +6,7 @@ import { InvoicesService, ProvidersService, RecipientsService } from '@app/core'
 import { Recipient, Invoice, Goods, Provider } from '@app/shared';
 import { Tools } from '@app/shared/tools';
 import { MatSelect } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-invoice-edit',
@@ -36,6 +37,7 @@ export class InvoiceEditComponent implements OnInit {
         private _invoicesService: InvoicesService,
         private _providersService: ProvidersService,
         private _recipientsService: RecipientsService,
+        private _snackBar: MatSnackBar
     ) {
         this._initForm();
         this.providers_subs = this._providersService.providers$.subscribe(providers => {
@@ -93,6 +95,11 @@ export class InvoiceEditComponent implements OnInit {
                     this.recipients = [new Recipient(this.invoice_form.value['recepient']), ... this.recipients];
             }
         });
+    }
+
+    maxDate(d: Date): boolean {
+        const today = new Date();
+        return d.getTime() < today.getTime();
     }
 
     patchOrganization(select: MatSelect) {
@@ -203,22 +210,20 @@ export class InvoiceEditComponent implements OnInit {
             invoice.creation_date = Tools.formatDate(new Date(), 'yyyy-MM-ddTHH:mm:ss.mssZ');
 
         invoice.update_date = Tools.formatDate(new Date(), 'yyyy-MM-ddTHH:mm:ss.mssZ');
-        console.log(invoice);
 
-        // this._invoicesService
-        //     .save(invoice)
-        //     .subscribe((upd_invoice: Invoice) => {
-        //         this.invoice = upd_invoice;
-        //         this.invoice_form.patchValue(this.invoice);
+        this._invoicesService
+            .save(invoice)
+            .subscribe((upd_invoice: Invoice) => {
+                this.invoice = upd_invoice;
+                this.invoice_form.patchValue(this.invoice);
 
-        //         // this._notificationsService.success(
-        //         //     'Успех!',
-        //         //     'Успешно записахте фактурата'
-        //         // );
+                this._snackBar.open('Успешно записахте фактурата', '', {
+                    duration: 2000
+                });
 
-        //         if (!invoice._id && upd_invoice._id)
-        //             this._router.navigate(['/home', 'invoices', 'edit', upd_invoice._id]);
-        //     });
+                if (!invoice._id && upd_invoice._id)
+                    this._router.navigate(['/home', 'invoices', 'edit', upd_invoice._id]);
+            });
     }
 
 }
