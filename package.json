@@ -1,5 +1,5 @@
 {
-    "name": "electron-angular-quickstart",
+    "name": "invoices",
     "version": "1.0.1",
     "license": "MIT",
     "main": "electron/main.js",
@@ -24,6 +24,7 @@
         "@angular/common": "^7.1.0",
         "@angular/compiler": "^7.1.0",
         "@angular/core": "^7.1.0",
+        "@angular/flex-layout": "^7.0.0-beta.22",
         "@angular/forms": "^7.1.0",
         "@angular/http": "^7.1.0",
         "@angular/material": "^7.1.0",

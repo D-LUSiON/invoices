@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule, MatListModule, MatIconModule } from '@angular/material';
 import { CoreModule } from '@app/core';
 import { InvoiceEditComponent, SharedModule } from './shared';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { InvoiceEditComponent, SharedModule } from './shared';
         MatSidenavModule,
         MatListModule,
         MatIconModule,
+        FlexLayoutModule,
     ],
     declarations: [
         AppComponent,

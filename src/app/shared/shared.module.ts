@@ -15,10 +15,12 @@ import {
     MatAutocompleteModule,
     MatSelectModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatListModule
 } from '@angular/material';
 import { InvoiceEditComponent } from './components';
 import { DialogModule } from './dialog/dialog.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
     declarations: [
@@ -40,6 +42,8 @@ import { DialogModule } from './dialog/dialog.module';
         MatSelectModule,
         MatIconModule,
         MatSnackBarModule,
+        MatListModule,
+        FlexLayoutModule,
 
         DialogModule,
     ],
@@ -59,6 +63,8 @@ import { DialogModule } from './dialog/dialog.module';
         MatSelectModule,
         MatIconModule,
         MatSnackBarModule,
+        MatListModule,
+        FlexLayoutModule,
 
         DialogModule,
 
