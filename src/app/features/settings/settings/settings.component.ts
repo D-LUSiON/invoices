@@ -43,12 +43,11 @@ export class SettingsComponent implements OnInit {
                 this._gmail_data = data;
                 this.email_form.patchValue({
                     '_id': this._gmail_data['_id'],
-                    'email': this._gmail_data['value']['email'],
+                    'email': this._gmail_data['value']['email'].replace(/@\w+\.\w+$/i, ''),
                     'password': this._gmail_data['value']['password'],
                 });
                 this.email_form.markAsPristine();
             }
-
         });
 
         this._settings.getReceiverEmail().subscribe(data => {
@@ -82,7 +81,7 @@ export class SettingsComponent implements OnInit {
     private _initMailForm() {
         this.email_form = this._fb.group({
             '_id': this._fb.control(''),
-            'email': this._fb.control('', [Validators.email]),
+            'email': this._fb.control('', [Validators.required]),
             'password': this._fb.control('', [Validators.required]),
         });
     }
@@ -150,10 +149,16 @@ export class SettingsComponent implements OnInit {
                 '_id': this.email_form.value['_id'],
                 'setting': 'email',
                 'value': {
-                    'email': this.email_form.value['email'],
+                    'email': `${this.email_form.value['email'].replace(/@\w+\.\w+?/i, '')}@gmail.com`,
                     'password': this.email_form.value['password'],
                 }
             }).subscribe(res => {
+                this._gmail_data = res;
+                this.email_form.patchValue({
+                    '_id': this._gmail_data['_id'],
+                    'email': this._gmail_data['value']['email'].replace(/@\w+\.\w+$/i, ''),
+                    'password': this._gmail_data['value']['password'],
+                });
                 this.email_form.markAsPristine();
 
                 this._snackBar.open('Успешно записахте данните за Вашия е-мейл!', '', {
