@@ -110,7 +110,7 @@
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="invoices_columns; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: invoices_columns;"></tr>
+            <tr mat-row *matRowDef="let row; columns: invoices_columns;" [ngClass]="{ gray: row.status === 'archived' && invoices_status === 'all' }"></tr>
         </table>
     </mat-card-content>
 </mat-card>

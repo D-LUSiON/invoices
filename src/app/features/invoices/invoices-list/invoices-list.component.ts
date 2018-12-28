@@ -55,12 +55,10 @@ export class InvoicesListComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.invoices_subs = this._invoicesService.invoices$.subscribe(
-            invoices => {
-                this.invoices = invoices;
-                this.filtered_invoices = [...this.invoices];
-            }
-        );
+        this.invoices_subs = this._invoicesService.invoices$.subscribe((invoices: Invoice[]) => {
+            this.invoices = invoices;
+            this.filterInvoices();
+        });
         this._invoicesService.getAll();
 
         this.send_form = this._fb.group({
@@ -132,11 +130,11 @@ export class InvoicesListComponent implements OnInit {
     }
 
     get selected_invoices() {
-        return this.invoices.filter(x => x.status === 'new' && x.selected);
+        return this.selection.selected;
     }
 
     get selected_count() {
-        return this.selected_invoices.length;
+        return this.selection.selected.length;
     }
 
     openSendDialog() {
@@ -187,9 +185,12 @@ export class InvoicesListComponent implements OnInit {
 
             this._invoicesService.sendInvoices(send_data).subscribe(res => {
                 if (res && res.error) {
-                    this._snackBar.open(`Грешка ${res.error.responseCode} - ${res.error.code}/${res.error.command}`, '', {
-                        duration: 2000
+                    const snackbarError = this._snackBar.open(`Грешка ${res.error.responseCode} - ${res.error.code}/${res.error.command}`, 'затвори', {});
+
+                    snackbarError.onAction().subscribe(() => {
+                        snackbarError.dismiss();
                     });
+
                 } else {
                     this._snackBar.open(`Успешно изпратихте ${this.selected_count} фактури на Вашия счетоводител!`, '', {
                         duration: 2000

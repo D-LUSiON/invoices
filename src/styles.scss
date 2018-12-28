@@ -2,6 +2,10 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @import 'assets/scss/spacing.scss';
 
+$light-gray: #e0e0e0;
+$gray: #888;
+$dark-gray: #333;
+
 body {
     background: lightgray;
 }
@@ -62,7 +66,16 @@ table {
 }
 
 .mat-list-item.active {
-    background-color: #e0e0e0;
+    background-color: $light-gray;
+}
+
+.mat-row.gray {
+    background-color: $light-gray;
+
+    &,
+    & * {
+        color: $gray !important;
+    }
 }
 
 .mat-form-field {
