@@ -20,6 +20,18 @@ const routes: Routes = [
         loadChildren: '../recipients/recipients.module#RecipientsModule'
     },
     {
+        path: 'income',
+        loadChildren: '../income/income.module#IncomeModule'
+    },
+    {
+        path: 'payments',
+        loadChildren: '../payments/payments.module#PaymentsModule'
+    },
+    {
+        path: 'taxes',
+        loadChildren: '../taxes/taxes.module#TaxesModule'
+    },
+    {
         path: 'archive',
         loadChildren: '../archive/archive.module#ArchiveModule'
     },

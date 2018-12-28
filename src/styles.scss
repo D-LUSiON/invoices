@@ -61,7 +61,15 @@ table {
     }
 }
 
+.mat-list-item.active {
+    background-color: #e0e0e0;
+}
+
 .mat-form-field {
     font-size: 14px;
     width: 100%;
+}
+
+textarea.mat-input-element.cdk-textarea-autosize {
+    min-height: 1.4em;
 }

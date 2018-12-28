@@ -5,7 +5,7 @@
                 <div class="col-10">
                     <h5>Списък на фактури</h5>
                 </div>
-                <div class="col-2">
+                <div class="col-2 text-right">
                     <a [routerLink]="['/home', 'invoices', 'new']" mat-flat-button color="primary">Нова фактура</a>
                 </div>
             </div>
@@ -22,11 +22,57 @@
                         <input matInput (keyup)="filterInvoices($event.target.value)" placeholder="Filter">
                     </mat-form-field>
                 </div>
-                <div class="col-9"></div>
+                <div class="col-5 text-center">
+                    <button type="button" mat-flat-button color="primary" (click)="openSendDialog()" *ngIf="selection.selected.length">
+                        <strong><span class="fa fa-check"></span></strong> Изпрати избраните ({{ selection.selected.length }})
+                    </button>
+                </div>
+                <div class="col-4 text-right">
+                    <button type="button" class="mr-5" mat-stroked-button [color]="invoices_status === 'all' ? 'accent' : ''" (click)="filterByStatus('all')">Всички</button>
+                    <button type="button" class="mr-5" mat-stroked-button [color]="invoices_status === 'new' ? 'accent' : ''" (click)="filterByStatus('new')">Нови</button>
+                    <button type="button" mat-stroked-button [color]="invoices_status === 'archived' ? 'accent' : ''" (click)="filterByStatus('archived')">Изпратени</button>
+                </div>
+            </div>
+            <div class="row mb-20">
+                <div class="col-9">
+                    Показани са <strong>{{ filtered_invoices.length }}</strong> фактури на обща стойност <strong>{{ filtered_total }}лв.</strong>, ДДС: <strong>{{ filtered_vat }}лв.</strong>, общо: <strong>{{ filtered_final }}лв.</strong>
+                </div>
+                <div class="col-3">
+                    <!-- <div class="input-group">
+                        <select class="form-control" #sort_control (click)="sortList(sort_control.value)">
+                            <option value="issue_date">Сортиране по: дата на издаване</option>
+                            <option value="creation_date">Сортиране по: дата на въвеждане</option>
+                            <option value="update_date">Сортиране по: дата на последна редакция</option>
+                        </select>
+                        <div class="input-group-append" (click)="sort = (sort === 'asc'? 'desc' : 'asc'); sortList(sort_control.value)" [ngStyle]="{ 'cursor': 'pointer' }">
+                            <span class="input-group-text">
+                                <span class="fa" [class.fa-arrow-up]="sort === 'asc'" [class.fa-arrow-down]="sort === 'desc'"></span>
+                            </span>
+                        </div>
+                    </div> -->
+                </div>
             </div>
         </div>
 
         <table mat-table [dataSource]="filtered_invoices">
+            <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox
+                        (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                    >
+                    </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-checkbox
+                        (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)"
+                    >
+                    </mat-checkbox>
+                </td>
+            </ng-container>
             <ng-container matColumnDef="recipient">
                 <th mat-header-cell *matHeaderCellDef>Фактура от</th>
                 <td mat-cell *matCellDef="let invoice">{{ invoice.recipient.name }}</td>
@@ -68,3 +114,58 @@
         </table>
     </mat-card-content>
 </mat-card>
+<app-dialog
+    [(visible)]="preview_dialog_visible"
+    max_width="1000px"
+    max_height="600px"
+    heading="Преглед на фактура"
+>
+    <h3>Прегледа на фактура все още не е направен!</h3>
+    <h5><em>Очаквай скоро...</em></h5>
+    <ng-template #modal_footer>
+        <button type="button" class="btn btn-default" (click)="preview_dialog_visible = false">Затвори</button>
+    </ng-template>
+</app-dialog>
+<app-dialog
+    [(visible)]="send_dialog_visible"
+    heading="Изпращане на фактури"
+>
+    <!-- <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Фактура от</th>
+                <th scope="col">Описание</th>
+                <th scope="col">Сума</th>
+                <th scope="col">ДДС</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let invoice of selected_invoices">
+                <th scope="row">{{ invoice.recipient.name }}</th>
+                <td>
+                    <strong>{{ invoice.type }}</strong>
+                    <br>
+                    <small>{{ invoice.notes }}</small>
+                </td>
+                <td class="text-center">{{ invoice.total_sum }} лв.</td>
+                <td class="text-center">{{ invoice.total_vat }} лв.</td>
+            </tr>
+        </tbody>
+    </table> -->
+    <div class="row">
+        <div class="col-12">
+            <form [formGroup]="send_form" novalidate (ngSubmit)="sendInvoices()">
+                <mat-form-field>
+                    <input matInput placeholder="Заглавие на е-мейла" formControlName="subject">
+                </mat-form-field>
+                <mat-form-field>
+                    <textarea matInput mat-autosize matAutosizeMaxRows="20" placeholder="Текст" formControlName="mail_text"></textarea>
+                </mat-form-field>
+            </form>
+        </div>
+    </div>
+    <ng-template #modal_footer>
+        <button type="button" class="btn btn-success" [disabled]="send_form.invalid" (click)="sendInvoices()">Изпрати</button>
+        <button type="button" class="btn btn-default" (click)="send_dialog_visible = false">Затвори</button>
+    </ng-template>
+</app-dialog>

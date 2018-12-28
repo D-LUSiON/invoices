@@ -5,7 +5,7 @@ import { Tools } from '../tools';
 
 export class Invoice {
     _id: string;
-    status: string = 'new'; // 'new' | 'archived'
+    status: 'new' | 'archived' = 'new'; // 'new' | 'archived'
     selected?: boolean = false;
     number: string = '';
     issue_date?: string;

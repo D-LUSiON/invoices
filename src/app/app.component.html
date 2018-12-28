@@ -24,7 +24,6 @@
                     <a
                         mat-list-item
                         [routerLink]="['/home']"
-                        routerLinkActive="active"
                         (click)="closeMenu()"
                     >
                         <mat-icon matListIcon>home</mat-icon>
@@ -60,6 +59,33 @@
                 >
                     <mat-icon matListIcon>account_box</mat-icon>
                     <h3 matLine>Фирми</h3>
+                </a>
+                <a
+                    mat-list-item
+                    [routerLink]="['/home', 'income']"
+                    routerLinkActive="active"
+                    (click)="closeMenu()"
+                >
+                    <mat-icon matListIcon>account_balance_wallet</mat-icon>
+                    <h3 matLine>Приходи</h3>
+                </a>
+                <a
+                    mat-list-item
+                    [routerLink]="['/home', 'payments']"
+                    routerLinkActive="active"
+                    (click)="closeMenu()"
+                >
+                    <mat-icon matListIcon>money</mat-icon>
+                    <h3 matLine>Плащания</h3>
+                </a>
+                <a
+                    mat-list-item
+                    [routerLink]="['/home', 'taxes']"
+                    routerLinkActive="active"
+                    (click)="closeMenu()"
+                >
+                    <mat-icon matListIcon>monetization_on</mat-icon>
+                    <h3 matLine>Данъци</h3>
                 </a>
             </mat-list>
             <footer fxFlex="1 1 auto">
