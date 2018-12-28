@@ -287,7 +287,9 @@ ipcMain.on('invoices:send', (event, send_data) => {
         });
         worksheet.addRows(worksheet_data);
 
-        const file_name = app.getPath('userData') + '/' + new Date().getTime() + '.xlsx';
+        const now = new Date();
+
+        const file_name = `${app.getPath('userData')}/${now.toISOString().replace(/[tz]/ig, '').replace(/\.\d+$/, '')}.xlsx`;
 
         workbook.xlsx.writeFile(file_name).then(function () {
             send({
