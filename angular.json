@@ -49,7 +49,7 @@
                         },
                         "production": {
                             "baseHref": "",
-                            "outputPath": "./html_prod",
+                            "outputPath": "./prebuild",
                             "deleteOutputPath": true,
                             "optimization": true,
                             "outputHashing": "all",

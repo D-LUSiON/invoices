@@ -1,11 +1,14 @@
+const env = require('./environment.js');
 //handle setupevents as quickly as possible
-const setupEvents = require('../installer_scripts/setupEvents');
+const root_dir = env.production ? '.' : '..';
+const setupEvents = require(root_dir + '/installer_scripts/setupEvents');
+
+
 if (setupEvents.handleSquirrelEvent()) {
    // squirrel event handled and app will exit in 1000ms, so don't do anything else
    return;
 }
 
-const env = require('./environment.js');
 const {
     app,
     BrowserWindow,
@@ -45,11 +48,11 @@ function createWindow() {
         frame: env.frame,
         show: false,
         backgroundColor: '#ffffff',
-        icon: `file://${path.join(__dirname, '..', env.html_src, 'assets', 'app-icon-l.jpg')}`
+        icon: `file://${path.join(__dirname, root_dir, env.html_src, 'assets', 'app-icon-l.jpg')}`
     });
 
     mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, '..', env.html_src, 'index.html'),
+        pathname: path.join(__dirname, root_dir, env.html_src, 'index.html'),
         protocol: 'file:',
         slashes: true,
         webPreferences: {

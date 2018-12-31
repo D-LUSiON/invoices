@@ -9,15 +9,16 @@
     "scripts": {
         "ng": "ng",
         "prestart": "ng build --configuration=dev --delete-output-path=true",
-        "start": "gulp copy_dev_environment && concurrently \"npm run watch\" \"electron .\"",
+        "start": "gulp copy_dev_environment && concurrently \"npm run watch\" \"electron .\\electron\"",
         "watch": "ng build --watch --configuration=dev",
         "prebuild": "ng build --configuration=production",
-        "build": "gulp copy_prod_environment && electron-packager-interactive && gulp copy_dev_environment",
+        "build:full": "npm run build && npm run installer:win",
+        "build": "gulp package_for_production",
         "build:electron": "gulp setup_electron_before && electron-packager-interactive && gulp setup_electron_after",
+        "installer:win": "node installer_scripts/createinstaller-win.js",
         "test": "ng test",
         "lint": "ng lint",
-        "e2e": "ng e2e",
-        "installer:win": "node installer_scripts/createinstaller-win.js"
+        "e2e": "ng e2e"
     },
     "private": true,
     "dependencies": {
@@ -36,11 +37,7 @@
         "animate.css": "^3.7.0",
         "bootstrap-scss": "^4.1.3",
         "core-js": "2.5.6",
-        "electron-window-state": "4.1.1",
-        "exceljs": "^1.6.3",
         "font-awesome": "^4.7.0",
-        "gmail-send": "^1.2.14",
-        "nedb": "^1.8.0",
         "ngx-electron": "1.0.4",
         "rxjs": "6.3.3",
         "zone.js": "0.8.26"
@@ -58,7 +55,6 @@
         "electron": "^3.0.10",
         "electron-packager": "^13.0.1",
         "electron-packager-interactive": "^0.1.3",
-        "electron-reload": "^1.2.2",
         "electron-winstaller": "^2.7.0",
         "gulp": "3.9.1",
         "gulp-rename": "1.2.2",

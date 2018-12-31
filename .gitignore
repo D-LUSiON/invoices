@@ -7,9 +7,11 @@
 /out-tsc
 /html_dev
 /html_prod
+/prebuild
 
 # dependencies
 /node_modules
+/electron/node_modules
 
 # IDEs and editors
 /.idea
