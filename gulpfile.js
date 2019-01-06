@@ -8,7 +8,7 @@ const path = require('path');
 const packager = require('electron-packager');
 const packageJSON = require('./package.json');
 
-const util = require('util');
+// const util = require('util');
 const inquirer = require('inquirer');
 
 const paths = {
@@ -157,7 +157,8 @@ gulp.task('package_electron', ['copy_installer_scripts'], () => {
                 default: settings.asar
             },
         ]).then(answers => {
-            const options = util._extend(settings, answers);
+            // const options = util._extend(settings, answers);
+            const options = { ...settings, ...answers };
 
             options.arch = answers.arch.join(',')
             if (options.arch === '') {
