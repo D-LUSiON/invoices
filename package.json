@@ -3,7 +3,7 @@
     "productName": "Invoices",
     "description": "Application for personal accounting and calculating VAT",
     "author": "D-LUSiON",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "license": "MIT",
     "main": "electron/main.js",
     "scripts": {
