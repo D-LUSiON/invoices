@@ -20,7 +20,7 @@ gulp.task('copy_dev_environment', () => {
     gulp
         .src(`${paths.electron}/env/environment.dev.js`)
         .pipe(rename_to('environment.js'))
-        .pipe(gulp.dest('${paths.electron}'))
+        .pipe(gulp.dest(paths.electron))
         .on('error', (err) => {
             console.log('Error copying electron "dev" environment: ', err);
         });

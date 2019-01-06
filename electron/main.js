@@ -13,9 +13,6 @@ const {
     app,
     BrowserWindow,
     ipcMain,
-    Menu,
-    MenuItem,
-    Tray,
     globalShortcut
 } = require('electron');
 
