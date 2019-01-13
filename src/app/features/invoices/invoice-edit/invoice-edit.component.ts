@@ -78,7 +78,7 @@ export class InvoiceEditComponent implements OnInit {
                 'organization': this._fb.control(this.invoice.provider.organization, [Validators.required]),
                 'acc_person': this._fb.control(this.invoice.provider.acc_person),
                 'address': this._fb.control(this.invoice.provider.address),
-                'vat': this._fb.control(this.invoice.provider.vat, [Validators.required]),
+                'vat': this._fb.control(this.invoice.provider.vat, [Validators.required, Validators.pattern(/^(?:bg)?\d{9}$/i)]),
                 'vat2': this._fb.control(this.invoice.provider.vat2)
             }),
             'goods': this.buildGoodsRows,
