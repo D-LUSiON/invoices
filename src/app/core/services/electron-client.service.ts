@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, BehaviorSubject } from 'rxjs';
 
 
 @Injectable()
@@ -8,11 +8,27 @@ export class ElectronClientService {
 
     private _backend: Electron.IpcRenderer;
 
+    private _db_connected: boolean = false;
+
+    db_connected: BehaviorSubject<boolean> = new BehaviorSubject(this._db_connected);
+
     constructor(
         private _electron: ElectronService,
         private _ngZone: NgZone,
     ) {
         this._backend = this._electron.ipcRenderer;
+
+        this._backend.on('db_conn', (e, connected) => {
+            this._ngZone.run(() => {
+                this._db_connected = connected;
+                this.db_connected.next(connected);
+            });
+        });
+
+        this._backend.on('log', (event, data) => {
+            console.log(event, data);
+        });
+
     }
 
     getAll(event: string, filter?: any): Observable<any> {

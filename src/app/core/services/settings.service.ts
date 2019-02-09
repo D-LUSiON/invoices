@@ -27,6 +27,12 @@ export class SettingsService {
         }));
     }
 
+    getDatabase() {
+        return this._electron.get('settings:database').pipe(map(response => {
+            return response;
+        }));
+    }
+
     save(data) {
         return this._electron.save('settings', data).pipe(map(response => {
             return response;

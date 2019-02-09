@@ -1,5 +1,6 @@
 export class Provider {
-    _id: string;
+    _id: string; // NeDB ID
+    id: string; // RethinkDB ID
     organization: string = '';
     acc_person: string = '';
     address: string = '';
@@ -8,12 +9,13 @@ export class Provider {
 
     constructor(data?) {
         if (data) {
-            if (data._id) this._id = data._id;
-            if (data.organization) this.organization = data.organization;
-            if (data.acc_person) this.acc_person = data.acc_person;
-            if (data.address) this.address = data.address;
-            if (data.vat) this.vat = data.vat;
-            if (data.vat2) this.vat2 = data.vat2;
+            if (data.hasOwnProperty('_id')) this._id = data._id;
+            if (data.hasOwnProperty('id')) this.id = data.id;
+            if (data.hasOwnProperty('organization')) this.organization = data.organization;
+            if (data.hasOwnProperty('acc_person')) this.acc_person = data.acc_person;
+            if (data.hasOwnProperty('address')) this.address = data.address;
+            if (data.hasOwnProperty('vat')) this.vat = data.vat;
+            if (data.hasOwnProperty('vat2')) this.vat2 = data.vat2;
         }
     }
 

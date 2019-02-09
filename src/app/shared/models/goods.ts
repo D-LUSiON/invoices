@@ -7,11 +7,11 @@ export class Goods {
 
     constructor(data?) {
         if (data) {
-            if (data.title) this.title = data.title;
-            if (data.measure) this.measure = data.measure;
-            if (data.quantity) this.quantity = data.quantity;
-            if (data.price) this.price = data.price;
-            if (data.total) this.total = data.total;
+            if (data.hasOwnProperty('title')) this.title = data.title;
+            if (data.hasOwnProperty('measure')) this.measure = data.measure;
+            if (data.hasOwnProperty('quantity')) this.quantity = data.quantity;
+            if (data.hasOwnProperty('price')) this.price = data.price;
+            if (data.hasOwnProperty('total')) this.total = data.total;
         }
     }
 }

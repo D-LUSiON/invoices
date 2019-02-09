@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SettingsService } from '@app/core';
+import { SettingsService, ElectronClientService } from '@app/core';
 import { BankAccount } from '@app/shared';
 import { MatSnackBar } from '@angular/material';
 
@@ -16,9 +16,11 @@ export class SettingsComponent implements OnInit {
 
     private _gmail_data: { [key: string]: any };
     private _receiver_data: { [key: string]: any };
+    private _db_data: { [key: string]: any };
 
     email_form: FormGroup;
     receiver_form: FormGroup;
+    db_form: FormGroup;
 
     bank_accounts: Array<BankAccount> = [];
     edit_bank_acc_visible: boolean = false;
@@ -30,6 +32,7 @@ export class SettingsComponent implements OnInit {
         // private _notificationsService: NotificationsService,
         private _snackBar: MatSnackBar,
         private _settings: SettingsService,
+        private _electron: ElectronClientService,
     ) {
         this._settings.get('bank_accounts').subscribe(bank_accounts => {
             if (bank_accounts) {
@@ -59,11 +62,25 @@ export class SettingsComponent implements OnInit {
                 });
                 this.receiver_form.markAsPristine();
             }
-
         });
+
+        this._settings.getDatabase().subscribe(data => {
+            if (data) {
+                this._db_data = data;
+                this.db_form.patchValue({
+                    '_id': this._db_data['_id'],
+                    'host': this._db_data['value']['host'],
+                    'user': this._db_data['value']['user'],
+                    'password': this._db_data['value']['password'],
+                });
+                this.db_form.markAsPristine();
+            }
+        });
+
         this._initBankAccForm();
         this._initMailForm();
         this._initReceiverForm();
+        this._initDatabaseForm();
     }
 
     ngOnInit() {
@@ -90,6 +107,15 @@ export class SettingsComponent implements OnInit {
         this.receiver_form = this._fb.group({
             '_id': this._fb.control(''),
             'email': this._fb.control('', [Validators.email]),
+        });
+    }
+
+    private _initDatabaseForm() {
+        this.db_form = this._fb.group({
+            '_id': this._fb.control(''),
+            'host': this._fb.control('', [Validators.pattern(/^(localhost|(?:(?:\d{1,3}){4}\:\d+$))/i)]),
+            'user': this._fb.control(''),
+            'password': this._fb.control(''),
         });
     }
 
@@ -184,4 +210,29 @@ export class SettingsComponent implements OnInit {
             });
     }
 
+    onSubmitDatabase() {
+        this._settings.save(
+            {
+                '_id': this.db_form.value['_id'],
+                'setting': 'database',
+                'value': {
+                    'host': this.db_form.value['host'],
+                    'user': this.db_form.value['user'],
+                    'password': this.db_form.value['password'],
+                }
+            }
+        ).subscribe(res => {
+            this.db_form.markAsPristine();
+
+            this._snackBar.open('Успешно записахте адреса на базата данни!', '', {
+                duration: 2000
+            });
+        });
+    }
+
+    onSyncAll() {
+        this._electron.send('sync_all', {}).subscribe(res => {
+            console.log(res);
+        });
+    }
 }

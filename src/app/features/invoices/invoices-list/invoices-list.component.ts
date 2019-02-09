@@ -137,6 +137,15 @@ export class InvoicesListComponent implements OnInit {
         return this.selection.selected.length;
     }
 
+    onRemove(invoice: Invoice) {
+        if (confirm('Сигурни ли сте, че искате да изтриете тази фактура?'))
+            this._invoicesService.remove(invoice).subscribe((res: Invoice) => {
+                this._snackBar.open(`Успешно изтрихте фактурата!`, '', {
+                    duration: 2000
+                });
+            });
+    }
+
     openSendDialog() {
         forkJoin(
             this._settingsService.getEmail().pipe(take(1)),
@@ -166,9 +175,14 @@ export class InvoicesListComponent implements OnInit {
                     'ноември',
                     'декември'
                 ];
-
+                let current_month = new Date().getMonth() - 1;
+                let current_year = new Date().getFullYear();
+                if (current_month === -1) {
+                    current_month = 12;
+                    current_year -= 1;
+                }
                 this.send_form.patchValue({
-                    'subject': `Фактури за м. ${months[new Date().getMonth()]} ${new Date().getFullYear()}`,
+                    'subject': `Фактури за м. ${months[current_month]} ${current_year}`,
                     'invoices': this.selection.selected
                 });
                 this.send_dialog_visible = true;
