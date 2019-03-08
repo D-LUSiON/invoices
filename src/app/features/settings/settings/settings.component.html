@@ -67,13 +67,13 @@
                     </form>
                 </mat-card-content>
             </mat-card>
-            <mat-card>
+            <mat-card class="mb-30">
                 <mat-card-header>
                     <div mat-card-avatar>
                         <mat-icon>contact_mail</mat-icon>
                     </div>
                     <mat-card-title>
-                        Е-мейл на Вашия счетоводител
+                        Е-мейл на счетоводителя
                     </mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
@@ -82,6 +82,30 @@
                             <input type="email" matInput placeholder="Е-мейл на счетоводителя" formControlName="email">
                         </mat-form-field>
                         <button type="submit" mat-raised-button color="primary" [disabled]="receiver_form.pristine || receiver_form.invalid">Запази</button>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="mb-30">
+                <mat-card-header>
+                    <div mat-card-avatar>
+                        <mat-icon>cloud_circle</mat-icon>
+                    </div>
+                    <mat-card-title>
+                        Отдалечена база данни
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <form [formGroup]="db_form" novalidate (ngSubmit)="onSubmitDatabase()">
+                        <mat-form-field>
+                            <input type="text" matInput placeholder="Адрес на отдалечената база данни напр. 'localhost:28015'" formControlName="host">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input type="text" matInput placeholder="Потребителско име" formControlName="user">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input type="password" matInput placeholder="Парола" formControlName="password">
+                        </mat-form-field>
+                        <button type="submit" mat-raised-button color="primary" [disabled]="db_form.pristine || db_form.invalid">Запази</button>
                     </form>
                 </mat-card-content>
             </mat-card>

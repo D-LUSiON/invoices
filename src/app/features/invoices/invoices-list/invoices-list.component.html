@@ -107,6 +107,9 @@
                     <a [routerLink]="['/home', 'invoices', 'edit', invoice._id]" mat-icon-button color="primary">
                         <mat-icon>edit</mat-icon>
                     </a>
+                    <button mat-flat-button (click)="onRemove()">
+                        <mat-icon>delete_forever</mat-icon>
+                    </button>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="invoices_columns; sticky: true"></tr>

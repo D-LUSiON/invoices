@@ -4,7 +4,8 @@ import { Recipient } from './recipient';
 import { Tools } from '../tools';
 
 export class Invoice {
-    _id: string;
+    _id: string; // NeDB ID
+    id: string; // RethinkDB ID
     status: 'new' | 'archived' = 'new'; // 'new' | 'archived'
     selected?: boolean = false;
     number: string = '';
@@ -21,20 +22,21 @@ export class Invoice {
 
     constructor(data?: Invoice) {
         if (data) {
-            if (data._id) this._id = data._id;
-            if (data.status) this.status = data.status;
+            if (data.hasOwnProperty('_id')) this._id = data._id;
+            if (data.hasOwnProperty('id')) this.id = data.id;
+            if (data.hasOwnProperty('status')) this.status = data.status;
             if (data.hasOwnProperty('selected')) this.selected = data.selected;
-            if (data.number) this.number = data.number;
-            if (data.issue_date) this.issue_date = data.issue_date;
-            if (data.issue_place) this.issue_place = data.issue_place;
-            if (data.recipient) this.recipient = new Recipient(data.recipient);
-            if (data.type) this.type = data.type;
-            if (data.notes) this.notes = data.notes;
-            if (data.provider) this.provider = new Provider(data.provider);
-            if (data.goods) this.goods = data.goods.map(x => new Goods(x));
-            if (data.total_sum) this.total_sum = +data.total_sum;
-            if (data.creation_date) this.creation_date = data.creation_date;
-            if (data.update_date) this.update_date = data.update_date;
+            if (data.hasOwnProperty('number')) this.number = data.number;
+            if (data.hasOwnProperty('issue_date')) this.issue_date = data.issue_date;
+            if (data.hasOwnProperty('issue_place')) this.issue_place = data.issue_place;
+            if (data.hasOwnProperty('recipient')) this.recipient = new Recipient(data.recipient);
+            if (data.hasOwnProperty('type')) this.type = data.type;
+            if (data.hasOwnProperty('notes')) this.notes = data.notes;
+            if (data.hasOwnProperty('provider')) this.provider = new Provider(data.provider);
+            if (data.hasOwnProperty('goods')) this.goods = data.goods.map(x => new Goods(x));
+            if (data.hasOwnProperty('total_sum')) this.total_sum = +data.total_sum;
+            if (data.hasOwnProperty('creation_date')) this.creation_date = data.creation_date;
+            if (data.hasOwnProperty('update_date')) this.update_date = data.update_date;
         }
     }
 

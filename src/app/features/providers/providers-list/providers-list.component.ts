@@ -47,7 +47,7 @@ export class ProvidersListComponent implements OnInit {
             'organization': this._fb.control('', [Validators.required]),
             'acc_person': this._fb.control(''),
             'address': this._fb.control(''),
-            'vat': this._fb.control(''),
+            'vat': this._fb.control('', [Validators.required, Validators.pattern(/^(?:bg)?\d{9}$/i)]),
             'vat2': this._fb.control('')
         });
     }
