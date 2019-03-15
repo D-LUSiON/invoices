@@ -189,7 +189,7 @@ gulp.task('package_electron', ['copy_installer_scripts'], () => {
             console.log('');
             console.log('Compiling...');
 
-            packager(settings).then(appPath => {
+            packager(options).then(appPath => {
                 console.log('-------------------------------------------------');
                 console.log('');
                 console.log(`Application packaged successfully to '${appPath}'! Enjoy!`);
