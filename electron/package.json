@@ -1,20 +1,25 @@
 {
-    "name": "invoices",
+    "name": "invoices-elan",
     "productName": "Invoices",
-    "description": "Application for personal accounting and calculating VAT",
+    "description": "Application for managing VAT invoices",
     "author": "D-LUSiON",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
-    "scripts": {},
+    "keywords": [
+        "invoices",
+        "vat",
+        "tool",
+        "app",
+        "electron",
+        "angular"
+    ],
     "main": "main.js",
     "dependencies": {
-        "electron-window-state": "4.1.1",
-        "exceljs": "^1.6.3",
+        "electron-window-state": "^5.0.3",
+        "exceljs": "^1.7.0",
         "gmail-send": "^1.2.14",
         "nedb": "^1.8.0",
         "rethinkdb": "^2.3.3"
     },
-    "devDependencies": {
-        "electron-reload": "^1.2.2"
-    }
+    "devDependencies": {}
 }

@@ -1,21 +1,18 @@
 const env = require('./environment.js');
-const packageJSON = require('./package.json');
-
 //handle setupevents as quickly as possible
 const root_dir = env.production ? '.' : '..';
-const setupEvents = require(root_dir + '/installer_scripts/setupEvents');
+// const setupEvents = require(root_dir + '/installer_scripts/setupEvents');
 
 
-if (setupEvents.handleSquirrelEvent()) {
-    // squirrel event handled and app will exit in 1000ms, so don't do anything else
-    return;
-}
+// if (setupEvents.handleSquirrelEvent()) {
+//    // squirrel event handled and app will exit in 1000ms, so don't do anything else
+//    return;
+// }
 
 const {
     app,
     BrowserWindow,
     ipcMain,
-    ipcRenderer,
     globalShortcut
 } = require('electron');
 
@@ -28,11 +25,12 @@ const RethinkDB = require('rethinkdb');
 
 const windowStateKeeper = require('electron-window-state');
 
-let mainWindow;
-
 if (!env.production) {
-    app.setName(`${app.getName()}-dev`)
+    app.setName(`${app.getName()} (development mode)`);
+    app.setPath('userData', `${app.getPath('userData')}-dev`);
 }
+
+let mainWindow;
 
 function createWindow() {
     // Initialize window state keeper
@@ -85,13 +83,13 @@ function createWindow() {
 }
 
 // Enable Electron reload if not in production mode
-if (!env.production)
-    require('electron-reload')(
-        path.join(__dirname, '..'), {
-            ignored: /node_modules|[\/\\]\./,
-            electron: path.join(__dirname, '..', 'node_modules', 'electron', 'dist', 'electron.exe')
-        }
-    );
+// if (!env.production)
+//     require('electron-reload')(
+//         path.join(__dirname, '..'), {
+//             ignored: /node_modules|[\/\\]\./,
+//             electron: path.join(__dirname, '..', 'node_modules', 'electron', 'dist', 'electron.exe')
+//         }
+//     );
 
 // Create window on electron intialization
 app.on('ready', createWindow)
@@ -112,11 +110,11 @@ app.on('activate', () => {
 });
 
 
-// /******************************/
-// /******* EXAMPLE EVENTS *******/
-// /******************************/
+/******************************/
+/******* EXAMPLE EVENTS *******/
+/******************************/
 
-// // Event handler for asynchronous incoming messages
+// Event handler for asynchronous incoming messages
 // ipcMain.on('asynchronous-message', (event, arg) => {
 //     console.log(arg);
 
@@ -124,7 +122,7 @@ app.on('activate', () => {
 //     event.sender.send('asynchronous-reply', 'async pong')
 // });
 
-// // Event handler for synchronous incoming messages
+// Event handler for synchronous incoming messages
 // ipcMain.on('synchronous-message', (event, arg) => {
 //     console.log(arg);
 

@@ -23,7 +23,7 @@ function getInstallerConfig() {
         noMsi: false,
         outputDirectory: path.join(outPath, 'windows-installer'),
         exe: `${package.name}.exe`,
-        setupExe: `${package.productName}Installer-v${package.version}.exe`,
+        setupExe: `${package.name.charAt(0).toUpperCase()}${package.name.substr(1)}Installer.exe`,
         setupIcon: path.join(rootPath, 'src', 'assets', 'app-icon.ico')
     };
 
@@ -47,7 +47,7 @@ function getInstallerConfig() {
                             type: 'confirm',
                             name: 'noMsi',
                             message: 'Do you want to create .msi package?',
-                            default: !settings.noMsi
+                            default: settings.noMsi
                         },
                         {
                             type: 'input',
@@ -75,8 +75,6 @@ function getInstallerConfig() {
                         }
                     ]).then(answers => {
                         const options = util._extend(settings, answers);
-
-                        options.noMsi = !options.noMsi;
                         if (!options.exe.match(/\.exe$/i))
                             options.exe = `${options.exe}.exe`;
                         if (!options.setupExe.match(/\.exe$/i))
