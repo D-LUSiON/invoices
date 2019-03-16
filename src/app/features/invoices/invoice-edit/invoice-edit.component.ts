@@ -106,6 +106,7 @@ export class InvoiceEditComponent implements OnInit {
         const new_provider = new Provider(select.value);
         const provider = this.providers.find(x => x._id === new_provider._id);
         this.invoice_form.controls['provider'].patchValue(provider || new Provider({}));
+        this.invoice_form.controls['provider'].markAsDirty();
     }
 
     private get buildGoodsRows() {
