@@ -1,13 +1,5 @@
 const env = require('./environment.js');
-//handle setupevents as quickly as possible
 const root_dir = env.production ? '.' : '..';
-// const setupEvents = require(root_dir + '/installer_scripts/setupEvents');
-
-
-// if (setupEvents.handleSquirrelEvent()) {
-//    // squirrel event handled and app will exit in 1000ms, so don't do anything else
-//    return;
-// }
 
 const {
     app,
@@ -34,6 +26,8 @@ let mainWindow;
 
 function createWindow() {
     // Initialize window state keeper
+
+    // FIXME: windowStateKeeper does not remember window position
     let winState = windowStateKeeper({
         defaultWidth: env.default_width,
         defaultHeight: env.default_height
@@ -65,6 +59,7 @@ function createWindow() {
 
     mainWindow.once('ready-to-show', () => {
         mainWindow.show();
+        winState.manage(mainWindow);
     });
 
     // open the DevTools if not in production mode
