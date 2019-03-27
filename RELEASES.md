@@ -14,6 +14,7 @@ Bugfixes:
 - [x] add: RELEASES.md file with planned functioniality
 - [ ] fix: Correct app resources - icons and so on...
 - [ ] add: Invoice edit - add field for invoice price with VAT
+- [ ] add: Save last state option
 
 ## v2.2.0
 *(current)*

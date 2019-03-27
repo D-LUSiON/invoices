@@ -10,7 +10,10 @@ export class SettingsService {
     ) { }
 
     get(setting: string) {
+        console.log('service:', setting);
+
         return this._electron.get('settings', setting).pipe(map(response => {
+            console.log(`service response ${setting}`, response);
             return response;
         }));
     }

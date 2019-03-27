@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SettingsService, ElectronClientService } from '@app/core';
 import { BankAccount } from '@app/shared';
 import { MatSnackBar } from '@angular/material';
+import { state } from '@angular/animations';
 
 @Component({
     selector: 'app-settings',
@@ -17,7 +18,9 @@ export class SettingsComponent implements OnInit {
     private _gmail_data: { [key: string]: any };
     private _receiver_data: { [key: string]: any };
     private _db_data: { [key: string]: any };
+    private _save_state: { [key: string]: any };
 
+    state_form: FormGroup;
     email_form: FormGroup;
     receiver_form: FormGroup;
     db_form: FormGroup;
@@ -34,50 +37,8 @@ export class SettingsComponent implements OnInit {
         private _settings: SettingsService,
         private _electron: ElectronClientService,
     ) {
-        this._settings.get('bank_accounts').subscribe(bank_accounts => {
-            if (bank_accounts) {
-                this.bank_acc_settings_id = bank_accounts['_id'];
-                this.bank_accounts = bank_accounts['value'].map((x, idx) => new BankAccount({ ...x, _id: idx + 1 }));
-            }
-        });
-
-        this._settings.getEmail().subscribe(data => {
-            if (data) {
-                this._gmail_data = data;
-                this.email_form.patchValue({
-                    '_id': this._gmail_data['_id'],
-                    'email': this._gmail_data['value']['email'].replace(/@\w+\.\w+$/i, ''),
-                    'password': this._gmail_data['value']['password'],
-                });
-                this.email_form.markAsPristine();
-            }
-        });
-
-        this._settings.getReceiverEmail().subscribe(data => {
-            if (data) {
-                this._receiver_data = data;
-                this.receiver_form.patchValue({
-                    '_id': this._receiver_data['_id'],
-                    'email': this._receiver_data['value']['email'],
-                });
-                this.receiver_form.markAsPristine();
-            }
-        });
-
-        this._settings.getDatabase().subscribe(data => {
-            if (data) {
-                this._db_data = data;
-                this.db_form.patchValue({
-                    '_id': this._db_data['_id'],
-                    'host': this._db_data['value']['host'],
-                    'user': this._db_data['value']['user'],
-                    'password': this._db_data['value']['password'],
-                });
-                this.db_form.markAsPristine();
-            }
-        });
-
         this._initBankAccForm();
+        this._initSaveStateForm();
         this._initMailForm();
         this._initReceiverForm();
         this._initDatabaseForm();
@@ -93,6 +54,55 @@ export class SettingsComponent implements OnInit {
             'bank': this._fb.control('', [Validators.required]),
             'description': this._fb.control(''),
         });
+
+        this._settings.get('bank_accounts').subscribe(bank_accounts => {
+            if (bank_accounts) {
+                this.bank_acc_settings_id = bank_accounts['_id'];
+                this.bank_accounts = bank_accounts['value'].map((x, idx) => new BankAccount({ ...x, _id: idx + 1 }));
+            }
+        });
+    }
+
+    private _initSaveStateForm() {
+        this.state_form = this._fb.group({
+            'state': this._fb.control(false)
+        });
+        console.log('requesting "save state"');
+        this._settings.get('save_state').subscribe(data => {
+            console.log(data);
+
+            if (data) {
+                this._save_state = data;
+                this.state_form.patchValue({
+                    '_id': this._save_state['_id'],
+                    'host': this._save_state['value']['host'],
+                    'user': this._save_state['value']['user'],
+                    'password': this._save_state['value']['password'],
+                });
+                this.state_form.markAsPristine();
+            }
+        });
+    }
+
+    changeSaveState() {
+        setTimeout(() => {
+            this._settings.save(
+                {
+                    '_id': this.state_form.value['_id'],
+                    'setting': 'save_state',
+                    'value': {
+                        'state': this.state_form.value['state'],
+                    }
+                }
+            ).subscribe(res => {
+
+                this.state_form.markAsPristine();
+
+                this._snackBar.open('Успешно записахте адреса на базата данни!', '', {
+                    duration: 2000
+                });
+            });
+        }, 50);
     }
 
     private _initMailForm() {
@@ -101,12 +111,35 @@ export class SettingsComponent implements OnInit {
             'email': this._fb.control('', [Validators.required]),
             'password': this._fb.control('', [Validators.required]),
         });
+
+        this._settings.getEmail().subscribe(data => {
+            if (data) {
+                this._gmail_data = data;
+                this.email_form.patchValue({
+                    '_id': this._gmail_data['_id'],
+                    'email': this._gmail_data['value']['email'].replace(/@\w+\.\w+$/i, ''),
+                    'password': this._gmail_data['value']['password'],
+                });
+                this.email_form.markAsPristine();
+            }
+        });
     }
 
     private _initReceiverForm() {
         this.receiver_form = this._fb.group({
             '_id': this._fb.control(''),
             'email': this._fb.control('', [Validators.email]),
+        });
+
+        this._settings.getReceiverEmail().subscribe(data => {
+            if (data) {
+                this._receiver_data = data;
+                this.receiver_form.patchValue({
+                    '_id': this._receiver_data['_id'],
+                    'email': this._receiver_data['value']['email'],
+                });
+                this.receiver_form.markAsPristine();
+            }
         });
     }
 
@@ -116,6 +149,19 @@ export class SettingsComponent implements OnInit {
             'host': this._fb.control('', [Validators.pattern(/^(localhost|(?:(?:\d{1,3}){4}\:\d+$))/i)]),
             'user': this._fb.control(''),
             'password': this._fb.control(''),
+        });
+
+        this._settings.getDatabase().subscribe(data => {
+            if (data) {
+                this._db_data = data;
+                this.db_form.patchValue({
+                    '_id': this._db_data['_id'],
+                    'host': this._db_data['value']['host'],
+                    'user': this._db_data['value']['user'],
+                    'password': this._db_data['value']['password'],
+                });
+                this.db_form.markAsPristine();
+            }
         });
     }
 

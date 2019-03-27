@@ -757,11 +757,15 @@ ipcMain.on('recipient:remove', (event, recipient) => {
 /** Settings related stuff starts here **/
 /****************************************/
 ipcMain.on('settings:get', (event, setting) => {
+    console.log('settings:get', setting);
+
     settings_db.find({
         setting: setting
     }, (err, settings) => {
         if (err)
             console.log(err);
+
+        console.log('settings:get:response', settings);
         event.sender.send('settings:get:response', settings);
     });
 });
