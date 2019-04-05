@@ -10,10 +10,13 @@
 *(WIP)*
 Bugfixes:
 
-- [x] fix: When updating invoice, choosing presaved provider does not trigger `form.dirty`
 - [x] add: RELEASES.md file with planned functioniality
+- [x] add: Invoice edit - add field for invoice price with VAT
+- [x] fix: When updating invoice, choosing presaved provider does not trigger `form.dirty`
+- [ ] fix: Sending via email was not working
 - [ ] fix: Correct app resources - icons and so on...
-- [ ] add: Invoice edit - add field for invoice price with VAT
+
+Optional:
 - [ ] add: Save last state option
 
 ## v2.2.0
