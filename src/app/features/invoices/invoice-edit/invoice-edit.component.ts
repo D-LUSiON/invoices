@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { InvoicesService, ProvidersService, RecipientsService } from '@app/core';
 import { Recipient, Invoice, Goods, Provider } from '@app/shared';
 import { Tools } from '@app/shared/tools';
-import { MatSelect } from '@angular/material';
+import { MatSelect, MatInput } from '@angular/material';
 import { MatSnackBar } from '@angular/material';
 
 @Component({
@@ -29,6 +29,10 @@ export class InvoiceEditComponent implements OnInit {
 
     goods_columns: Array<string> = ['number', 'title', 'measure', 'quantity', 'price', 'total'];
     // goods_columns: Array<string> = ['№', 'Наименование на стоката/услугата', 'Мярка', 'Количество', 'Ед. цена', 'Стойност', ''];
+
+    @ViewChild('input_with_vat') inputWithVat: ElementRef;
+
+    total_sum_vat: number = 0;
 
     constructor(
         private _router: Router,
@@ -129,6 +133,21 @@ export class InvoiceEditComponent implements OnInit {
 
     displayRecipientFn(recipient?: Recipient): string | undefined {
         return recipient ? recipient.name : undefined;
+    }
+
+    calcSumVat(with_vat: boolean) {
+        console.log(with_vat, this.total_sum_vat);
+        setTimeout(() => {
+            if (with_vat) {
+                this.invoice_form.patchValue({
+                    'total_sum': Math.round(+this.inputWithVat.nativeElement.value / 1.2 * 100) / 100
+                });
+                console.log(+this.inputWithVat.nativeElement.value / 1.2, this.invoice_form.value['total_sum'], this.inputWithVat.nativeElement.value);
+            } else {
+                this.inputWithVat.nativeElement.value = (Math.round(this.invoice_form.value['total_sum'] * 1.2 * 100) / 100).toString();
+                console.log(this.invoice_form.value['total_sum'] * 1.2, this.invoice_form.value['total_sum'], this.inputWithVat.nativeElement.value);
+            }
+        }, 150);
     }
 
     addRow() {

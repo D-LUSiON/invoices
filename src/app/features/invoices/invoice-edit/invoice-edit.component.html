@@ -3,16 +3,11 @@
         <mat-card-content>
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-11">
                         <h3 *ngIf="invoice_form.value['_id']; else new_invoice_header">Редакция на фактура</h3>
                         <ng-template #new_invoice_header>
                             <h3>Нова фактура</h3>
                         </ng-template>
-                    </div>
-                    <div class="col-3">
-                        <mat-form-field>
-                            <input matInput placeholder="Стойност без ДДС" formControlName="total_sum">
-                        </mat-form-field>
                     </div>
                     <div class="col-1">
                         <button type="submit" mat-raised-button color="primary" [disabled]="invoice_form.pristine || invoice_form.invalid">Запиши</button>
@@ -100,6 +95,30 @@
                         <mat-form-field>
                             <input matInput placeholder="ИН/ЕГН" formControlName="vat2">
                         </mat-form-field>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+        <div class="row mb-15">
+            <div class="col"></div>
+            <div class="col">
+                <mat-card>
+                    <mat-card-header>
+                        <h5>Стойност на фактурата</h5>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col-6">
+                                <mat-form-field>
+                                    <input matInput placeholder="Стойност без ДДС" formControlName="total_sum" (input)="calcSumVat(false)">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6">
+                                <mat-form-field>
+                                    <input #input_with_vat matInput placeholder="Стойност с ДДС" (input)="calcSumVat(true)" [(value)]="total_sum_vat">
+                                </mat-form-field>
+                            </div>
+                        </div>
                     </mat-card-content>
                 </mat-card>
             </div>
