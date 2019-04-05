@@ -959,17 +959,24 @@ ipcMain.on('invoices:send', (event, send_data) => {
 
         const dest_path = `${app.getPath('documents')}/${app.getName().replace(/[\\\/\:\*\?\"\<\>\|]/g, '-').trim()}`;
         const file_name = `${now.toISOString().replace(/[tz]/ig, ' ').trim().replace(/[\\\/\:\*\?\"\<\>\|]/g, '-').replace(/\.\d+$/, '')}.xlsx`;
-        const full_file_path = path.join(dest_path, file_name);
+        const full_file_path = path.join(dest_path, file_name).replace(/\s/g, '\ ');
+
+        if (!fs.existsSync(dest_path))
+            fs.mkdirSync(dest_path);
 
         workbook.xlsx.writeFile(full_file_path).then(() => {
             // Send via gmail to accountant
             GmailAPI({
                 subject: send_data.subject,
                 html: (send_data.mail_text || ''),
-                files: [file_name]
+                files: [{
+                    path: full_file_path,
+                    filename: file_name
+                }]
             }, (err, res) => {
 
                 if (err) {
+                    console.error(err);
                     event.sender.send('invoices:send:response', {
                         error: err,
                         response: res,
@@ -998,6 +1005,11 @@ ipcMain.on('invoices:send', (event, send_data) => {
             });
         }).catch(err => {
             console.log('Error writing .xlsx file!', err);
+            event.sender.send('invoices:send:response', {
+                error: err,
+                response: 'Error writing .xlsx file!',
+                rows_updated: []
+            });
         });
     });
 });

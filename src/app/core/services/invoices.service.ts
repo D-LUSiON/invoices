@@ -103,6 +103,8 @@ export class InvoicesService {
 
     sendInvoices(send_data) {
         return this._electron.send('invoices:send', send_data).pipe(map(response => {
+            if (response.error)
+                console.error(response);
             this.getAll();
             return response;
         }));
