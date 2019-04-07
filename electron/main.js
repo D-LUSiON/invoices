@@ -899,41 +899,41 @@ ipcMain.on('invoices:send', (event, send_data) => {
                 key: 'total_total',
                 width: 10
             },
-            {
-                header: 'Тип',
-                key: 'type',
-                width: 10
-            },
-            {
-                header: 'Бележки',
-                key: 'notes',
-                width: 20
-            },
-            {
-                header: 'Доставчик',
-                key: 'provider',
-                width: 30
-            },
-            {
-                header: 'Доставчик - МОЛ',
-                key: 'acc_person',
-                width: 20
-            },
-            {
-                header: 'Доставчик - Адрес',
-                key: 'address',
-                width: 30
-            },
-            {
-                header: 'Доставчик - ДДС номер',
-                key: 'vat',
-                width: 30
-            },
-            {
-                header: 'Доставчик - ИН/ЕГН',
-                key: 'vat2',
-                width: 30
-            },
+            // {
+            //     header: 'Тип',
+            //     key: 'type',
+            //     width: 10
+            // },
+            // {
+            //     header: 'Бележки',
+            //     key: 'notes',
+            //     width: 20
+            // },
+            // {
+            //     header: 'Доставчик',
+            //     key: 'provider',
+            //     width: 30
+            // },
+            // {
+            //     header: 'Доставчик - МОЛ',
+            //     key: 'acc_person',
+            //     width: 20
+            // },
+            // {
+            //     header: 'Доставчик - Адрес',
+            //     key: 'address',
+            //     width: 30
+            // },
+            // {
+            //     header: 'Доставчик - ДДС номер',
+            //     key: 'vat',
+            //     width: 30
+            // },
+            // {
+            //     header: 'Доставчик - ИН/ЕГН',
+            //     key: 'vat2',
+            //     width: 30
+            // },
         ];
 
         const worksheet_data = send_data.invoices.map(invoice => {
