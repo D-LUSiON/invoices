@@ -63,6 +63,12 @@ table {
         width: 10%;
         text-align: center !important;
     }
+
+    thead {
+        tr.mat-header-row th {
+            top: -10px !important;
+        }
+    }
 }
 
 .mat-list-item.active {
