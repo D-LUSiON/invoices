@@ -4,6 +4,7 @@ import { SettingsService, ElectronClientService } from '@app/core';
 import { BankAccount } from '@app/shared';
 import { MatSnackBar } from '@angular/material';
 import { state } from '@angular/animations';
+import { environment } from '@env/environment';
 
 @Component({
     selector: 'app-settings',
@@ -11,6 +12,7 @@ import { state } from '@angular/animations';
     styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
+    env = environment;
 
     // private _gmail_pass = 'shjxkaaowcvjmzmt';
     // https://www.npmjs.com/package/gmail-send

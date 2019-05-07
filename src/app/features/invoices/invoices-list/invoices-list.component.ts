@@ -95,14 +95,14 @@ export class InvoicesListComponent implements OnInit {
 
     isAllSelected() {
         const numSelected = this.selection.selected.length;
-        const numRows = this.invoices.length;
+        const numRows = this.filtered_invoices.length;
         return numSelected === numRows;
     }
 
     masterToggle() {
         this.isAllSelected() ?
             this.selection.clear() :
-            this.invoices.forEach(row => this.selection.select(row));
+            this.filtered_invoices.forEach(row => this.selection.select(row));
     }
 
     get filtered_total() {

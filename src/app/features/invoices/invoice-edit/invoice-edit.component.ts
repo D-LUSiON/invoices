@@ -32,7 +32,7 @@ export class InvoiceEditComponent implements OnInit {
 
     @ViewChild('input_with_vat') inputWithVat: ElementRef;
 
-    total_sum_vat: number = 0;
+    total_sum_vat: number | string = '';
 
     constructor(
         private _router: Router,
@@ -50,8 +50,11 @@ export class InvoiceEditComponent implements OnInit {
         });
         this._providersService.getAll();
 
-        this.recipients_subs = this._recipientsService.recipients$.subscribe(recipients => {
-            this.recipients = recipients;
+        this.recipients_subs = this._recipientsService.recipients$.subscribe((recipients: Recipient[]) => {
+            this.recipients = recipients.map((recipient: Recipient) => {
+                recipient.invoices = [];
+                return recipient;
+            });
             this.filtered_recipients = [...this.recipients];
         });
         this._recipientsService.getAll();

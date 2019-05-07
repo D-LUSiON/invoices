@@ -5,6 +5,7 @@
 - [ ] add: Received payments
 - [ ] add: Payed VAT (taxes)
 - [ ] add: Payed VAT to recipients
+- [ ] update: Choose fields of generated .xls
 
 ## v2.2.1
 *(WIP)*
@@ -16,7 +17,11 @@ Bugfixes:
 - [x] fix: Sending via email was not working
 - [x] fix: Correct app resources - icons and so on...
 - [x] fix: Sticky headers in tables has gap over them
+- [x] fix: Invoices list - Checkbox "Select/Deselect all" ignores filters
+- [ ] fix: After sending invoices button "Send selected" remains active
 - [x] update: Generated .xls must have only basic invoice info
+- [x] fix: DB overflow when creating invoices - invoices are stored with recipient's invoices
+- [x] fix: Replace `electron/environment.js` with dev version after building (ElAn bug)
 
 Optional:
 - [ ] add: Save last state option

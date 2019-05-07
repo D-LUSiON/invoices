@@ -438,6 +438,7 @@ function _saveInvoiceRecipient(invoice, callback) {
         const new_recipient = JSON.parse(JSON.stringify(invoice.recipient));
         delete new_recipient._id;
         delete new_recipient.id;
+        new_recipient.invoices = [];
 
         if (invoice.recipient._id) {
             recipients_db.update({
@@ -884,21 +885,6 @@ ipcMain.on('invoices:send', (event, send_data) => {
                 key: 'issue_date',
                 width: 15
             },
-            {
-                header: 'Данъчна основа',
-                key: 'total_sum',
-                width: 20
-            },
-            {
-                header: 'ДДС 20%',
-                key: 'total_vat',
-                width: 10
-            },
-            {
-                header: 'Общо',
-                key: 'total_total',
-                width: 10
-            },
             // {
             //     header: 'Тип',
             //     key: 'type',
@@ -924,16 +910,31 @@ ipcMain.on('invoices:send', (event, send_data) => {
             //     key: 'address',
             //     width: 30
             // },
-            // {
-            //     header: 'Доставчик - ДДС номер',
-            //     key: 'vat',
-            //     width: 30
-            // },
+            {
+                header: 'Доставчик - ЕИК',
+                key: 'vat',
+                width: 30
+            },
             // {
             //     header: 'Доставчик - ИН/ЕГН',
             //     key: 'vat2',
             //     width: 30
             // },
+            {
+                header: 'Данъчна основа',
+                key: 'total_sum',
+                width: 20
+            },
+            {
+                header: 'ДДС 20%',
+                key: 'total_vat',
+                width: 10
+            },
+            {
+                header: 'Общо',
+                key: 'total_total',
+                width: 10
+            },
         ];
 
         const worksheet_data = send_data.invoices.map(invoice => {

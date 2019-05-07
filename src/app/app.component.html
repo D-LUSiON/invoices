@@ -7,7 +7,7 @@
             <img src="assets/arrow-go-back.svg" alt="">
         </div>
     </ng-template>
-    <ng-template #titlebar_title>Фактури v2.0</ng-template>
+    <ng-template #titlebar_title>Фактури v2.0 <small *ngIf="!env.production">(development mode)</small></ng-template>
 </app-titlebar>
 
 <mat-drawer-container

@@ -45,7 +45,7 @@
             </mat-card>
         </div>
         <div class="col-6">
-            <mat-card class="mb-30">
+            <mat-card class="mb-30" *ngIf="!env.production">
                 <mat-card-header>
                     <div mat-card-avatar>
                         <mat-icon>save</mat-icon>

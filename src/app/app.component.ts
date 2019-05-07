@@ -3,6 +3,7 @@ import { ElectronService } from 'ngx-electron';
 import { MatDrawer } from '@angular/material';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
+import { environment } from '@env/environment';
 
 @Component({
     selector: 'app-root',
@@ -10,6 +11,7 @@ import { Location } from '@angular/common';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+    env = environment;
 
     back_url: string = '';
     current_url: string = '';
