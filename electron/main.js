@@ -48,6 +48,8 @@ function createWindow() {
         icon: `file://${path.join(__dirname, root_dir, env.html_src, 'assets', 'app-icon-l.jpg')}`
     });
 
+    winState.manage(mainWindow);
+
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, root_dir, env.html_src, 'index.html'),
         protocol: 'file:',
@@ -59,7 +61,6 @@ function createWindow() {
 
     mainWindow.once('ready-to-show', () => {
         mainWindow.show();
-        winState.manage(mainWindow);
     });
 
     // open the DevTools if not in production mode
