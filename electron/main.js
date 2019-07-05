@@ -10,7 +10,7 @@ const {
 
 const path = require('path');
 const url = require('url');
-const fs = require('fs');
+const fs = require('fs-extra');
 
 const Datastore = require('nedb');
 const RethinkDB = require('rethinkdb');
@@ -45,19 +45,24 @@ function createWindow() {
         frame: env.frame,
         show: false,
         backgroundColor: '#ffffff',
-        icon: `file://${path.join(__dirname, root_dir, env.html_src, 'assets', 'app-icon-l.jpg')}`
+        icon: `file://${path.join(__dirname, root_dir, env.html_src, 'assets', 'app-icon-l.jpg')}`,
+        webPreferences: {
+            nodeIntegration: true
+        }
     });
 
     winState.manage(mainWindow);
 
-    mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, root_dir, env.html_src, 'index.html'),
-        protocol: 'file:',
-        slashes: true,
-        webPreferences: {
-            webSecurity: false
-        }
-    }));
+    mainWindow.loadFile(path.join(__dirname, root_dir, env.html_src, 'index.html'));
+
+    // mainWindow.loadURL(url.format({
+    //     pathname: path.join(__dirname, root_dir, env.html_src, 'index.html'),
+    //     protocol: 'file:',
+    //     slashes: true,
+    //     webPreferences: {
+    //         webSecurity: false
+    //     }
+    // }));
 
     mainWindow.once('ready-to-show', () => {
         mainWindow.show();
@@ -995,12 +1000,26 @@ ipcMain.on('invoices:send', (event, send_data) => {
                             }
                         }, {}, (err, rows_updated) => {
                             i++;
-                            if (i === send_data.invoices.length)
-                                event.sender.send('invoices:send:response', {
-                                    error: err,
-                                    response: res,
-                                    rows_updated: rows_updated
-                                });
+                            if (i === send_data.invoices.length) {
+                                createBackup()
+                                    .then(result => {
+                                        event.sender.send('invoices:send:response', {
+                                            error: err,
+                                            response: res,
+                                            rows_updated: rows_updated
+                                        });
+                                    })
+                                    .catch(error => {
+                                        event.sender.send('invoices:send:response', {
+                                            error: {
+                                                err,
+                                                error
+                                            },
+                                            response: res,
+                                            rows_updated: rows_updated
+                                        });
+                                    });
+                            }
                         });
                     });
                 }
@@ -1015,3 +1034,75 @@ ipcMain.on('invoices:send', (event, send_data) => {
         });
     });
 });
+
+ipcMain.on('system:create_backup', (event) => {
+    createBackup()
+        .then(result => {
+            event.sender.send('system:create_backup:response', result);
+        })
+        .catch(error => {
+            event.sender.send('system:create_backup:response', error);
+        });
+});
+
+function createBackup() {
+    return new Promise((resolve, reject) => {
+        const archiver = require('archiver');
+        const src = `${app.getPath('userData')}`;
+
+        let now = new Date();
+        now = new Date(now.getTime() + (Math.abs(now.getTimezoneOffset() * 1000 * 60)));
+
+        const dest = `${app.getPath('documents')}/${app.getName().replace(/[\\\/\:\*\?\"\<\>\|]/g, '-').trim()}`;
+        const file_name = `Invoices backup (${now.toISOString().replace(/[tz]/ig, ' ').trim().replace(/[\\\/\:\*\?\"\<\>\|]/g, '-').replace(/\.\d+$/, '')}).zip`;
+        const full_file_path = path.join(dest, file_name).replace(/\s/g, '\ ');
+
+        const archive = archiver('zip', {
+            zlib: {
+                level: 9
+            }
+        });
+
+        const backup_zip = fs.createWriteStream(full_file_path);
+
+        backup_zip.on('close', () => {
+            resolve('system:create_backup:response', {
+                from: src,
+                to: dest,
+                bytes: archive.pointer()
+            });
+        });
+
+        backup_zip.on('end', function () {
+            console.log('Data has been drained');
+        });
+
+        archive.pipe(backup_zip);
+
+        archive.on('error', error => {
+            reject('system:create_backup:response', {
+                error
+            });
+        });
+
+        fs.readdir(src, (err, files) => {
+            if (files && files.length) {
+                files
+                    .filter(file => file.match(/\.(?:db|json)$/))
+                    .forEach(file => {
+                        console.log(`Adding ${file}...`);
+                        archive.file(`${src}/${file}`, {
+                            name: file
+                        });
+                    });
+                archive.finalize();
+            } else {
+                backup_zip.close();
+                fs.unlink(full_file_path);
+                reject('system:create_backup:response', {
+                    error: 'No files to backup!',
+                });
+            }
+        });
+    });
+}

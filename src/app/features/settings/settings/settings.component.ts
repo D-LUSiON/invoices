@@ -283,4 +283,18 @@ export class SettingsComponent implements OnInit {
             console.log(res);
         });
     }
+
+    onCreateBackup() {
+        this._electron.send('system:create_backup', {}).subscribe(res => {
+            if (!res.hasOwnProperty('error')) {
+                this._snackBar.open('Успешно направихте backup на базата данни!', '', {
+                    duration: 2000
+                });
+            } else {
+                this._snackBar.open('Грешка при създаването на backup!', '', {
+                    duration: 10000
+                });
+            }
+        });
+    }
 }

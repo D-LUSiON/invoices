@@ -47,7 +47,6 @@ export class ElectronClientService {
         return Observable.create((observer: Observer<any>) => {
             this._backend.once(`${event}:get:response`, (e, response) => {
                 this._ngZone.run(() => {
-                    console.log(response);
                     observer.next(response ? response[0] : null);
                     observer.complete();
                 });
