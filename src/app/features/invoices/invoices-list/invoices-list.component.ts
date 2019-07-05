@@ -34,12 +34,14 @@ export class InvoicesListComponent implements OnInit {
 
     send_dialog_visible: boolean = false;
     send_form: FormGroup;
+    period_form: FormGroup;
 
     invoices_columns: string[] = [
         'select',
         'recipient',
         'provider',
         'type_notes',
+        'issue_date',
         'total_sum',
         'total_vat',
         'total_total',
@@ -52,7 +54,22 @@ export class InvoicesListComponent implements OnInit {
         private _invoicesService: InvoicesService,
         private _settingsService: SettingsService,
         private _snackBar: MatSnackBar
-    ) { }
+    ) {
+        this.send_form = this._fb.group({
+            'subject': this._fb.control('', [Validators.required]),
+            'mail_text': this._fb.control(''),
+            'invoices': this._fb.control([])
+        });
+
+        this.period_form = this._fb.group({
+            'from': this._fb.control(''),
+            'to': this._fb.control(''),
+        });
+
+        this.period_form.valueChanges.subscribe(() => {
+            this.filterInvoices();
+        });
+    }
 
     ngOnInit() {
         this.invoices_subs = this._invoicesService.invoices$.subscribe((invoices: Invoice[]) => {
@@ -60,17 +77,20 @@ export class InvoicesListComponent implements OnInit {
             this.filterInvoices();
         });
         this._invoicesService.getAll();
-
-        this.send_form = this._fb.group({
-            'subject': this._fb.control('', [Validators.required]),
-            'mail_text': this._fb.control(''),
-            'invoices': this._fb.control([])
-        });
     }
 
     filterByStatus(status: 'all' | 'new' | 'archived') {
         this.invoices_status = status;
         this.filterInvoices();
+    }
+
+    filterByPeriod() {
+        const from = this.period_form.value['from'] || 0;
+        const to = this.period_form.value['to'] || Infinity;
+        this.filtered_invoices = this.filtered_invoices.filter(invoice => {
+            const invoice_date = new Date(invoice.issue_date).getTime();
+            return invoice_date >= from && invoice_date <= to;
+        });
     }
 
     filterInvoices(value?) {
@@ -91,6 +111,16 @@ export class InvoicesListComponent implements OnInit {
             );
         else
             this.filtered_invoices = this.invoices.filter(invoice => this.invoices_status === 'all' || invoice.status === this.invoices_status);
+
+        this.selection.clear();
+        this.filterByPeriod();
+    }
+
+    clearDatePeriod() {
+        this.period_form.patchValue({
+            'from': '',
+            'to': ''
+        });
     }
 
     isAllSelected() {
@@ -216,6 +246,9 @@ export class InvoicesListComponent implements OnInit {
                             x.selected = false;
                         }
                     });
+                    this.selection.clear();
+                    this.send_form.patchValue({});
+                    this.send_form.markAsPristine();
                 }
 
             });

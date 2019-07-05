@@ -15,44 +15,79 @@
 
 <mat-card class="mb-15">
     <mat-card-content>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-3">
-                    <mat-form-field>
-                        <input matInput (keyup)="filterInvoices($event.target.value)" placeholder="Filter">
-                    </mat-form-field>
+        <form [formGroup]="period_form" novalidate>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-3">
+                        <mat-form-field>
+                            <input matInput (keyup)="filterInvoices($event.target.value)" placeholder="Filter">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-4 text-center">
+                        <button type="button" mat-flat-button color="primary" (click)="openSendDialog()" *ngIf="selection.selected.length">
+                            <strong><span class="fa fa-check"></span></strong> Изпрати избраните ({{ selection.selected.length }})
+                        </button>
+                    </div>
+                    <div class="col-4 text-right">
+                        <button type="button" class="mr-5" mat-stroked-button [color]="invoices_status === 'all' ? 'accent' : ''" (click)="filterByStatus('all')">Всички</button>
+                        <button type="button" class="mr-5" mat-stroked-button [color]="invoices_status === 'new' ? 'accent' : ''" (click)="filterByStatus('new')">Нови</button>
+                        <button type="button" mat-stroked-button [color]="invoices_status === 'archived' ? 'accent' : ''" (click)="filterByStatus('archived')">Изпратени</button>
+                    </div>
                 </div>
-                <div class="col-5 text-center">
-                    <button type="button" mat-flat-button color="primary" (click)="openSendDialog()" *ngIf="selection.selected.length">
-                        <strong><span class="fa fa-check"></span></strong> Изпрати избраните ({{ selection.selected.length }})
-                    </button>
-                </div>
-                <div class="col-4 text-right">
-                    <button type="button" class="mr-5" mat-stroked-button [color]="invoices_status === 'all' ? 'accent' : ''" (click)="filterByStatus('all')">Всички</button>
-                    <button type="button" class="mr-5" mat-stroked-button [color]="invoices_status === 'new' ? 'accent' : ''" (click)="filterByStatus('new')">Нови</button>
-                    <button type="button" mat-stroked-button [color]="invoices_status === 'archived' ? 'accent' : ''" (click)="filterByStatus('archived')">Изпратени</button>
-                </div>
-            </div>
-            <div class="row mb-20">
-                <div class="col-9">
-                    Показани са <strong>{{ filtered_invoices.length }}</strong> фактури на обща стойност <strong>{{ filtered_total }}лв.</strong>, ДДС: <strong>{{ filtered_vat }}лв.</strong>, общо: <strong>{{ filtered_final }}лв.</strong>
-                </div>
-                <div class="col-3">
-                    <!-- <div class="input-group">
-                        <select class="form-control" #sort_control (click)="sortList(sort_control.value)">
-                            <option value="issue_date">Сортиране по: дата на издаване</option>
-                            <option value="creation_date">Сортиране по: дата на въвеждане</option>
-                            <option value="update_date">Сортиране по: дата на последна редакция</option>
-                        </select>
-                        <div class="input-group-append" (click)="sort = (sort === 'asc'? 'desc' : 'asc'); sortList(sort_control.value)" [ngStyle]="{ 'cursor': 'pointer' }">
-                            <span class="input-group-text">
-                                <span class="fa" [class.fa-arrow-up]="sort === 'asc'" [class.fa-arrow-down]="sort === 'desc'"></span>
-                            </span>
+                <div class="row">
+                        <div class="col-3">
+                            <mat-form-field>
+                                <input
+                                    matInput
+                                    [matDatepicker]="picker_from"
+                                    [matDatepickerFilter]="maxDate"
+                                    placeholder="Дата от"
+                                    formControlName="from"
+                                >
+                                <mat-datepicker-toggle matSuffix [for]="picker_from"></mat-datepicker-toggle>
+                                <mat-datepicker #picker_from></mat-datepicker>
+                            </mat-form-field>
                         </div>
-                    </div> -->
+                        <div class="col-3">
+                            <mat-form-field>
+                                <input
+                                    matInput
+                                    [matDatepicker]="picker_to"
+                                    [matDatepickerFilter]="maxDate"
+                                    placeholder="Дата до"
+                                    formControlName="to"
+                                >
+                                <mat-datepicker-toggle matSuffix [for]="picker_to"></mat-datepicker-toggle>
+                                <mat-datepicker #picker_to></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-1">
+                            <button type="button" mat-icon-button color="primary" (click)="clearDatePeriod()">
+                                <mat-icon>clear</mat-icon>
+                            </button>
+                        </div>
+                </div>
+                <div class="row mb-20">
+                    <div class="col-9">
+                        Показани са <strong>{{ filtered_invoices.length }}</strong> фактури на обща стойност <strong>{{ filtered_total }}лв.</strong>, ДДС: <strong>{{ filtered_vat }}лв.</strong>, общо: <strong>{{ filtered_final }}лв.</strong>
+                    </div>
+                    <div class="col-3">
+                        <!-- <div class="input-group">
+                            <select class="form-control" #sort_control (click)="sortList(sort_control.value)">
+                                <option value="issue_date">Сортиране по: дата на издаване</option>
+                                <option value="creation_date">Сортиране по: дата на въвеждане</option>
+                                <option value="update_date">Сортиране по: дата на последна редакция</option>
+                            </select>
+                            <div class="input-group-append" (click)="sort = (sort === 'asc'? 'desc' : 'asc'); sortList(sort_control.value)" [ngStyle]="{ 'cursor': 'pointer' }">
+                                <span class="input-group-text">
+                                    <span class="fa" [class.fa-arrow-up]="sort === 'asc'" [class.fa-arrow-down]="sort === 'desc'"></span>
+                                </span>
+                            </div>
+                        </div> -->
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
 
         <table mat-table [dataSource]="filtered_invoices">
             <ng-container matColumnDef="select">
@@ -89,6 +124,12 @@
                     <small>{{ invoice.notes }}</small>
                 </td>
             </ng-container>
+            <ng-container matColumnDef="issue_date">
+                <th mat-header-cell *matHeaderCellDef>Дата</th>
+                <td mat-cell *matCellDef="let invoice">
+                    {{ invoice.issue_date_formatted }}
+                </td>
+            </ng-container>
             <ng-container matColumnDef="total_sum">
                 <th mat-header-cell *matHeaderCellDef>Сума</th>
                 <td mat-cell *matCellDef="let invoice">{{ invoice.total_sum }} лв.</td>
@@ -107,9 +148,9 @@
                     <a [routerLink]="['/home', 'invoices', 'edit', invoice._id]" mat-icon-button color="primary">
                         <mat-icon>edit</mat-icon>
                     </a>
-                    <button mat-flat-button (click)="onRemove()">
+                    <a href="#" mat-icon-button color="danger" (click)="onRemove()">
                         <mat-icon>delete_forever</mat-icon>
-                    </button>
+                    </a>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="invoices_columns; sticky: true"></tr>
