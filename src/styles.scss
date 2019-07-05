@@ -54,6 +54,11 @@ a:hover {
     text-decoration: none;
 }
 
+button:focus,
+button:active {
+    outline: none;
+}
+
 table {
     width: 100%;
     max-height: 400px;
