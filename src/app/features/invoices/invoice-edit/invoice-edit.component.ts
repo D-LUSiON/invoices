@@ -67,6 +67,7 @@ export class InvoiceEditComponent implements OnInit {
                 .subscribe(invoice => {
                     this.invoice = invoice;
                     this.invoice_form.patchValue(this.invoice);
+                    this.calcSumVat(false);
                 });
     }
 
@@ -244,8 +245,9 @@ export class InvoiceEditComponent implements OnInit {
                     duration: 2000
                 });
 
-                if (!invoice._id && upd_invoice._id)
-                    this._router.navigate(['/home', 'invoices', 'edit', upd_invoice._id]);
+                // if (!invoice._id && upd_invoice._id)
+                //     this._router.navigate(['/home', 'invoices', 'edit', upd_invoice._id]);
+                this._router.navigate(['/home', 'invoices']);
             });
     }
 
