@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "invoices-elan": {
+    "invoices": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -36,7 +36,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/invoices-elan",
+            "outputPath": "dist/invoices",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -104,18 +104,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "invoices-elan:build"
+            "browserTarget": "invoices:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "invoices-elan:build:production"
+              "browserTarget": "invoices:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "invoices-elan:build"
+            "browserTarget": "invoices:build"
           }
         },
         "test": {
@@ -149,7 +149,7 @@
         }
       }
     },
-    "invoices-elan-e2e": {
+    "invoices-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -158,11 +158,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "invoices-elan:serve"
+            "devServerTarget": "invoices:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "invoices-elan:serve:production"
+              "devServerTarget": "invoices:serve:production"
             }
           }
         },
@@ -178,5 +178,5 @@
       }
     }
   },
-  "defaultProject": "invoices-elan"
+  "defaultProject": "invoices"
 }
