@@ -1,27 +1,22 @@
 {
-    "name": "invoices",
-    "productName": "Invoices",
-    "description": "Application for managing VAT invoices",
-    "author": "D-LUSiON",
-    "version": "2.2.0",
-    "license": "MIT",
-    "keywords": [
-        "invoices",
-        "vat",
-        "tool",
-        "app",
-        "electron",
-        "angular"
-    ],
-    "main": "main.js",
-    "dependencies": {
-        "archiver": "^3.0.0",
-        "electron-window-state": "^5.0.3",
-        "exceljs": "^1.7.0",
-        "fs-extra": "^7.0.1",
-        "gmail-send": "^1.2.14",
-        "nedb": "^1.8.0",
-        "rethinkdb": "^2.3.3"
-    },
-    "devDependencies": {}
+  "name": "invoices",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
+  },
+  "private": true,
+  "dependencies": {
+    "electron-window-state": "^5.0.3"
+  },
+  "devDependencies": {},
+  "productName": "",
+  "description": "",
+  "author": "",
+  "license": "",
+  "main": "main.js"
 }

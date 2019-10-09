@@ -1,0 +1,29 @@
+{
+  "blacklist": [],
+  "package": {
+    "name": "invoices",
+    "productName": "invoices",
+    "description": "Invoices application v3.0 (rewriten from scratch)",
+    "author": "D-LUSiON",
+    "version": "3.0.0",
+    "license": "MIT",
+    "keywords": [
+      "angular",
+      "electron",
+      "invoices",
+      "management",
+      "app",
+      "application",
+      "software",
+      "free",
+      "mit"
+    ]
+  },
+  "angular": {
+    "prefix": "inv",
+    "routing": true,
+    "style": "SCSS",
+    "minimal": true,
+    "skipTests": true
+  }
+}
