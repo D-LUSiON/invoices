@@ -36,10 +36,13 @@ class MainWindow {
                 resizable: env.resizable,
                 frame: env.frame,
                 show: false,
+                // darkTheme: true,
+                titleBarStyle: 'hidden',
                 backgroundColor: env.background_color,
                 icon: `file://${path.join(__dirname, ROOT_DIR, 'resources', 'icon.png')}`,
                 webPreferences: {
-                    nodeIntegration: true
+                    nodeIntegration: true,
+                    nodeIntegrationInSubFrames: true,
                 }
             });
 
