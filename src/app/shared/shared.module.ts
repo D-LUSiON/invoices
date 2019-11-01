@@ -12,6 +12,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NzIconModule, NZ_ICONS } from 'ng-zorro-antd/icon';
 import { IconDefinition } from '@ant-design/icons-angular';
 import * as AllIcons from '@ant-design/icons-angular/icons';
+import { KeysPipe } from './pipes/keys.pipe';
+import { LogPipe } from './pipes/log.pipe';
 
 const antDesignIcons = AllIcons as {
     [key: string]: IconDefinition;
@@ -19,7 +21,10 @@ const antDesignIcons = AllIcons as {
 const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key])
 
 @NgModule({
-    declarations: [],
+    declarations: [
+        KeysPipe,
+        LogPipe,
+    ],
     imports: [
         CommonModule,
         NzMenuModule,
@@ -28,8 +33,8 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
         NzDropDownModule,
         NzTabsModule,
         NzEmptyModule,
-        TranslateModule,
         NzIconModule,
+        TranslateModule,
     ],
     exports: [
         NzMenuModule,
@@ -38,8 +43,11 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
         NzDropDownModule,
         NzTabsModule,
         NzEmptyModule,
-        TranslateModule,
         NzIconModule,
+        TranslateModule,
+
+        KeysPipe,
+        LogPipe,
     ],
     providers: [
         {

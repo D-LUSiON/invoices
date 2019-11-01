@@ -1,9 +1,9 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgZorroAntdModule, NZ_I18N, bg_BG } from 'ng-zorro-antd';
+// import { NgZorroAntdModule, NZ_I18N, bg_BG } from 'ng-zorro-antd';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -15,7 +15,12 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AnonymousGuard, AuthGuard } from './guards';
 import { ElectronService } from 'ngx-electron';
+// import { NzIconModule, NZ_ICONS } from 'ng-zorro-antd/icon';
+
 import { SharedModule } from './shared/shared.module';
+import { PluginLoaderService } from './services/plugin-loader/plugin-loader.service';
+import { ClientPluginLoaderService } from './services/plugin-loader/client-plugin-loader.service';
+import { PluginsConfigProvider } from './services/plugin-loader/plugins-config.provider';
 
 registerLocaleData(bg);
 
@@ -28,10 +33,12 @@ export function createTranslateLoader(http: HttpClient) {
         AppComponent
     ],
     imports: [
-        BrowserModule,
-        AppRoutingModule,
-        NgZorroAntdModule,
         HttpClientModule,
+        BrowserModule.withServerTransition({ appId: 'serverApp' }),
+        BrowserTransferStateModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        // NgZorroAntdModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -39,17 +46,32 @@ export function createTranslateLoader(http: HttpClient) {
                 deps: [HttpClient]
             }
         }),
-        BrowserAnimationsModule,
+        // NzIconModule,
         SharedModule,
     ],
     providers: [
+        {
+            provide: PluginLoaderService,
+            useClass: ClientPluginLoaderService
+        },
+        PluginsConfigProvider,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (provider: PluginsConfigProvider) => () =>
+                provider
+                    .loadConfig()
+                    .toPromise(),
+                    // .then(config => (provider.config = config)),
+            multi: true,
+            deps: [PluginsConfigProvider]
+        },
         AnonymousGuard,
         AuthGuard,
         ElectronService,
-        {
-            provide: NZ_I18N,
-            useValue: bg_BG,
-        },
+        // {
+        //     provide: NZ_I18N,
+        //     useValue: bg_BG,
+        // },
     ],
     bootstrap: [AppComponent]
 })

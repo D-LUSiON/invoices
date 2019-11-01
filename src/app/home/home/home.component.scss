@@ -7,9 +7,10 @@
         height: 100%;
         display: grid;
         grid-template-columns: 48px 300px 1fr;
-        grid-template-rows: 48px 1fr 24px;
+        grid-template-rows: 48px 40px 1fr 24px;
         grid-template-areas:
             "navigation navigation navigation"
+            "shortcuts sidebar tabs"
             "shortcuts sidebar main-content"
             "footer footer footer";
 
@@ -41,9 +42,18 @@
             overflow-y: auto;
         }
 
+        section[role=tabs] {
+            grid-area: tabs;
+        }
+
         section[role=main-content] {
             grid-area: main-content;
             overflow-y: auto;
+            padding: var(--padding);
+
+            &.active-tab {
+                background-color: #fff;
+            }
         }
 
         section[role=footer] {

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -9,12 +10,11 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent {
 
     constructor(
-        private _translate: TranslateService
+        private _translateService: TranslateService,
+        private _titleService: Title,
     ) {
-        // this language will be used as a fallback when a translation isn't found in the current language
-        this._translate.setDefaultLang('en');
-
-        // the lang to use, if the lang isn't available, it will use the current loader to get them
-        this._translate.use('bg');
+        this._translateService.setDefaultLang('en');
+        this._translateService.use('bg');
+        this._titleService.setTitle(this._translateService.instant('Invoices'));
     }
 }

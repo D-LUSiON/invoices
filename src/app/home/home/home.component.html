@@ -37,7 +37,18 @@
     </section>
     <section role="shortcuts">
         <div class="icon-list-container">
-            <button type="button" class="icon-container" title="{{ 'Invoices'|translate }}">
+            <ng-container *ngFor="let mod of loaded_plugins|keys">
+                <button
+                    type="button"
+                    class="icon-container"
+                    title="{{ loaded_plugins[mod].title|translate }}"
+                    *ngIf="loaded_plugins[mod].position === 'top'"
+                    (click)="renderSidebarComponent(loaded_plugins[mod])"
+                >
+                    <i nz-icon [nzType]="loaded_plugins[mod].icon" nzTheme="twotone"></i>
+                </button>
+            </ng-container>
+            <!-- <button type="button" class="icon-container" title="{{ 'Invoices'|translate }}">
                 <i nz-icon nzType="account-book" nzTheme="twotone"></i>
             </button>
             <button type="button" class="icon-container" title="{{ 'Issuers'|translate }}">
@@ -46,70 +57,62 @@
             <button type="button" class="icon-container" title="{{ 'Recipients'|translate }}">
                 <i nz-icon nzType="idcard" nzTheme="twotone"></i>
             </button>
-            <button type="button" class="icon-container push-bottom" title="{{ 'Settings'|translate }}">
-                <i nz-icon nzType="setting" nzTheme="twotone"></i>
-            </button>
+            -->
+            <div class="bottom-icons push-bottom">
+                <ng-container *ngFor="let mod of loaded_plugins|keys">
+                    <button
+                        type="button"
+                        class="icon-container"
+                        title="{{ loaded_plugins[mod].title|translate }}"
+                        *ngIf="loaded_plugins[mod].position === 'bottom'"
+                        (click)="renderSidebarComponent(loaded_plugins[mod])"
+                    >
+                        <i nz-icon [nzType]="loaded_plugins[mod].icon" nzTheme="twotone"></i>
+                    </button>
+                </ng-container>
+                <!-- <button
+                    type="button"
+                    class="icon-container"
+                    title="{{ 'Plugins'|translate }}"
+                    (click)="renderSidebarComponent('plugins')"
+                >
+                    <i nz-icon nzType="appstore" nzTheme="twotone"></i>
+                </button>
+                <button
+                    type="button"
+                    class="icon-container"
+                    title="{{ 'Settings'|translate }}"
+                    (click)="renderSidebarComponent('settings')"
+                >
+                    <i nz-icon nzType="setting" nzTheme="twotone"></i>
+                </button> -->
+            </div>
         </div>
     </section>
     <section role="sidebar">
-        <nz-collapse>
-            <nz-collapse-panel nzHeader="{{ 'Invoices'|translate }}" [nzActive]="true">
-                <nz-tree
-                    *ngIf="nodes.length; else no_invoices"
-                    nzShowLine
-                    [nzData]="nodes"
-                    (nzClick)="activeNode($event)"
-                    (nzDblClick)="openFolder($event)"
-                    [nzTreeTemplate]="nzTreeTemplate"
-                ></nz-tree>
-                <ng-template #nzTreeTemplate let-node>
-                    <span class="custom-node" [class.active]="activedNode?.key === node.key">
-                        <span *ngIf="!node.isLeaf" (contextmenu)="contextMenu($event, menu)">
-                            <i nz-icon nzType="calendar" nzTheme="fill" *ngIf="node.isExpanded" (click)="openFolder(node)"></i>
-                            <i nz-icon nzType="calendar" nzTheme="outline" *ngIf="!node.isExpanded" (click)="openFolder(node)"></i>
-                            <span class="folder-name">{{ node.title }}</span>
-                        </span>
-                        <span *ngIf="node.isLeaf" (contextmenu)="contextMenu($event, menu)">
-                            <i nz-icon nzType="file"></i>
-                            <span class="file-name">{{ node.title }}</span>
-                        </span>
-                    </span>
-                </ng-template>
-                <ng-template #no_invoices>
-                    <nz-empty></nz-empty>
-                </ng-template>
-                <nz-dropdown-menu #menu="nzDropdownMenu">
-                    <ul nz-menu>
-                        <li nz-menu-item (click)="selectDropdown()">
-                            <i nz-icon nzType="edit"></i> Edit
-                        </li>
-                        <li nz-menu-item (click)="selectDropdown()">
-                            <i nz-icon nzType="delete"></i> Delete
-                        </li>
-                    </ul>
-                </nz-dropdown-menu>
-            </nz-collapse-panel>
-            <nz-collapse-panel nzHeader="{{ 'Issuers'|translate }}">
-                <nz-empty></nz-empty>
-            </nz-collapse-panel>
-            <nz-collapse-panel nzHeader="{{ 'Recipients'|translate }}">
-                <nz-empty></nz-empty>
-            </nz-collapse-panel>
-        </nz-collapse>
+        <ng-template #sidebarRef></ng-template>
     </section>
-    <section role="tabs"></section>
-    <section role="main-content">
-        <nz-tabset nzType="card" [nzSelectedIndex]="index">
-            <nz-tab *ngFor="let tab of tabs" [nzTitle]="titleTemplate">
+    <section role="tabs">
+        <nz-tabset
+            nzType="card"
+            [nzSelectedIndex]="active_tab_idx"
+        >
+            <nz-tab
+                *ngFor="let tab of tabs; let idx = index"
+                [nzTitle]="titleTemplate"
+                (nzClick)="activateTab(idx)"
+            >
                 <ng-template #titleTemplate>
                     <div>
-                        {{ tab }}
-                        <i nz-icon nzType="close" class="ant-tabs-close-x" (click)="closeTab(tab)"></i>
+                        {{ tab.title }}
+                        <i nz-icon nzType="close" class="ant-tabs-close-x" (click)="closeTab(idx)"></i>
                     </div>
                 </ng-template>
-                Content of {{ tab }}
             </nz-tab>
         </nz-tabset>
+    </section>
+    <section role="main-content" [class.active-tab]="active_tab_idx > -1">
+        <ng-template #activeTabRef></ng-template>
     </section>
     <section role="footer"></section>
 </section>
