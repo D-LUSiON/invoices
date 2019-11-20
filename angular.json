@@ -70,7 +70,7 @@
                                 }
                             ],
                             "optimization": true,
-                            "outputHashing": "all",
+                            "outputHashing": "none",
                             "sourceMap": false,
                             "extractCss": true,
                             "namedChunks": false,
@@ -91,14 +91,14 @@
                                 }
                             ],
                             "baseHref": "",
-                            "outputPath": "build/app"
+                            "outputPath": "www"
                         },
                         "dev": {
                             "baseHref": "",
                             "outputPath": "www",
                             "deleteOutputPath": false,
                             "optimization": false,
-                            "outputHashing": "media",
+                            "outputHashing": "none",
                             "sourceMap": true,
                             "extractCss": false,
                             "namedChunks": true,

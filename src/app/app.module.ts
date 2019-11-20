@@ -14,7 +14,7 @@ import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-transla
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AnonymousGuard, AuthGuard } from './guards';
-import { ElectronService } from 'ngx-electron';
+import { ElectronService,  } from 'ngx-electron';
 // import { NzIconModule, NZ_ICONS } from 'ng-zorro-antd/icon';
 
 import { SharedModule } from './shared/shared.module';
