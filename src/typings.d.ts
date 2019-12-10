@@ -1,7 +1,7 @@
 interface Window {
-  define: (name: string, deps: string[], definitionFn: () => any) => void;
+    define: (name: string, deps: string[], definitionFn: () => any) => void;
 
-  System: {
-    import: (path) => Promise<any>;
-  };
+    System: {
+        import: (path) => Promise<any>;
+    };
 }

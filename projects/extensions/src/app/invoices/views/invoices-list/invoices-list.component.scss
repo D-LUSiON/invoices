@@ -1,0 +1,138 @@
+:host-context(app-invoices-list) {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    max-height: calc(100% - 31px);
+
+    .toolbar {
+        border-bottom: 1px solid var(--color-grey);
+        padding: calc(var(--padding)/2);
+        flex: 0 0 auto;
+    }
+
+    .tree-list-1 {
+        flex: 1 1 auto;
+        overflow-y: auto;
+
+        &,
+        ul,
+        li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .year-heading {
+            background-color: var(--color-dark-grey);
+            color: #fff;
+        }
+
+        .month-heading {
+            background-color: var(--color-light-grey);
+        }
+
+        .tree-list-item {
+            .tree-list-item-heading {
+                padding: calc(var(--padding) / 2);
+                display: flex;
+                justify-content: stretch;
+
+                .item-title {
+                    flex: 1 1 auto;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .item-side {
+                    flex: 0 0 auto;
+                }
+            }
+
+            .tree-list-item-detail {
+                height: 0;
+                overflow: hidden;
+            }
+
+            &.expanded>.tree-list-item-detail {
+                height: auto;
+            }
+
+            &.hover-highlight>.tree-list-item-heading {
+                transition: var(--transition);
+
+                &:hover {
+                    background-color: var(--color-dark-grey);
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    .tree-list {
+        flex: 1 1 auto;
+        overflow-y: auto;
+
+        ul,
+        li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        [class*="heading"] {
+            padding: calc(var(--padding) / 2);
+        }
+
+        &>ul {
+            li {
+                .year-heading {
+                    background-color: var(--color-dark-grey);
+                    color: #fff;
+                }
+
+                &>ul {
+                    height: 0;
+                    overflow: hidden;
+
+                    .month-heading {
+                        display: flex;
+                        justify-content: stretch;
+                        background-color: var(--color-light-grey);
+
+                        .month-title {
+                            flex: 1 1 auto;
+                        }
+
+                        .month-inv-count {
+                            flex: 0 0 auto;
+                        }
+                    }
+
+                    ul {
+                        padding-left: var(--padding);
+
+                        .invoice-heading {
+                            display: flex;
+                            justify-content: stretch;
+
+                            .invoice-desc {
+                                flex: 1 1 auto;
+                            }
+
+                            .invoice-price {
+                                flex: 0 0 auto;
+                            }
+                        }
+                    }
+                }
+
+                &.expanded {
+                    ul {
+                        height: auto;
+                    }
+                }
+            }
+        }
+    }
+}

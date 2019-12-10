@@ -3,8 +3,14 @@
     --color-white: #fff;
     --color-black: #282828;
     --color-grey: #c0c0c0;
+    --color-light-grey: #bbb;
+    --color-dark-grey: #666;
+    --color-deep-grey: #484848;
+    --color-black: #333;
 
     --padding: 15px;
+
+    --transition: all .3s ease-in-out;
 }
 
 * {
@@ -13,7 +19,10 @@
 }
 
 .selectable,
-.selectable * {
+.selectable *,
+input,
+textarea,
+select {
     user-select: initial;
 }
 
@@ -24,50 +33,7 @@ body {
     font-size: 10pt;
 }
 
-.icon-list-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    height: 100%;
-
-    .push-bottom {
-        order: 99;
-        margin-top: auto;
-        border-top: 1px solid var(--color-grey);
-        border-bottom: none;
-    }
-
-    .icon-container {
-        order: 1;
-        padding: 10px;
-        border: none;
-        border-bottom: 1px solid var(--color-grey);
-        background-color: transparent;
-
-        &:focus,
-        &:active {
-            outline: none;
-        }
-
-        &.push-bottom {
-            order: 99;
-            margin-top: auto;
-            border-top: 1px solid var(--color-grey);
-            border-bottom: none;
-
-            &:first-of-type {
-                margin-top: auto;
-            }
-            &:first {
-                margin-top: auto;
-            }
-            &:first-child {
-                margin-top: auto;
-            }
-        }
-
-        [nz-icon] {
-            font-size: 28px;
-        }
-    }
+button:focus,
+button:active {
+    outline: none;
 }

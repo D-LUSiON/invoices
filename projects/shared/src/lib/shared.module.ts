@@ -1,43 +1,44 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SharedComponent } from './shared.component';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-// import { NzMenuModule } from 'ng-zorro-antd/menu';
-// import { NzCollapseModule } from 'ng-zorro-antd/collapse';
-// import { NzTreeModule } from 'ng-zorro-antd/tree';
-// import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-// import { NzTabsModule } from 'ng-zorro-antd/tabs';
-// import { NzEmptyModule } from 'ng-zorro-antd/empty';
-// import { NzButtonModule } from 'ng-zorro-antd';
-// import { NzIconModule } from 'ng-zorro-antd/icon';
-// import { TranslateModule } from '@ngx-translate/core';
+import { NgxElectronModule } from 'ngx-electron';
+
+import { KeysPipe } from './pipes/keys.pipe';
+import { LogPipe } from './pipes/log.pipe';
+import { SortPipe } from './pipes/sort.pipe';
+import { CurrencyPipe } from './pipes/currency.pipe';
 
 @NgModule({
+    declarations: [
+        KeysPipe,
+        LogPipe,
+        SortPipe,
+        CurrencyPipe,
+    ],
     imports: [
-        CommonModule,
-        // NzMenuModule,
-        // NzCollapseModule,
-        // NzTreeModule,
-        // NzDropDownModule,
-        // NzTabsModule,
-        // NzEmptyModule,
-        // NzButtonModule,
-        // NzIconModule,
-        // TranslateModule,
+        HttpClientModule,
+        NgxElectronModule,
+        ReactiveFormsModule,
+        FormsModule,
     ],
-    declarations: [SharedComponent],
-    entryComponents: [SharedComponent],
     exports: [
-        SharedComponent,
-        // NzMenuModule,
-        // NzCollapseModule,
-        // NzTreeModule,
-        // NzDropDownModule,
-        // NzTabsModule,
-        // NzEmptyModule,
-        // NzButtonModule,
-        // NzIconModule,
-        // TranslateModule,
-    ],
+        HttpClientModule,
+        NgxElectronModule,
+        ReactiveFormsModule,
+        FormsModule,
+
+        KeysPipe,
+        LogPipe,
+        SortPipe,
+        CurrencyPipe,
+    ]
 })
-export class SharedModule {}
+export class SharedModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: SharedModule,
+            providers: []
+        }
+    }
+}

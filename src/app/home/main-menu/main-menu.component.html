@@ -1,0 +1,19 @@
+<nav>
+    <div class="logo">
+        <img src="assets/logo.png" alt="">
+    </div>
+    <ul>
+        <li *ngFor="let item of menu; let idx = index" [class.open]="item.open">
+            <span class="item-name" (click)="menuClicked(idx)">{{ item.name }}</span>
+            <ul *ngIf="item.children?.length">
+                <li *ngFor="let child of item.children" (click)="actionClicked(child.action)" [class.divider]="child.role === 'divider'">
+                    <span class="item-icon" *ngIf="child.role !== 'divider'">
+                        <i class="fas fa-{{ child.icon }}"></i>
+                    </span>
+                    <span class="item-name" *ngIf="child.role !== 'divider'">{{ child.name }}</span>
+                    <hr *ngIf="child.role === 'divider'">
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>

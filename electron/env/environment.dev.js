@@ -4,6 +4,7 @@ const environment = {
     name: package_json.name,
     description: package_json.description,
     production: false,
+    single_instance: true,
     html_src: 'www',
     background_color: '#ffffff',
     resizable: true,

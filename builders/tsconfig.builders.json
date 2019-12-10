@@ -2,12 +2,12 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
-    "outDir": "./plugin-builder",
+    "outDir": "./extension-builder",
     "importHelpers": false,
     "sourceMap": false,
     "target": "es6"
   },
   "files": [
-    "./plugin-builder/index.ts"
+    "./extension-builder/index.ts"
   ]
 }

@@ -1,0 +1,62 @@
+<div class="toolbar">
+    <i class="fas fa-filter"></i>
+    <i class="fas fa-exchange-alt" (click)="changeSorting('issue_date')" title="Sort by issue date"></i>
+    <i class="fas fa-share-square" (click)="changeSorting('sent_date')" title="Sort by send to accountant"></i>
+</div>
+<ul class="tree-list-1">
+    <li class="tree-list-item expanded">
+        <div class="tree-list-item-heading year-heading">2019</div>
+        <ul class="tree-list-item-detail">
+            <li class="tree-list-item expanded">
+                <div class="tree-list-item-heading month-heading">
+                    <div class="item-title">December</div>
+                    <div class="item-side" title="Count of invoices for this month: 2">2</div>
+                </div>
+                <ul class="tree-list-item-detail">
+                    <li class="tree-list-item hover-highlight">
+                        <div class="tree-list-item-heading invoice-heading" title="Invoice from: Some Issuer ltd.&#013;Issued on: 02.11.2019&#013;Detail: I bought a new laptop - Asus Scar ||| with RTX 2070">
+                            <div class="item-title">I bought a new laptop - Asus Scar ||| with RTX 2070</div>
+                            <div class="item-side">3452.00</div>
+                        </div>
+                        <div class="tree-list-item-detail invoice-detail">blabla</div>
+                    </li>
+                    <li class="tree-list-item hover-highlight">
+                        <div class="tree-list-item-heading invoice-heading">
+                            <div class="item-title">Winter tires</div>
+                            <div class="item-side">891.60</div>
+                        </div>
+                        <div class="tree-list-item-detail invoice-detail">blabla</div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+<div class="tree-list">
+    <ul>
+        <li *ngFor="let year of (invoicesSorted|keys|sort:'desc'); let first_year = first; let idx_year = index" [class.expanded]="idx_year === expanded_year_idx || expanded_year_idx === -1 && first_year">
+            <div class="year-heading" (click)="expandYear(idx_year)">{{ year }}</div>
+            <ul *ngIf="(invoicesSorted[year]|keys).length">
+                <li *ngFor="let month of (invoicesSorted[year]|keys|sort:'desc'); let first_month = first; let idx_month = index" >
+                    <div class="month-heading">
+                        <div class="month-title">{{ getMonthName(+month) }}</div>
+                        <div class="month-inv-count">{{ (invoicesSorted[year][month]|keys).length }}</div>
+                    </div>
+                    <ul *ngIf="(invoicesSorted[year][month]|keys).length">
+                        <li *ngFor="let position of invoicesSorted[year][month]|keys; let first_inv = first; let idx_inv = index">
+                            <div class="invoice-heading">
+                                <div class="invoice-desc">{{ invoicesSorted[year][month][position].notes }}</div>
+                                <div class="invoice-price">{{ invoicesSorted[year][month][position].total_sum|currency }}</div>
+                            </div>
+                            <ul>
+                                <li>Number: {{ invoicesSorted[year][month][position].number }}</li>
+                                <li>Issue date: {{ invoicesSorted[year][month][position].issue_date|date:'yyyy-MM-dd' }}</li>
+                                <li>Send to accountant on: {{ invoicesSorted[year][month][position].sent_date|date:'yyyy-MM-dd' }}</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

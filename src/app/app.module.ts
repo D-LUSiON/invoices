@@ -1,77 +1,48 @@
-import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+
+import { ElectronService } from 'ngx-electron';
+import { SharedModule } from 'shared';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-// import { NgZorroAntdModule, NZ_I18N, bg_BG } from 'ng-zorro-antd';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { registerLocaleData } from '@angular/common';
-import bg from '@angular/common/locales/bg';
-
-import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
+import { ExtensionLoaderService } from './services/extension-loader/extension-loader.service';
+import { ClientExtensionLoaderService } from './services/extension-loader/client-extesion-loader.service';
+import { ExtensionsConfigProvider } from './services/extension-loader/extensions-config.provider';
 import { AnonymousGuard, AuthGuard } from './guards';
-import { ElectronService,  } from 'ngx-electron';
-// import { NzIconModule, NZ_ICONS } from 'ng-zorro-antd/icon';
-
-import { SharedModule } from './shared/shared.module';
-import { PluginLoaderService } from './services/plugin-loader/plugin-loader.service';
-import { ClientPluginLoaderService } from './services/plugin-loader/client-plugin-loader.service';
-import { PluginsConfigProvider } from './services/plugin-loader/plugins-config.provider';
-
-registerLocaleData(bg);
-
-export function createTranslateLoader(http: HttpClient) {
-    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
 
 @NgModule({
     declarations: [
         AppComponent
     ],
     imports: [
-        HttpClientModule,
-        BrowserModule.withServerTransition({ appId: 'serverApp' }),
-        BrowserTransferStateModule,
+        BrowserModule,
         BrowserAnimationsModule,
+        HttpClientModule,
+        SharedModule.forRoot(),
         AppRoutingModule,
-        // NgZorroAntdModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (createTranslateLoader),
-                deps: [HttpClient]
-            }
-        }),
-        // NzIconModule,
-        SharedModule,
     ],
     providers: [
         {
-            provide: PluginLoaderService,
-            useClass: ClientPluginLoaderService
+            provide: ExtensionLoaderService,
+            useClass: ClientExtensionLoaderService
         },
-        PluginsConfigProvider,
+        ExtensionsConfigProvider,
         {
             provide: APP_INITIALIZER,
-            useFactory: (provider: PluginsConfigProvider) => () =>
+            useFactory: (provider: ExtensionsConfigProvider) => () =>
                 provider
                     .loadConfig()
                     .toPromise(),
                     // .then(config => (provider.config = config)),
             multi: true,
-            deps: [PluginsConfigProvider]
+            deps: [ExtensionsConfigProvider]
         },
+        ElectronService,
         AnonymousGuard,
         AuthGuard,
-        ElectronService,
-        // {
-        //     provide: NZ_I18N,
-        //     useValue: bg_BG,
-        // },
     ],
     bootstrap: [AppComponent]
 })

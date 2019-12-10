@@ -1,28 +1,13 @@
 {
-    "blacklist": [
-        "sequelize",
-        "sqlite3",
-        "knex",
-        "better-sqlite3"
-    ],
+    "blacklist": [],
     "package": {
         "name": "invoices",
         "productName": "invoices",
-        "description": "Invoices application v3.0 (rewriten from scratch)",
-        "author": "D-LUSiON",
+        "description": "",
+        "author": "",
         "version": "3.0.0",
         "license": "MIT",
-        "keywords": [
-            "angular",
-            "electron",
-            "invoices",
-            "management",
-            "app",
-            "application",
-            "software",
-            "free",
-            "mit"
-        ]
+        "keywords": []
     },
     "angular": {
         "prefix": "inv",
@@ -30,5 +15,12 @@
         "style": "SCSS",
         "minimal": true,
         "skipTests": true
+    },
+    "versions": {
+        "main": "3.0.0",
+        "electron": "3.0.0",
+        "angular": {
+            "invoices": "3.0.0"
+        }
     }
 }

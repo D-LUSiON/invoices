@@ -36,7 +36,7 @@ export class ElectronClientService {
         return Observable.create((observer: Observer<any>) => {
             this._electron.once(`${event}:get:response`, (e, response) => {
                 this._ngZone.run(() => {
-                    observer.next(response ? response[0] : null);
+                    observer.next(response ? response : null);
                     observer.complete();
                 });
             });
@@ -60,7 +60,7 @@ export class ElectronClientService {
         return Observable.create((observer: Observer<any>) => {
             this._electron.once(`${event}:remove:response`, (e, response) => {
                 this._ngZone.run(() => {
-                    observer.next(response ? response[0] : null);
+                    observer.next(response ? response : null);
                     observer.complete();
                 });
             });

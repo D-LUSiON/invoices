@@ -4,14 +4,18 @@ import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home/home.component';
 
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from 'shared';
+import { MainMenuComponent } from './main-menu/main-menu.component';
 
 @NgModule({
-    declarations: [HomeComponent],
+    declarations: [
+        HomeComponent,
+        MainMenuComponent
+    ],
     imports: [
         CommonModule,
         HomeRoutingModule,
-        SharedModule
+        SharedModule.forRoot()
     ]
 })
 export class HomeModule { }

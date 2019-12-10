@@ -1,12 +1,12 @@
 import { Component, OnInit, Injector, ViewChild, ViewContainerRef, ComponentFactory } from '@angular/core';
 import { ElectronClientService } from 'src/app/services';
 
-import { TranslateService } from '@ngx-translate/core';
-import { PluginLoaderService } from 'src/app/services/plugin-loader/plugin-loader.service';
-import { PluginsConfigProvider } from 'src/app/services/plugin-loader/plugins-config.provider';
-import { Plugin } from 'src/app/shared/classes/plugin';
+import { ExtensionLoaderService } from 'src/app/services/extension-loader/extension-loader.service';
+import { ExtensionsConfigProvider } from 'src/app/services/extension-loader/extensions-config.provider';
+import { Extension } from '@app/shared/classes/extension';
 import { Observable } from 'rxjs';
 import { Tab } from '../../shared/classes/tab';
+import { MenuItem } from '../main-menu/main-menu.component';
 
 @Component({
     selector: 'inv-home',
@@ -18,59 +18,174 @@ export class HomeComponent implements OnInit {
     @ViewChild('sidebarRef', { read: ViewContainerRef, static: true }) sidebarRef: ViewContainerRef;
     @ViewChild('activeTabRef', { read: ViewContainerRef, static: true }) activeTabRef: ViewContainerRef;
 
-    mainMenu: Electron.Menu;
+    electronMainMenu: Electron.Menu;
+    private _electonWindow: Electron.BrowserWindow;
+
+    window_maximized: boolean = false;
 
     index = 0;
 
     tabs: Tab[] = [];
     active_tab_idx: number = -1;
 
-    loaded_plugins: { [key: string]: Plugin } = {};
-    active_sidebar_plugin: Plugin = null;
-    active_sidebar_plugin_idx: number = null;
+    loaded_extensions: { [key: string]: Extension } = {};
+    active_sidebar_extension: Extension = null;
+    active_sidebar_extension_idx: number = null;
+
+    mainMenu: MenuItem[] = [
+        {
+            name: 'File',
+            children: [
+                {
+                    name: 'New invioce',
+                    icon: 'file-alt',
+                    action: 'file:new-invoice'
+                },
+                {
+                    name: 'Open...',
+                    icon: 'file-alt',
+                    action: 'file:open'
+                },
+                {
+                    name: 'Save',
+                    icon: 'save',
+                    action: 'file:open'
+                },
+                {
+                    role: 'divider'
+                },
+                {
+                    name: 'Settings',
+                    icon: 'cog',
+                    action: 'file:settings'
+                },
+                {
+                    role: 'divider'
+                },
+                {
+                    name: 'Quit',
+                    action: 'file:settings'
+                },
+            ]
+        },
+        {
+            name: 'Edit',
+            children: [
+                {
+                    name: 'Undo',
+                    icon: 'undo',
+                    action: 'edit:undo'
+                },
+                {
+                    name: 'Redo',
+                    icon: 'redo',
+                    action: 'edit:redo'
+                },
+                {
+                    role: 'divider'
+                },
+                {
+                    name: 'Cut...',
+                    icon: 'cut',
+                    action: 'edit:cut'
+                },
+                {
+                    name: 'Copy...',
+                    icon: 'copy',
+                    action: 'edit:copy'
+                },
+                {
+                    name: 'Paste',
+                    icon: 'paste',
+                    action: 'edit:paste'
+                },
+            ]
+        },
+        {
+            name: 'Action',
+            action: 'action:action',
+        },
+        {
+            name: 'Help',
+            children: [
+                {
+                    name: 'About',
+                    action: 'help:about'
+                }
+            ]
+        },
+    ];
 
     constructor(
-        private injector: Injector,
-        private _translateService: TranslateService,
         private _electronService: ElectronClientService,
-        private _pluginLoader: PluginLoaderService,
-        private _pluginsConfig: PluginsConfigProvider
+        private _extensionLoader: ExtensionLoaderService,
+        private _extensionsConfig: ExtensionsConfigProvider
     ) {
-        const win = this._electronService.remote.getCurrentWindow();
-        win.removeMenu();
+        this._electonWindow = this._electronService.remote.getCurrentWindow();
+        this._electonWindow.removeMenu();
+
+        this.window_maximized = this._electonWindow.isMaximized();
+        this._electonWindow.on('maximize', () => {
+            this.window_maximized = true;
+        });
+
+        this._electonWindow.on('restore', () => {
+            this.window_maximized = false;
+        });
     }
 
     ngOnInit() {
-        this._pluginLoader.plugins$.subscribe(plugins => {
-            this.loaded_plugins = { ...plugins };
-            if (Object.keys(this.loaded_plugins).length) {
-                if (this.active_sidebar_plugin === null) {
-                    this.active_sidebar_plugin_idx = 0;
-                    this.active_sidebar_plugin = this.loaded_plugins[Object.keys(this.loaded_plugins)[this.active_sidebar_plugin_idx]];
+        this._extensionLoader.extensions$.subscribe(extensions => {
+            this.loaded_extensions = { ...extensions };
+            if (Object.keys(this.loaded_extensions).length) {
+                if (this.active_sidebar_extension === null) {
+                    this.active_sidebar_extension_idx = 0;
+                    this.active_sidebar_extension = this.loaded_extensions[Object.keys(this.loaded_extensions)[this.active_sidebar_extension_idx]];
                 }
-                this.renderSidebarComponent(this.active_sidebar_plugin);
+                this.renderSidebarComponent();
             } else {
                 this.sidebarRef.clear();
             }
         });
     }
 
-
-    renderSidebarComponent(mod?: Plugin) {
-        if (mod) {
-            this.active_sidebar_plugin = mod;
-            this.active_sidebar_plugin_idx = Object.keys(this.loaded_plugins).findIndex(key => key === this.active_sidebar_plugin.name);
-        }
-        // console.log(`renderSidebarComponent`, this.active_sidebar_plugin);
-        if (this.active_sidebar_plugin.listComponent) {
-            this.sidebarRef.clear();
-            this.sidebarRef.createComponent(this.active_sidebar_plugin.listComponent);
-        } else
-            // console.log(`Add new tab for plugin "${this.active_sidebar_plugin.title}"`);
-            this.addNewTab(mod);
+    minimizeWindow() {
+        this._electonWindow.minimize();
     }
 
-    addNewTab(mod: Plugin, data?: { [key: string]: any }): void {
+    maximizeWindow() {
+        this._electonWindow.maximize();
+        this.window_maximized = true;
+    }
+
+    restoreWindow() {
+        this._electonWindow.restore();
+        this.window_maximized = false;
+    }
+
+    closeWindow() {
+        this._electonWindow.close();
+    }
+
+    menuItemClicked(action: string) {
+        console.log(action);
+    }
+
+    renderSidebarComponent(mod?: Extension) {
+        if (mod) {
+            this.active_sidebar_extension = mod;
+            this.active_sidebar_extension_idx = Object.keys(this.loaded_extensions).findIndex(key => key === this.active_sidebar_extension.name);
+        }
+        // console.log(`renderSidebarComponent`, this.active_sidebar_extension);
+        if (this.active_sidebar_extension.listComponent) {
+            this.sidebarRef.clear();
+            this.sidebarRef.createComponent(this.active_sidebar_extension.listComponent);
+        } else
+            // console.log(`Add new tab for extension "${this.active_sidebar_extension.title}"`);
+            this.addNewTab(this.active_sidebar_extension);
+    }
+
+    addNewTab(mod: Extension, data?: { [key: string]: any }): void {
         console.log(mod);
         if (this.tabs.filter(tab => tab.title === mod.title).length) {
             this.active_tab_idx = this.tabs.findIndex(tab => tab.title === mod.title);
@@ -108,13 +223,13 @@ export class HomeComponent implements OnInit {
     //             case 'Settings':
     //                 new_tab = new Tab({
     //                     title: 'Settings',
-    //                     component: this.loaded_plugins['settings'].editComponent,
+    //                     component: this.loaded_extensions['settings'].editComponent,
     //                 });
     //                 break;
-    //             case 'Plugins':
+    //             case 'Extensions':
     //                 new_tab = new Tab({
-    //                     title: 'Plugins',
-    //                     component: this.loaded_plugins['plugins'].editComponent
+    //                     title: 'Extensions',
+    //                     component: this.loaded_extensions['extensions'].editComponent
     //                 });
     //                 break;
 

@@ -1,6 +1,6 @@
 # Shared
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.9.
+This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.13.
 
 ## Code scaffolding
 

@@ -1,4 +1,4 @@
-:host-context(inv-home) {
+:host {
     section[role=container] {
         position: fixed;
         top: 0;
@@ -7,31 +7,116 @@
         height: 100%;
         display: grid;
         grid-template-columns: 48px 300px 1fr;
-        grid-template-rows: 48px 40px 1fr 24px;
+        grid-template-rows: 32px 40px 1fr 24px;
         grid-template-areas:
             "navigation navigation navigation"
             "shortcuts sidebar tabs"
             "shortcuts sidebar main-content"
             "footer footer footer";
 
+        section[role=navigation] {
+            grid-area: navigation;
+            display: flex;
+            // border-top: 1px solid var(--color-grey);
+            // border-bottom: 1px solid var(--color-grey);
+            background-color: var(--color-deep-grey);
+            color: #fff;
+
+            * {
+                flex: 0 0 auto;
+            }
+
+            .draggable {
+                flex: 1 1 auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 10px;
+
+                -webkit-app-region: drag;
+            }
+
+            .window-controls {
+                display: grid;
+                grid-template-columns: repeat(3, 46px);
+                font-family: "Segoe MDL2 Assets";
+                font-size: 10px;
+
+                .button {
+                    grid-row: 1 / span 1;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    height: 100%;
+                    cursor: default;
+
+                    &:not(.button-close):hover {
+                        background-color: rgba(255, 255, 255, 0.1);
+                    }
+
+                    &:not(.button-close):active {
+                        background-color: rgba(255, 255, 255, 0.2);
+                    }
+
+                    &.button-close {
+                        &:hover {
+                            background-color: #E81123;
+                        }
+
+                        &:active {
+                            background-color: #f1707a;
+                            color: #000;
+                        }
+                    }
+                }
+            }
+        }
+
         section[role=shortcuts] {
             grid-area: shortcuts;
             border-right: 1px solid var(--color-grey);
-        }
+            display: flex;
+            flex-direction: column;
 
-        section[role=navigation] {
-            grid-area: navigation;
-            border-top: 1px solid var(--color-grey);
-            border-bottom: 1px solid var(--color-grey);
+            .icon-list-container {
+                &.top {
+                    flex: 1 1 auto;
 
-            .ant-menu-item {
-
-                [nz-icon] {
-                    font-size: 20px;
+                    .icon-container {
+                        border-bottom: 1px solid var(--color-light-grey);
+                    }
                 }
 
-                [nz-icon]:last-of-type {
-                    margin-right: 0;
+                &.bottom {
+                    flex: 0 0 auto;
+
+                    .icon-container {
+                        border-top: 1px solid var(--color-light-grey);
+                    }
+                }
+            }
+
+            .icon-container {
+                display: block;
+                width: 100%;
+                padding: calc(var(--padding) / 2);
+                padding-left: calc(var(--padding) / 2 - 3px);
+                border: none;
+                border-left: 3px solid transparent;
+                background: #f1f1f1;
+                color: var(--color-black);
+                font-size: 20px;
+                line-height: 1em;
+                transition: var(--transition);
+
+                &.current {
+                    border-left: 3px solid var(--color-dark-grey);
+                }
+
+                &:hover {
+                    background-color: var(--color-dark-grey);
+                    color: #fff;
                 }
             }
         }
@@ -40,6 +125,16 @@
             grid-area: sidebar;
             border-right: 1px solid var(--color-grey);
             overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+
+            .active-extension-title {
+                flex: 0 0 auto;
+                text-transform: uppercase;
+                padding: calc(var(--padding)/2);
+                border-bottom: 1px solid var(--color-grey);
+                background-color: var(--color-light-grey);
+            }
         }
 
         section[role=tabs] {
