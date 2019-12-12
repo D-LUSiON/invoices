@@ -10,7 +10,7 @@
         flex: 0 0 auto;
     }
 
-    .tree-list-1 {
+    .tree-list {
         flex: 1 1 auto;
         overflow-y: auto;
 
@@ -59,7 +59,7 @@
             }
 
             &.hover-highlight>.tree-list-item-heading {
-                transition: var(--transition);
+                transition: all var(--transition);
 
                 &:hover {
                     background-color: var(--color-dark-grey);
@@ -69,7 +69,7 @@
         }
     }
 
-    .tree-list {
+    .tree-list-1 {
         flex: 1 1 auto;
         overflow-y: auto;
 

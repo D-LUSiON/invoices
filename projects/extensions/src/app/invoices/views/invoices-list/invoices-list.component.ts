@@ -23,6 +23,7 @@ export class InvoicesListComponent implements OnInit {
     sort_by: 'issue_date' | 'sent_date' = 'issue_date';
 
     expanded_year_idx: number = -1;
+    expanded_month_idx: number = -1;
 
     month_names = [
         'January',
