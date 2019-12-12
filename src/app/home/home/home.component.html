@@ -60,9 +60,24 @@
         <ng-template #sidebarRef></ng-template>
     </section>
     <section role="tabs">
+        <ul class="tabs-container">
+            <li class="tab" title="Invoice 0000004523 from Provider ltd. for 324 BGN" (click)="activateTab(0)" [class.active]="active_tab_idx === 0">
+                Invoice 0000004523
+                <span class="fas fa-times"></span>
+            </li>
+            <li class="tab" (click)="activateTab(1)" [class.active]="active_tab_idx === 1">
+                Invoice 4000006421
+                <span class="fas fa-circle"></span>
+                <span class="fas fa-times"></span>
+            </li>
+            <li class="tab" (click)="activateTab(2)" [class.active]="active_tab_idx === 2">
+                Invoice 1000004304
+                <span class="fas fa-times"></span>
+            </li>
+        </ul>
     </section>
     <section role="main-content" [class.active-tab]="active_tab_idx > -1">
-        <ng-template #activeTabRef></ng-template>
+        <ng-template #tabsContentRef></ng-template>
     </section>
     <section role="footer"></section>
 </section>

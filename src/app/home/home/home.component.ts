@@ -16,7 +16,7 @@ import { MenuItem } from '../main-menu/main-menu.component';
 export class HomeComponent implements OnInit {
 
     @ViewChild('sidebarRef', { read: ViewContainerRef, static: true }) sidebarRef: ViewContainerRef;
-    @ViewChild('activeTabRef', { read: ViewContainerRef, static: true }) activeTabRef: ViewContainerRef;
+    @ViewChild('tabsContentRef', { read: ViewContainerRef, static: true }) tabsContentRef: ViewContainerRef;
 
     electronMainMenu: Electron.Menu;
     private _electonWindow: Electron.BrowserWindow;
@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
     index = 0;
 
     tabs: Tab[] = [];
-    active_tab_idx: number = -1;
+    active_tab_idx: number = 0;
 
     loaded_extensions: { [key: string]: Extension } = {};
     active_sidebar_extension: Extension = null;
@@ -206,9 +206,10 @@ export class HomeComponent implements OnInit {
     }
 
     renderCurrentContent() {
-        this.activeTabRef.clear();
-        if (this.tabs[this.active_tab_idx].component) {
-            const componentRef = this.activeTabRef.createComponent(this.tabs[this.active_tab_idx].component);
+        if (this.tabs.length && this.tabs[this.active_tab_idx].component) {
+            const componentRef = this.tabsContentRef.createComponent(this.tabs[this.active_tab_idx].component);
+            this.tabs[this.active_tab_idx].componentRef = componentRef;
+            componentRef.instance.
             console.log(componentRef);
         }
     }

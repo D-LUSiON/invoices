@@ -7,7 +7,7 @@
         height: 100%;
         display: grid;
         grid-template-columns: 48px 300px 1fr;
-        grid-template-rows: 32px 40px 1fr 24px;
+        grid-template-rows: 32px 37px 1fr 24px;
         grid-template-areas:
             "navigation navigation navigation"
             "shortcuts sidebar tabs"
@@ -108,7 +108,7 @@
                 color: var(--color-black);
                 font-size: 20px;
                 line-height: 1em;
-                transition: var(--transition);
+                transition: all var(--transition);
 
                 &.current {
                     border-left: 3px solid var(--color-dark-grey);
@@ -139,6 +139,9 @@
 
         section[role=tabs] {
             grid-area: tabs;
+            border-bottom: 1px solid var(--color-grey);
+            padding-top: 5px;
+            padding-left: 5px;
         }
 
         section[role=main-content] {
@@ -176,10 +179,10 @@
         padding: 0 1000px;
     }
 
-    .active {
-        background: #1890ff;
-        color: #fff;
-    }
+    // .active {
+    //     background: #1890ff;
+    //     color: #fff;
+    // }
 
     .file-name,
     .folder-name {
