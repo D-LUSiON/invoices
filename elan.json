@@ -3,11 +3,21 @@
     "package": {
         "name": "invoices",
         "productName": "invoices",
-        "description": "",
-        "author": "",
+        "description": "Invoices application v3.0 (rewriten from scratch)",
+        "author": "D-LUSiON",
         "version": "3.0.0",
         "license": "MIT",
-        "keywords": []
+        "keywords": [
+            "angular",
+            "electron",
+            "invoices",
+            "management",
+            "app",
+            "application",
+            "software",
+            "free",
+            "mit"
+        ]
     },
     "angular": {
         "prefix": "inv",
@@ -15,6 +25,14 @@
         "style": "SCSS",
         "minimal": true,
         "skipTests": true
+    },
+    "template": {
+        "name": "default",
+        "templateName": "Default template",
+        "language": "js",
+        "electronRoot": "electron",
+        "ngBuildDir": "www",
+        "eBuildDir": ""
     },
     "versions": {
         "main": "3.0.0",

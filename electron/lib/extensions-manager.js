@@ -2,6 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const electron = require('electron');
 const {
+    app,
     ipcMain
 } = electron;
 
@@ -9,8 +10,8 @@ const env = require('../environment');
 
 class ExtensionsManager {
 
-    constructor(app_user_data_path) {
-        this.app_user_data_path = app_user_data_path;
+    constructor() {
+        this.app_user_data_path = app.getPath('userData');
         this.extensions = [];
         this.syncExtensions();
         ipcMain.on('extensions:get', (event) => {
