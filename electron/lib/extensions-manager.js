@@ -7,36 +7,40 @@ const {
 } = electron;
 
 const env = require('../environment');
+const APP_USER_DATA_PATH = app.getPath('userData');
+const EXT_CONF_PATH = env.production ? path.join(APP_USER_DATA_PATH, 'extensions-config.json') : path.resolve('www', 'assets', 'extensions-config.json');
+const EXT_PATH = env.production ? path.join(APP_USER_DATA_PATH, 'extensions') : path.resolve('www', 'assets', 'extensions');
 
 class ExtensionsManager {
 
     constructor() {
-        this.app_user_data_path = app.getPath('userData');
         this.extensions = [];
         this.syncExtensions();
         ipcMain.on('extensions:get', (event) => {
             this.getConfig().then(contents => {
                 event.sender.send('extensions:get:response', contents);
             });
-            // this.getAllExtensions().then(files => {
-            //     console.log(files);
-            //     event.sender.send('extensions:get:response', files);
-            // });
         });
     }
 
     syncExtensions() {
+        // TODO: Copy all extensions from /www/assets/extensions to userData folder
         return new Promise((resolve, reject) => {
-            // TODO: Copy all extensions from /www/assets/extensions to usedData folder
-            resolve();
+            if (fs.existsSync(path.resolve('www', 'assets', 'extensions')))
+                fs.copy(path.resolve('www', 'assets', 'extensions'), path.join(APP_USER_DATA_PATH, 'extensions')).then(() => {
+                    console.log(`Extensions copied (${path.resolve('www', 'assets', 'extensions')} -> ${path.join(APP_USER_DATA_PATH, 'extensions')})!`);
+                    resolve();
+                });
+            else
+                resolve();
         });
     }
 
     getAllExtensions() {
         return new Promise((resolve, reject) => {
-            const ext_path = env.production ? path.join(this.app_user_data_path, 'extensions') : path.resolve('www', 'assets', 'extensions');
-            fs.readdir(ext_path).then((files) => {
-                this.extensions = files.map(file => path.join(ext_path, file)).filter(file => file.match(/\.js$/));
+            // const ext_path = env.production ? path.join(APP_USER_DATA_PATH, 'extensions') : path.resolve('www', 'assets', 'extensions');
+            fs.readdir(EXT_PATH).then((files) => {
+                this.extensions = files.map(file => path.join(EXT_PATH, file)).filter(file => file.match(/\.js$/));
                 resolve(this.extensions);
             });
         });
@@ -44,13 +48,13 @@ class ExtensionsManager {
 
     getConfig() {
         return new Promise((resolve, reject) => {
-            const conf_path = `${env.production ? path.join(this.app_user_data_path, 'extensions-config.json') : path.resolve('www', 'assets', 'extensions-config.json')}`;
-            if (fs.existsSync(conf_path))
-                fs.readFile(conf_path).then(contents => {
+            // const EXT_CONF_PATH = `${env.production ? path.join(APP_USER_DATA_PATH, 'extensions-config.json') : path.resolve('www', 'assets', 'extensions-config.json')}`;
+            if (fs.existsSync(EXT_CONF_PATH))
+                fs.readFile(EXT_CONF_PATH).then(contents => {
                     try {
                         this.extensions_config = JSON.parse(contents);
                         Object.entries(this.extensions_config).forEach(([key, value]) => {
-                            const ext_path = env.production ? path.join(this.app_user_data_path, 'extensions') : path.resolve('www', 'assets', 'extensions', `${value['name']}.js`);
+                            const ext_path = path.join(EXT_PATH, `${value['name']}.js`);
                             if (fs.existsSync(ext_path))
                                 this.extensions_config[key].path = ext_path;
                         });

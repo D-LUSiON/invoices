@@ -45,10 +45,19 @@ class MainWindow {
             });
 
             // open the DevTools if not in production mode
-            if (!environment.production)
+            if (!environment.production) {
                 this.window.webContents.openDevTools({
                     mode: 'undocked'
                 });
+                const ContextMenu = require('./context-menu');
+                const cmenu = new ContextMenu(this.window.webContents);
+                this.window.webContents.on('context-menu', (e, params) => {
+                    cmenu.show({
+                        x: params.x,
+                        y: params.y
+                    });
+                });
+            }
 
             // open the DevTools with Ctrl-F12
             globalShortcut.register('CommandOrControl+F12', () => {
@@ -133,7 +142,9 @@ class MainWindow {
             const window_state = require(WINDOW_STATE_PATH);
             this.windowState = new WindowState({ ...window_state });
         } else
+            // fs.writeFileSync(WINDOW_STATE_PATH, {}, { encoding: 'utf8' });
             this.windowState = new WindowState();
+            this._saveWindowState();
     }
 
     _saveWindowState() {
