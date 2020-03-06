@@ -9,7 +9,7 @@
         "lint": "ng lint",
         "e2e": "ng e2e",
         "build:builder": "tsc -p builders/tsconfig.builders.json",
-        "build:all": "npm run build:shared && npm run build:invoices",
+        "build:all": "npm run build:shared && npm run build:invoices && npm run build:providers",
         "build:shared": "ng build shared && ng build --project extensions --prod --modulePath=shared#SharedModule --extensionName=shared  --outputPath=./src/assets/extensions",
         "build:invoices": "ng build --project extensions --prod --modulePath=./app/invoices/invoices.module#InvoicesModule --extensionName=invoices --sharedLibs=shared --outputPath=./src/assets/extensions",
         "build:providers": "ng build --project extensions --prod --modulePath=./app/providers/providers.module#ProvidersModule --extensionName=providers --sharedLibs=shared --outputPath=./src/assets/extensions"

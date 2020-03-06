@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedServiceService } from 'shared';
 import { InvoicesService } from '../../services/invoices.service';
 import { Invoice } from '../../models/invoice';
+import { AppStateService } from '@app/services';
+import { AppStateSharedService } from 'shared';
 
 export interface InvoicesList {
     [year: number]: {
@@ -41,7 +42,9 @@ export class InvoicesListComponent implements OnInit {
     ];
 
     constructor(
-        private _sharedService: SharedServiceService,
+        private _appState: AppStateService,
+        // TODO: ...
+        private _appStateShared: AppStateSharedService,
         private _invoicesService: InvoicesService,
     ) {
         this._invoicesService.invoices$.subscribe(invoices => {
@@ -51,6 +54,8 @@ export class InvoicesListComponent implements OnInit {
     }
 
     ngOnInit() {
+        this._appState.hello('Hello from invoices-list.component!');
+        this._appState.state$.subscribe(time => console.log(`invoices-list.component: ${time}`));
         this._invoicesService.getAll();
     }
 

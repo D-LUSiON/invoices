@@ -12,6 +12,7 @@ import { ExtensionLoaderService } from './services/extension-loader/extension-lo
 import { ClientExtensionLoaderService } from './services/extension-loader/client-extesion-loader.service';
 import { ExtensionsConfigProvider } from './services/extension-loader/extensions-config.provider';
 import { AnonymousGuard, AuthGuard } from './guards';
+import { AppStateService } from './services';
 
 @NgModule({
     declarations: [
@@ -41,6 +42,7 @@ import { AnonymousGuard, AuthGuard } from './guards';
             deps: [ExtensionsConfigProvider]
         },
         ElectronService,
+        // AppStateService,
         AnonymousGuard,
         AuthGuard,
     ],

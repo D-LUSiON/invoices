@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppStateService } from '@app/services';
 
 @Component({
   selector: 'app-invoice-preview',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InvoicePreviewComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private _appState: AppStateService,
+  ) { }
 
   ngOnInit() {
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Injector, ViewChild, ViewContainerRef, ComponentFactory } from '@angular/core';
-import { ElectronClientService } from 'src/app/services';
+import { ElectronClientService, AppStateService } from 'src/app/services';
 
 import { ExtensionLoaderService } from 'src/app/services/extension-loader/extension-loader.service';
 import { ExtensionsConfigProvider } from 'src/app/services/extension-loader/extensions-config.provider';
@@ -7,6 +7,7 @@ import { Extension } from '@app/shared/classes/extension';
 import { Observable } from 'rxjs';
 import { Tab } from '../../shared/classes/tab';
 import { MenuItem } from '../main-menu/main-menu.component';
+import { AppStateSharedService } from 'shared';
 
 @Component({
     selector: 'inv-home',
@@ -119,7 +120,9 @@ export class HomeComponent implements OnInit {
     constructor(
         private _electronService: ElectronClientService,
         private _extensionLoader: ExtensionLoaderService,
-        private _extensionsConfig: ExtensionsConfigProvider
+        private _extensionsConfig: ExtensionsConfigProvider,
+        private _appState: AppStateService,
+        private _appStateShared: AppStateSharedService,
     ) {
         this._electonWindow = this._electronService.remote.getCurrentWindow();
         this._electonWindow.removeMenu();
@@ -135,6 +138,9 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
+        this._appState.hello('Hello from home.component!');
+        this._appState.state$.subscribe(time => console.log(`home.component: ${time}`));
+
         this._extensionLoader.extensions$.subscribe(extensions => {
             this.loaded_extensions = { ...extensions };
             if (Object.keys(this.loaded_extensions).length) {

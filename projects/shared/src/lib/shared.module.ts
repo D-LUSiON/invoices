@@ -8,6 +8,7 @@ import { KeysPipe } from './pipes/keys.pipe';
 import { LogPipe } from './pipes/log.pipe';
 import { SortPipe } from './pipes/sort.pipe';
 import { CurrencyPipe } from './pipes/currency.pipe';
+import { AppStateSharedService } from './services/app-state.service';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,9 @@ export class SharedModule {
     static forRoot(): ModuleWithProviders {
         return {
             ngModule: SharedModule,
-            providers: []
+            providers: [
+                // AppStateSharedService
+            ]
         }
     }
 }

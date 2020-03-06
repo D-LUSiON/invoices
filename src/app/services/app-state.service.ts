@@ -4,10 +4,13 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
     providedIn: 'root'
 })
-export class AppStateSharedService {
+export class AppStateService {
     state$: BehaviorSubject<any> = new BehaviorSubject(null);
-
     constructor() {
-        console.log(`Hello from AppStateSharedService`);
+        console.log(`Hello from core app AppState service`);
+    }
+
+    hello(message: string) {
+        console.log(message);
     }
 }
