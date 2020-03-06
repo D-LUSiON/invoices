@@ -3,10 +3,12 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "invoices": {
+        "invoices-plg": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
+                    "inlineTemplate": true,
+                    "inlineStyle": true,
                     "style": "scss",
                     "skipTests": true
                 },
@@ -17,6 +19,9 @@
                     "skipTests": true
                 },
                 "@schematics/angular:guard": {
+                    "skipTests": true
+                },
+                "@schematics/angular:interceptor": {
                     "skipTests": true
                 },
                 "@schematics/angular:module": {
@@ -36,52 +41,40 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "www",
+                        "outputPath": "dist/invoices-plg",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "tsconfig.app.json",
-                        "aot": false,
+                        "aot": true,
                         "assets": [
                             "src/favicon.ico",
-                            "src/assets"
+                            "src/assets",
+                            "src/modules"
                         ],
                         "styles": [
-                            "node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
-                            "node_modules/@fortawesome/fontawesome-free/scss/solid.scss",
-                            "node_modules/@fortawesome/fontawesome-free/scss/regular.scss",
+                            "src/assets/themify-icons.css",
+                            "src/assets/segoe-mdl2-icons.css",
                             "src/styles.scss"
                         ],
-                        "scripts": [
-                            "node_modules/systemjs/dist/s.js",
-                            "node_modules/systemjs/dist/extras/named-register.js",
-                            "node_modules/systemjs/dist/extras/amd.js"
-                        ]
+                        "scripts": []
                     },
                     "configurations": {
                         "production": {
-                            "baseHref": "",
-                            "outputPath": "www",
-                            "deleteOutputPath": false,
-                            "optimization": true,
-                            "outputHashing": "none",
-                            "sourceMap": true,
-                            "extractCss": true,
-                            "namedChunks": true,
-                            "aot": true,
-                            "extractLicenses": true,
-                            "vendorChunk": true,
-                            "buildOptimizer": true,
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",
                                     "with": "src/environments/environment.prod.ts"
-                                },
-                                {
-                                    "replace": "src/app/services/extension-loader/extension-externals.ts",
-                                    "with": "src/app/services/extension-loader/extension-externals.prod.ts"
                                 }
                             ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
                             "budgets": [
                                 {
                                     "type": "initial",
@@ -93,18 +86,20 @@
                                     "maximumWarning": "6kb",
                                     "maximumError": "10kb"
                                 }
-                            ]
+                            ],
+                            "baseHref": "",
+                            "outputPath": "build/app"
                         },
                         "dev": {
                             "baseHref": "",
                             "outputPath": "www",
                             "deleteOutputPath": false,
                             "optimization": false,
-                            "outputHashing": "none",
+                            "outputHashing": "media",
                             "sourceMap": true,
                             "extractCss": false,
                             "namedChunks": true,
-                            "aot": false,
+                            "aot": true,
                             "extractLicenses": false,
                             "vendorChunk": true,
                             "buildOptimizer": false,
@@ -120,60 +115,18 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "invoices:build"
+                        "browserTarget": "invoices-plg:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "invoices:build:production"
+                            "browserTarget": "invoices-plg:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "invoices:build"
-                    }
-                }
-            }
-        },
-        "extensions": {
-            "projectType": "application",
-            "schematics": {
-                "@schematics/angular:component": {
-                    "style": "scss"
-                }
-            },
-            "root": "projects/extensions",
-            "sourceRoot": "projects/extensions/src",
-            "prefix": "app",
-            "architect": {
-                "build": {
-                    "builder": "./builders:extension",
-                    "options": {
-                        "outputPath": "dist/extensions",
-                        "index": "",
-                        "main": "projects/extensions/src/main.ts",
-                        "polyfills": "projects/extensions/src/polyfills.ts",
-                        "tsConfig": "projects/extensions/tsconfig.app.json",
-                        "es5BrowserSupport": false,
-                        "assets": [],
-                        "styles": [],
-                        "scripts": []
-                    },
-                    "configurations": {
-                        "production": {
-                            "fileReplacements": [],
-                            "optimization": true,
-                            "outputHashing": "none",
-                            "sourceMap": true,
-                            "extractCss": true,
-                            "namedChunks": false,
-                            "aot": true,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true,
-                            "budgets": []
-                        }
+                        "browserTarget": "invoices-plg:build"
                     }
                 }
             }
@@ -189,6 +142,11 @@
                     "options": {
                         "tsConfig": "projects/shared/tsconfig.lib.json",
                         "project": "projects/shared/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "projects/shared/tsconfig.lib.prod.json"
+                        }
                     }
                 },
                 "test": {
@@ -212,7 +170,127 @@
                     }
                 }
             }
+        },
+        "invoices": {
+            "projectType": "library",
+            "root": "projects/invoices",
+            "sourceRoot": "projects/invoices/src",
+            "prefix": "lib",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-ng-packagr:build",
+                    "options": {
+                        "tsConfig": "projects/invoices/tsconfig.lib.json",
+                        "project": "projects/invoices/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "projects/invoices/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/invoices/src/test.ts",
+                        "tsConfig": "projects/invoices/tsconfig.spec.json",
+                        "karmaConfig": "projects/invoices/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "projects/invoices/tsconfig.lib.json",
+                            "projects/invoices/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        },
+        "providers": {
+            "projectType": "library",
+            "root": "projects/providers",
+            "sourceRoot": "projects/providers/src",
+            "prefix": "lib",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-ng-packagr:build",
+                    "options": {
+                        "tsConfig": "projects/providers/tsconfig.lib.json",
+                        "project": "projects/providers/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "projects/providers/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/providers/src/test.ts",
+                        "tsConfig": "projects/providers/tsconfig.spec.json",
+                        "karmaConfig": "projects/providers/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "projects/providers/tsconfig.lib.json",
+                            "projects/providers/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        },
+        "sending": {
+            "projectType": "library",
+            "root": "projects/sending",
+            "sourceRoot": "projects/sending/src",
+            "prefix": "lib",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-ng-packagr:build",
+                    "options": {
+                        "tsConfig": "projects/sending/tsconfig.lib.json",
+                        "project": "projects/sending/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "projects/sending/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/sending/src/test.ts",
+                        "tsConfig": "projects/sending/tsconfig.spec.json",
+                        "karmaConfig": "projects/sending/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "projects/sending/tsconfig.lib.json",
+                            "projects/sending/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
         }
     },
-    "defaultProject": "invoices"
+    "defaultProject": "invoices-plg"
 }

@@ -1,50 +1,34 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-
-import { ElectronService } from 'ngx-electron';
-import { SharedModule } from 'shared';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ExtensionLoaderService } from './services/extension-loader/extension-loader.service';
-import { ClientExtensionLoaderService } from './services/extension-loader/client-extesion-loader.service';
-import { ExtensionsConfigProvider } from './services/extension-loader/extensions-config.provider';
-import { AnonymousGuard, AuthGuard } from './guards';
-import { AppStateService } from './services';
+import { SharedModule, ModulesProviderService, StateManagerService } from '@shared';
+import { ElectronService } from 'ngx-electron';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
     ],
     imports: [
         BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        SharedModule.forRoot(),
         AppRoutingModule,
+        SharedModule
     ],
     providers: [
-        {
-            provide: ExtensionLoaderService,
-            useClass: ClientExtensionLoaderService
-        },
-        ExtensionsConfigProvider,
+        ElectronService,
         {
             provide: APP_INITIALIZER,
-            useFactory: (provider: ExtensionsConfigProvider) => () =>
-                provider
-                    .loadConfig()
-                    .toPromise(),
-                    // .then(config => (provider.config = config)),
-            multi: true,
-            deps: [ExtensionsConfigProvider]
+            useFactory: (provider: ModulesProviderService) => () => provider.loadModules(),
+            deps: [ModulesProviderService],
+            multi: true
         },
-        ElectronService,
-        // AppStateService,
-        AnonymousGuard,
-        AuthGuard,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (provider: StateManagerService) => () => provider.getLastState(),
+            deps: [StateManagerService],
+            multi: true
+        },
     ],
     bootstrap: [AppComponent]
 })

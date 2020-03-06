@@ -1,0 +1,96 @@
+:host-context(lib-tabs) {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    overflow: overlay;
+    white-space: nowrap;
+    background-color: var(--bg-color);
+
+    &,
+    & * {
+        user-select: none;
+    }
+
+    .tabs-container {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+
+        &:empty::after {
+            content: 'No opened documents';
+            padding: calc(var(--spacing) + 3px) var(--spacing);
+            color: var(--c-main-darkest);
+            font-style: italic;
+        }
+
+        .tab-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            max-width: 230px;
+            padding: var(--spacing) calc(var(--spacing) * 4);
+            cursor: pointer;
+
+            &.active {
+                background-color: var(--bg-color-accented);
+            }
+
+            &.preview {
+                font-style: italic;
+            }
+
+            .tab-icon {
+                flex: 0 0 auto;
+                margin-right: calc(var(--spacing));
+            }
+            .tab-title {
+                flex: 1 1 auto;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+            .tab-button {
+                flex: 0 0 auto;
+                margin-left: calc(var(--spacing));
+                font-size: calc(var(--font-size) - 2pt);
+
+                .tab-dirty {
+                    display: none;
+                }
+                .tab-close {
+                    display: block;
+                }
+            }
+
+            &.dirty {
+                .tab-button {
+                    .tab-dirty {
+                        display: block;
+                    }
+                    .tab-close {
+                        display: none;
+                    }
+                }
+
+                &:hover {
+                    .tab-button {
+                        .tab-dirty {
+                            display: none;
+                        }
+                        .tab-close {
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // &:hover {
+    //     .tabs-container {
+    //         .tab-container {
+    //             padding-bottom: var(--spacing);
+    //         }
+    //     }
+    // }
+}

@@ -1,0 +1,39 @@
+:host-context(lib-accordion-group) {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    transition: all var(--animation-speed) ease-in-out;
+
+    .group-title {
+        flex: 0 0 auto;
+        padding: var(--spacing);
+        background-color: var(--bg-color-accented);
+        font-weight: bold;
+        letter-spacing: 0.15rem;
+        text-transform: uppercase;
+        box-shadow: 0px 8px 10px -2px #000;
+        cursor: pointer;
+    }
+
+    .group-content {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        height: 0;
+        padding: 0;
+        transition: all var(--animation-speed) ease-in-out;
+        opacity: 0;
+    }
+
+    &.expanded {
+        flex: 1 1 auto;
+
+        .group-content {
+            overflow: auto;
+            height: auto;
+            padding: var(--spacing);
+            opacity: 1;
+        }
+    }
+}

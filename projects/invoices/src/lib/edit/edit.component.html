@@ -1,0 +1,176 @@
+<div class="heading">
+    <h1>Invoice</h1>
+    <div class="actions">
+        <div class="msg msg-danger" *ngIf="invoiceForm?.invalid; else saveButton">Invalid</div>
+        <ng-template #saveButton>
+            <button type="button" class="btn" [disabled]="invoiceForm?.pristine" (click)="onSubmit()">
+                <div class="ti ti-save"></div>
+            </button>
+        </ng-template>
+    </div>
+</div>
+<form class="form-container" [formGroup]="invoiceForm" novalidate (ngSubmit)="onSubmit()">
+    <div class="invoice-container">
+        <div class="invoice-head">
+            <div class="invoice-recipient">
+                <div class="form-group">
+                    <label>Получател</label>
+                    <div class="form-control" readonly>Любомир Пейков</div>
+                </div>
+                <div class="form-group">
+                    <label>ЕИК</label>
+                    <div class="form-control" readonly>7811051085</div>
+                </div>
+                <div class="form-group">
+                    <label>ДДС Номер</label>
+                    <div class="form-control" readonly>BG7811051085</div>
+                </div>
+                <div class="form-group">
+                    <label>Адрес</label>
+                    <div class="form-control" readonly>София, ул. 11-ти Август №29</div>
+                </div>
+            </div>
+            <div class="invoice-heading">
+                <h1 class="text-center">Фактура</h1>
+                <div class="form-group">
+                    <label class="text-center">Номер</label>
+                    <input type="text" class="form-control" placeholder="Invoice number" formControlName="number">
+                </div>
+                <div class="form-group">
+                    <label class="text-center">Дата на издаване</label>
+                    <input type="date" class="form-control" placeholder="Date of issuing" formControlName="issue_date" [max]="today">
+                </div>
+                <div class="form-group">
+                    <label class="text-center">Дата на въвеждане</label>
+                    <div class="form-control" readonly>{{ invoice.creation_date }}</div>
+                </div>
+            </div>
+            <div class="invoice-issuer" formGroupName="provider">
+                <div class="form-group">
+                    <label>Доставчик</label>
+                    <input type="text" class="form-control" placeholder="Issuer" formControlName="organization">
+                </div>
+                <div class="form-group">
+                    <label>VAT</label>
+                    <input type="text" class="form-control" placeholder="VAT" [attr.readonly]="invoiceForm.value['provider']['id']" formControlName="vat">
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" class="form-control" placeholder="Address" [attr.readonly]="invoiceForm.value['provider']['id']" formControlName="address">
+                </div>
+                <div class="form-group">
+                    <label>Accountable person</label>
+                    <input type="text" class="form-control" placeholder="Accountable person" [attr.readonly]="invoiceForm.value['provider']['id']" formControlName="acc_person">
+                </div>
+            </div>
+        </div>
+        <div class="invoice-goods-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30px">#</th>
+                        <th>Name of goods/service</th>
+                        <th style="width: 10%">Measure</th>
+                        <th style="width: 10%">Qty.</th>
+                        <th style="width: 10%">Unit price</th>
+                        <th style="width: 5%">VAT (%)</th>
+                        <th style="width: 10%">Total</th>
+                        <th style="width: 5%"></th>
+                    </tr>
+                </thead>
+                <tbody formGroupName="goods">
+                    <tr [formArrayName]="idx" *ngFor="let row of invoiceForm.value['goods']; let idx = index">
+                        <td>{{ idx + 1 }}</td>
+                        <td>
+                            <input type="text" class="form-control" formControlName="title">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control text-right" formControlName="measure">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control text-right" formControlName="quantity">
+                        </td>
+                        <td>
+                            <input type="text" class="form-control text-right" formControlName="price">
+                        </td>
+                        <td>
+                            20%
+                        </td>
+                        <td class="text-right">
+                            {{ invoiceForm.value['goods'][idx].quantity * invoiceForm.value['goods'][idx].price }}
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-default" *ngIf="idx < invoiceForm.value['goods'].length - 1" (click)="removeNewGoodsRow(idx)">
+                                <span class="mdl2-RemoveFrom"></span>
+                            </button>
+                            <button type="button" class="btn btn-default" *ngIf="idx === invoiceForm.value['goods'].length - 1" (click)="addNewGoodsRow()">
+                                <span class="mdl2-AddTo"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="invoice-sum-container">
+            <div class="sum-container">
+                <div class="cell">Tax base (20%)</div>
+                <div class="cell text-right">{{ invoice.total_sum }} лв.</div>
+                <div class="cell">VAT charged</div>
+                <div class="cell text-right">{{ invoice.total_vat }} лв.</div>
+                <div class="cell">
+                    <strong>Payment amount</strong>
+                </div>
+                <div class="cell text-right">{{ invoice.payment_amount }} лв.</div>
+            </div>
+        </div>
+    </div>
+    <!-- <fieldset>
+        <legend>Invoice data ({{ invoiceForm?.invalid }})</legend>
+        <div class="form-group">
+            <label>Number</label>
+            <input type="text" class="form-control" placeholder="Invoice number" formControlName="number">
+        </div>
+        <div class="form-group">
+            <label>Issue date</label>
+            <input type="date" class="form-control" placeholder="Date of issuing" formControlName="issue_date" [max]="today">
+        </div>
+        <div class="form-group">
+            <label>Type</label>
+            <input type="text" class="form-control" placeholder="Type of the invoice" formControlName="type">
+        </div>
+        <div class="form-group">
+            <label>Notes</label>
+            <textarea class="form-control" placeholder="Notes" formControlName="notes"></textarea>
+        </div>
+    </fieldset>
+    <fieldset formGroupName="provider">
+        <legend>Provider</legend>
+        <div class="form-group">
+            <label>Provider name</label>
+            <input type="text" class="form-control" placeholder="Provider name" formControlName="organization">
+        </div>
+        <div class="form-group">
+            <label>Accountable person</label>
+            <input type="text" class="form-control" placeholder="Accountable person" formControlName="acc_person">
+        </div>
+        <div class="form-group">
+            <label>Address</label>
+            <input type="text" class="form-control" placeholder="Address" formControlName="address">
+        </div>
+        <div class="form-group">
+            <label>VAT</label>
+            <input type="text" class="form-control" placeholder="VAT" formControlName="vat">
+        </div>
+        <div class="form-group">
+            <label>VAT2</label>
+            <input type="text" class="form-control" placeholder="VAT2" formControlName="vat2">
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Invoice sum</legend>
+        <div class="form-group">
+            <label>Total sum</label>
+            <input type="text" class="form-control" placeholder="Total sum" formControlName="total_sum">
+        </div>
+    </fieldset> -->
+</form>

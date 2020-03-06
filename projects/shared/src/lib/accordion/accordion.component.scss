@@ -1,0 +1,33 @@
+:host-context(lib-accordion) {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    inv-accordion-group,
+    .accordion-group {
+        flex: 0 0 auto;
+        transition: all var(--animation-speed) ease-in-out;
+
+        .group-title {
+            padding: var(--spacing);
+            background-color: var(--bg-color-accented);
+            cursor: pointer;
+        }
+
+        .group-content {
+            overflow: hidden;
+            height: 0;
+            padding: 0;
+        }
+
+        &.expanded {
+            flex: 1 1 auto;
+
+            .group-content {
+                overflow: auto;
+                height: auto;
+                padding: var(--spacing);
+            }
+        }
+    }
+}

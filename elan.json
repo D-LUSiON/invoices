@@ -1,44 +1,34 @@
 {
-    "blacklist": [],
-    "package": {
-        "name": "invoices",
-        "productName": "invoices",
-        "description": "Invoices application v3.0 (rewriten from scratch)",
-        "author": "D-LUSiON",
-        "version": "3.0.0",
-        "license": "MIT",
-        "keywords": [
-            "angular",
-            "electron",
-            "invoices",
-            "management",
-            "app",
-            "application",
-            "software",
-            "free",
-            "mit"
-        ]
-    },
+  "blacklist": [],
+  "package": {
+    "name": "invoices-plg",
+    "productName": "invoices-plg",
+    "description": "",
+    "author": "",
+    "version": "1.0.0",
+    "license": "MIT",
+    "keywords": []
+  },
+  "angular": {
+    "prefix": "inv",
+    "routing": true,
+    "style": "SCSS",
+    "minimal": true,
+    "skipTests": true
+  },
+  "template": {
+    "name": "default",
+    "templateName": "Default template",
+    "language": "js",
+    "electronRoot": "electron",
+    "ngBuildDir": "www",
+    "eBuildDir": ""
+  },
+  "versions": {
+    "main": "1.0.0",
+    "electron": "1.0.0",
     "angular": {
-        "prefix": "inv",
-        "routing": true,
-        "style": "SCSS",
-        "minimal": true,
-        "skipTests": true
-    },
-    "template": {
-        "name": "default",
-        "templateName": "Default template",
-        "language": "js",
-        "electronRoot": "electron",
-        "ngBuildDir": "www",
-        "eBuildDir": ""
-    },
-    "versions": {
-        "main": "3.0.0",
-        "electron": "3.0.0",
-        "angular": {
-            "invoices": "3.0.0"
-        }
+      "invoices-plg": "1.0.0"
     }
+  }
 }

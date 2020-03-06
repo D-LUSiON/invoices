@@ -1,0 +1,58 @@
+<div class="tabs-container">
+    <div
+        *ngFor="let tab of tabs; let idx = index"
+        class="tab-container"
+        [class.active]="idx === active_tab_idx"
+        [class.dirty]="tab.dirty"
+        [class.preview]="tab.mode === 'preview'"
+        [title]="tab.title"
+        (click)="activateTab(tab, idx)"
+    >
+        <div class="tab-icon ti ti-pencil-alt"></div>
+        <div class="tab-title">{{ tab.title }}</div>
+        <div class="tab-button">
+            <span class="tab-dirty mdl2-FullCircleMask"></span>
+            <span class="tab-close mdl2-ChromeClose" (click)="closeTab(tab, idx)"></span>
+        </div>
+    </div>
+    <!-- <div class="tab-container active" title="Invoice 1 - november - 2019">
+        <div class="tab-icon ti ti-pencil-alt"></div>
+        <div class="tab-title">Invoice 1 - november - 2019</div>
+        <div class="tab-button">
+            <span class="tab-dirty mdl2-FullCircleMask"></span>
+            <span class="tab-close mdl2-ChromeClose"></span>
+        </div>
+    </div>
+    <div class="tab-container dirty" title="Invoice 2 - november - 2019">
+        <div class="tab-icon ti ti-pencil-alt"></div>
+        <div class="tab-title">Invoice 2 - november - 2019</div>
+        <div class="tab-button">
+            <span class="tab-dirty mdl2-FullCircleMask"></span>
+            <span class="tab-close mdl2-ChromeClose"></span>
+        </div>
+    </div>
+    <div class="tab-container" title="Invoice 3 - november - 2019">
+        <div class="tab-icon ti ti-pencil-alt"></div>
+        <div class="tab-title">Invoice 3 - november - 2019</div>
+        <div class="tab-button">
+            <span class="tab-dirty mdl2-FullCircleMask"></span>
+            <span class="tab-close mdl2-ChromeClose"></span>
+        </div>
+    </div>
+    <div class="tab-container dirty" title="Invoice 4 - november - 2019">
+        <div class="tab-icon ti ti-pencil-alt"></div>
+        <div class="tab-title">Invoice 4 - november - 2019</div>
+        <div class="tab-button">
+            <span class="tab-dirty mdl2-FullCircleMask"></span>
+            <span class="tab-close mdl2-ChromeClose"></span>
+        </div>
+    </div>
+    <div class="tab-container" title="Invoice 5 - november - 2019">
+        <div class="tab-icon ti ti-pencil-alt"></div>
+        <div class="tab-title">Invoice 5 - november - 2019</div>
+        <div class="tab-button">
+            <span class="tab-dirty mdl2-FullCircleMask"></span>
+            <span class="tab-close mdl2-ChromeClose"></span>
+        </div>
+    </div> -->
+</div>

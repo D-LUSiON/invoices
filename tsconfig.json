@@ -1,43 +1,52 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ],
-    "paths": {
-        "@app/*": [
-            "src/app/*"
+    "compileOnSave": false,
+    "compilerOptions": {
+        "baseUrl": "./",
+        "outDir": "./dist/out-tsc",
+        "sourceMap": true,
+        "declaration": false,
+        "downlevelIteration": true,
+        "experimentalDecorators": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "importHelpers": true,
+        "target": "es2015",
+        "typeRoots": [
+            "node_modules/@types"
         ],
-        "@app/shared": [
-            "src/app/shared"
+        "lib": [
+            "es2018",
+            "dom"
         ],
-        "@env/*": [
-            "src/environments/*"
-        ],
-        "shared": [
-            "dist/shared"
-        ],
-        "shared/*": [
-            "dist/shared/*"
-        ]
+        "paths": {
+            "@app": [
+                "src/app/*",
+                "src/app"
+            ],
+            "@shared": [
+                "src/modules/shared/*",
+                "src/modules/shared/shared",
+                "src/modules/shared"
+            ],
+            "@invoices": [
+                "resources/modules/invoices/ng/*",
+                "resources/modules/invoices/ng/invoices",
+                "resources/modules/invoices/ng"
+            ],
+            "@providers": [
+                "resources/modules/providers/ng/*",
+                "resources/modules/providers/ng/providers",
+                "resources/modules/providers/ng"
+            ],
+            "@sending": [
+                "resources/modules/sending/ng/*",
+                "resources/modules/sending/ng/sending",
+                "resources/modules/sending/ng"
+            ]
+        }
+    },
+    "angularCompilerOptions": {
+        "fullTemplateTypeCheck": true,
+        "strictInjectionParameters": true
     }
-  },
-  "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
-  }
 }

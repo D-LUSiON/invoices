@@ -1,9 +1,0 @@
-{
-  "builders": {
-    "extension": {
-      "implementation": "./extension-builder",
-      "schema": "./extension-builder/schema.json",
-      "description": "Extension Builder"
-    }
-  }
-}

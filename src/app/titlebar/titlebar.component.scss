@@ -1,0 +1,109 @@
+#Titlebar {
+    position: fixed;
+    z-index: 999999999;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: stretch;
+    height: 32px;
+    color: inherit;
+    background-color: var(--c-primary-dark-darker);
+
+    .app-icon {
+        width: 32px;
+        padding: var(--spacing);
+        flex: 0 0 auto;
+        display: flex;
+        justify-content: stretch;
+        align-items: stretch;
+
+        #AppIcon {
+            width: 100%;
+            // height: 26px;
+            background-clip: content-box;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    }
+
+    .draggable {
+        -webkit-app-region: drag;
+        flex: 1 1 auto;
+    }
+
+    .window-controls {
+        -webkit-app-region: no-drag;
+        user-select: none;
+        flex: 0 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, 46px);
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        font-family: "Segoe MDL2 Assets";
+        font-size: 10px;
+
+        .button {
+            grid-row: 1 / span 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            color: var(--c-primary-light-lighter);
+
+            span {
+                color: inherit;
+            }
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            &:active {
+                background: rgba(255, 255, 255, 0.2);
+            }
+
+            &.min-button {
+                grid-column: 1;
+            }
+
+            &.max-button,
+            &.restore-button {
+                grid-column: 2;
+            }
+
+            &.close-button {
+                grid-column: 3;
+
+                &:hover {
+                    background: #e81123 !important;
+                }
+
+                &:active {
+                    background: #f1707a !important;
+                    color: #000;
+                }
+            }
+
+            &.restore-button {
+                display: none;
+            }
+        }
+
+        &.maximized {
+            .button {
+                &.restore-button {
+                    display: flex;
+                }
+
+                &.max-button {
+                    display: none;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,4098 @@
+@font-face {
+    font-family: "SegoeUI";
+    src: url("fonts/SegMDL2.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class*="mdl2"] {
+    display: inline-block;
+    font: normal normal normal 14px/1 SegoeUI;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    cursor: inherit;
+}
+
+[class*="mdl2"]::before {
+    display: block;
+    content: "";
+}
+
+.mdl2-GlobalNavigationButton:before {
+    content: "\e700";
+}
+.mdl2-Wifi:before {
+    content: "\e701";
+}
+.mdl2-Bluetooth:before {
+    content: "\e702";
+}
+.mdl2-Connect:before {
+    content: "\e703";
+}
+.mdl2-InternetSharing:before {
+    content: "\e704";
+}
+.mdl2-VPN:before {
+    content: "\e705";
+}
+.mdl2-Brightness:before {
+    content: "\e706";
+}
+.mdl2-MapPin:before {
+    content: "\e707";
+}
+.mdl2-QuietHours:before {
+    content: "\e708";
+}
+.mdl2-Airplane:before {
+    content: "\e709";
+}
+.mdl2-Tablet:before {
+    content: "\e70a";
+}
+.mdl2-QuickNote:before {
+    content: "\e70b";
+}
+.mdl2-RememberedDevice:before {
+    content: "\e70c";
+}
+.mdl2-ChevronDown:before {
+    content: "\e70d";
+}
+.mdl2-ChevronUp:before {
+    content: "\e70e";
+}
+.mdl2-Edit:before {
+    content: "\e70f";
+}
+.mdl2-Add:before {
+    content: "\e710";
+}
+.mdl2-Cancel:before {
+    content: "\e711";
+}
+.mdl2-More:before {
+    content: "\e712";
+}
+.mdl2-Settings:before {
+    content: "\e713";
+}
+.mdl2-Video:before {
+    content: "\e714";
+}
+.mdl2-Mail:before {
+    content: "\e715";
+}
+.mdl2-People:before {
+    content: "\e716";
+}
+.mdl2-Phone:before {
+    content: "\e717";
+}
+.mdl2-Pin:before {
+    content: "\e718";
+}
+.mdl2-Shop:before {
+    content: "\e719";
+}
+.mdl2-Stop:before {
+    content: "\e71a";
+}
+.mdl2-Link:before {
+    content: "\e71b";
+}
+.mdl2-Filter:before {
+    content: "\e71c";
+}
+.mdl2-AllApps:before {
+    content: "\e71d";
+}
+.mdl2-Zoom:before {
+    content: "\e71e";
+}
+.mdl2-ZoomOut:before {
+    content: "\e71f";
+}
+.mdl2-Microphone:before {
+    content: "\e720";
+}
+.mdl2-Search:before {
+    content: "\e721";
+}
+.mdl2-Camera:before {
+    content: "\e722";
+}
+.mdl2-Attach:before {
+    content: "\e723";
+}
+.mdl2-Send:before {
+    content: "\e724";
+}
+.mdl2-SendFill:before {
+    content: "\e725";
+}
+.mdl2-WalkSolid:before {
+    content: "\e726";
+}
+.mdl2-InPrivate:before {
+    content: "\e727";
+}
+.mdl2-FavoriteList:before {
+    content: "\e728";
+}
+.mdl2-PageSolid:before {
+    content: "\e729";
+}
+.mdl2-Forward:before {
+    content: "\e72a";
+}
+.mdl2-Back:before {
+    content: "\e72b";
+}
+.mdl2-Refresh:before {
+    content: "\e72c";
+}
+.mdl2-Share:before {
+    content: "\e72d";
+}
+.mdl2-Lock:before {
+    content: "\e72e";
+}
+.mdl2-ReportHacked:before {
+    content: "\e730";
+}
+.mdl2-EMI:before {
+    content: "\e731";
+}
+.mdl2-FavoriteStar:before {
+    content: "\e734";
+}
+.mdl2-FavoriteStarFill:before {
+    content: "\e735";
+}
+.mdl2-ReadingMode:before {
+    content: "\e736";
+}
+.mdl2-Favicon:before {
+    content: "\e737";
+}
+.mdl2-Remove:before {
+    content: "\e738";
+}
+.mdl2-Checkbox:before {
+    content: "\e739";
+}
+.mdl2-CheckboxComposite:before {
+    content: "\e73a";
+}
+.mdl2-CheckboxFill:before {
+    content: "\e73b";
+}
+.mdl2-CheckboxIndeterminate:before {
+    content: "\e73c";
+}
+.mdl2-CheckboxCompositeReversed:before {
+    content: "\e73d";
+}
+.mdl2-CheckMark:before {
+    content: "\e73e";
+}
+.mdl2-BackToWindow:before {
+    content: "\e73f";
+}
+.mdl2-FullScreen:before {
+    content: "\e740";
+}
+.mdl2-ResizeTouchLarger:before {
+    content: "\e741";
+}
+.mdl2-ResizeTouchSmaller:before {
+    content: "\e742";
+}
+.mdl2-ResizeMouseSmall:before {
+    content: "\e743";
+}
+.mdl2-ResizeMouseMedium:before {
+    content: "\e744";
+}
+.mdl2-ResizeMouseWide:before {
+    content: "\e745";
+}
+.mdl2-ResizeMouseTall:before {
+    content: "\e746";
+}
+.mdl2-ResizeMouseLarge:before {
+    content: "\e747";
+}
+.mdl2-SwitchUser:before {
+    content: "\e748";
+}
+.mdl2-Print:before {
+    content: "\e749";
+}
+.mdl2-Up:before {
+    content: "\e74a";
+}
+.mdl2-Down:before {
+    content: "\e74b";
+}
+.mdl2-OEM:before {
+    content: "\e74c";
+}
+.mdl2-Delete:before {
+    content: "\e74d";
+}
+.mdl2-Save:before {
+    content: "\e74e";
+}
+.mdl2-Mute:before {
+    content: "\e74f";
+}
+.mdl2-BackSpaceQWERTY:before {
+    content: "\e750";
+}
+.mdl2-ReturnKey:before {
+    content: "\e751";
+}
+.mdl2-UpArrowShiftKey:before {
+    content: "\e752";
+}
+.mdl2-Cloud:before {
+    content: "\e753";
+}
+.mdl2-Flashlight:before {
+    content: "\e754";
+}
+.mdl2-RotationLock:before {
+    content: "\e755";
+}
+.mdl2-CommandPrompt:before {
+    content: "\e756";
+}
+.mdl2-SIPMove:before {
+    content: "\e759";
+}
+.mdl2-SIPUndock:before {
+    content: "\e75a";
+}
+.mdl2-SIPRedock:before {
+    content: "\e75b";
+}
+.mdl2-EraseTool:before {
+    content: "\e75c";
+}
+.mdl2-UnderscoreSpace:before {
+    content: "\e75d";
+}
+.mdl2-GripperTool:before {
+    content: "\e75e";
+}
+.mdl2-Dialpad:before {
+    content: "\e75f";
+}
+.mdl2-PageLeft:before {
+    content: "\e760";
+}
+.mdl2-PageRight:before {
+    content: "\e761";
+}
+.mdl2-MultiSelect:before {
+    content: "\e762";
+}
+.mdl2-KeyboardLeftHanded:before {
+    content: "\e763";
+}
+.mdl2-KeyboardRightHanded:before {
+    content: "\e764";
+}
+.mdl2-KeyboardClassic:before {
+    content: "\e765";
+}
+.mdl2-KeyboardSplit:before {
+    content: "\e766";
+}
+.mdl2-Volume:before {
+    content: "\e767";
+}
+.mdl2-Play:before {
+    content: "\e768";
+}
+.mdl2-Pause:before {
+    content: "\e769";
+}
+.mdl2-ChevronLeft:before {
+    content: "\e76b";
+}
+.mdl2-ChevronRight:before {
+    content: "\e76c";
+}
+.mdl2-InkingTool:before {
+    content: "\e76d";
+}
+.mdl2-Emoji2:before {
+    content: "\e76e";
+}
+.mdl2-GripperBarHorizontal:before {
+    content: "\e76f";
+}
+.mdl2-System:before {
+    content: "\e770";
+}
+.mdl2-Personalize:before {
+    content: "\e771";
+}
+.mdl2-Devices:before {
+    content: "\e772";
+}
+.mdl2-SearchAndApps:before {
+    content: "\e773";
+}
+.mdl2-Globe:before {
+    content: "\e774";
+}
+.mdl2-TimeLanguage:before {
+    content: "\e775";
+}
+.mdl2-EaseOfAccess:before {
+    content: "\e776";
+}
+.mdl2-UpdateRestore:before {
+    content: "\e777";
+}
+.mdl2-HangUp:before {
+    content: "\e778";
+}
+.mdl2-ContactInfo:before {
+    content: "\e779";
+}
+.mdl2-Unpin:before {
+    content: "\e77a";
+}
+.mdl2-Contact:before {
+    content: "\e77b";
+}
+.mdl2-Memo:before {
+    content: "\e77c";
+}
+.mdl2-IncomingCall:before {
+    content: "\e77e";
+}
+.mdl2-Paste:before {
+    content: "\e77f";
+}
+.mdl2-PhoneBook:before {
+    content: "\e780";
+}
+.mdl2-LEDLight:before {
+    content: "\e781";
+}
+.mdl2-Error:before {
+    content: "\e783";
+}
+.mdl2-GripperBarVertical:before {
+    content: "\e784";
+}
+.mdl2-Unlock:before {
+    content: "\e785";
+}
+.mdl2-Slideshow:before {
+    content: "\e786";
+}
+.mdl2-Calendar:before {
+    content: "\e787";
+}
+.mdl2-GripperResize:before {
+    content: "\e788";
+}
+.mdl2-Megaphone:before {
+    content: "\e789";
+}
+.mdl2-Trim:before {
+    content: "\e78a";
+}
+.mdl2-NewWindow:before {
+    content: "\e78b";
+}
+.mdl2-SaveLocal:before {
+    content: "\e78c";
+}
+.mdl2-Color:before {
+    content: "\e790";
+}
+.mdl2-DataSense:before {
+    content: "\e791";
+}
+.mdl2-SaveAs:before {
+    content: "\e792";
+}
+.mdl2-Light:before {
+    content: "\e793";
+}
+.mdl2-AspectRatio:before {
+    content: "\e799";
+}
+.mdl2-DataSenseBar:before {
+    content: "\e7a5";
+}
+.mdl2-Redo:before {
+    content: "\e7a6";
+}
+.mdl2-Undo:before {
+    content: "\e7a7";
+}
+.mdl2-Crop:before {
+    content: "\e7a8";
+}
+.mdl2-OpenWith:before {
+    content: "\e7ac";
+}
+.mdl2-Rotate:before {
+    content: "\e7ad";
+}
+.mdl2-RedEye:before {
+    content: "\e7b3";
+}
+.mdl2-SetlockScreen:before {
+    content: "\e7b5";
+}
+.mdl2-MapPin2:before {
+    content: "\e7b7";
+}
+.mdl2-Package:before {
+    content: "\e7b8";
+}
+.mdl2-Warning:before {
+    content: "\e7ba";
+}
+.mdl2-ReadingList:before {
+    content: "\e7bc";
+}
+.mdl2-Education:before {
+    content: "\e7be";
+}
+.mdl2-ShoppingCart:before {
+    content: "\e7bf";
+}
+.mdl2-Train:before {
+    content: "\e7c0";
+}
+.mdl2-Flag:before {
+    content: "\e7c1";
+}
+.mdl2-Page:before {
+    content: "\e7c3";
+}
+.mdl2-TaskView:before {
+    content: "\e7c4";
+}
+.mdl2-BrowsePhotos:before {
+    content: "\e7c5";
+}
+.mdl2-HalfStarLeft:before {
+    content: "\e7c6";
+}
+.mdl2-HalfStarRight:before {
+    content: "\e7c7";
+}
+.mdl2-Record:before {
+    content: "\e7c8";
+}
+.mdl2-TouchPointer:before {
+    content: "\e7c9";
+}
+.mdl2-LangJPN:before {
+    content: "\e7de";
+}
+.mdl2-Ferry:before {
+    content: "\e7e3";
+}
+.mdl2-Highlight:before {
+    content: "\e7e6";
+}
+.mdl2-ActionCenterNotification:before {
+    content: "\e7e7";
+}
+.mdl2-PowerButton:before {
+    content: "\e7e8";
+}
+.mdl2-ResizeTouchNarrower:before {
+    content: "\e7ea";
+}
+.mdl2-ResizeTouchShorter:before {
+    content: "\e7eb";
+}
+.mdl2-DrivingMode:before {
+    content: "\e7ec";
+}
+.mdl2-RingerSilent:before {
+    content: "\e7ed";
+}
+.mdl2-OtherUser:before {
+    content: "\e7ee";
+}
+.mdl2-Admin:before {
+    content: "\e7ef";
+}
+.mdl2-CC:before {
+    content: "\e7f0";
+}
+.mdl2-SDCard:before {
+    content: "\e7f1";
+}
+.mdl2-CallForwarding:before {
+    content: "\e7f2";
+}
+.mdl2-SettingsDisplaySound:before {
+    content: "\e7f3";
+}
+.mdl2-TVMonitor:before {
+    content: "\e7f4";
+}
+.mdl2-Speakers:before {
+    content: "\e7f5";
+}
+.mdl2-Headphone:before {
+    content: "\e7f6";
+}
+.mdl2-DeviceLaptopPic:before {
+    content: "\e7f7";
+}
+.mdl2-DeviceLaptopNoPic:before {
+    content: "\e7f8";
+}
+.mdl2-DeviceMonitorRightPic:before {
+    content: "\e7f9";
+}
+.mdl2-DeviceMonitorLeftPic:before {
+    content: "\e7fa";
+}
+.mdl2-DeviceMonitorNoPic:before {
+    content: "\e7fb";
+}
+.mdl2-Game:before {
+    content: "\e7fc";
+}
+.mdl2-HorizontalTabKey:before {
+    content: "\e7fd";
+}
+.mdl2-StreetsideSplitMinimize:before {
+    content: "\e802";
+}
+.mdl2-StreetsideSplitExpand:before {
+    content: "\e803";
+}
+.mdl2-Car:before {
+    content: "\e804";
+}
+.mdl2-Walk:before {
+    content: "\e805";
+}
+.mdl2-Bus:before {
+    content: "\e806";
+}
+.mdl2-TiltUp:before {
+    content: "\e809";
+}
+.mdl2-TiltDown:before {
+    content: "\e80a";
+}
+.mdl2-CallControl:before {
+    content: "\e80b";
+}
+.mdl2-RotateMapRight:before {
+    content: "\e80c";
+}
+.mdl2-RotateMapLeft:before {
+    content: "\e80d";
+}
+.mdl2-Home:before {
+    content: "\e80f";
+}
+.mdl2-ParkingLocation:before {
+    content: "\e811";
+}
+.mdl2-MapCompassTop:before {
+    content: "\e812";
+}
+.mdl2-MapCompassBottom:before {
+    content: "\e813";
+}
+.mdl2-IncidentTriangle:before {
+    content: "\e814";
+}
+.mdl2-Touch:before {
+    content: "\e815";
+}
+.mdl2-MapDirections:before {
+    content: "\e816";
+}
+.mdl2-StartPoint:before {
+    content: "\e819";
+}
+.mdl2-StopPoint:before {
+    content: "\e81a";
+}
+.mdl2-EndPoint:before {
+    content: "\e81b";
+}
+.mdl2-History:before {
+    content: "\e81c";
+}
+.mdl2-Location:before {
+    content: "\e81d";
+}
+.mdl2-MapLayers:before {
+    content: "\e81e";
+}
+.mdl2-Accident:before {
+    content: "\e81f";
+}
+.mdl2-Work:before {
+    content: "\e821";
+}
+.mdl2-Construction:before {
+    content: "\e822";
+}
+.mdl2-Recent:before {
+    content: "\e823";
+}
+.mdl2-Bank:before {
+    content: "\e825";
+}
+.mdl2-DownloadMap:before {
+    content: "\e826";
+}
+.mdl2-InkingToolFill2:before {
+    content: "\e829";
+}
+.mdl2-HighlightFill2:before {
+    content: "\e82a";
+}
+.mdl2-EraseToolFill:before {
+    content: "\e82b";
+}
+.mdl2-EraseToolFill2:before {
+    content: "\e82c";
+}
+.mdl2-Dictionary:before {
+    content: "\e82d";
+}
+.mdl2-DictionaryAdd:before {
+    content: "\e82e";
+}
+.mdl2-ToolTip:before {
+    content: "\e82f";
+}
+.mdl2-ChromeBack:before {
+    content: "\e830";
+}
+.mdl2-ProvisioningPackage:before {
+    content: "\e835";
+}
+.mdl2-AddRemoteDevice:before {
+    content: "\e836";
+}
+.mdl2-FolderOpen:before {
+    content: "\e838";
+}
+.mdl2-Ethernet:before {
+    content: "\e839";
+}
+ .mdl2-ShareBroadband:before {
+     content: "\e83a";
+ }
+.mdl2-DirectAccess:before {
+    content: "\e83b";
+}
+ .mdl2-DialUp:before {
+     content: "\e83c";
+ }
+.mdl2-DefenderApp:before  {
+    content: "\e83d";
+}
+.mdl2-BatteryCharging9:before {
+    content: "\e83e";
+}
+.mdl2-Battery10:before {
+    content: "\e83f";
+}
+.mdl2-Pinned:before {
+    content: "\e840";
+}
+.mdl2-PinFill:before {
+    content: "\e841";
+}
+.mdl2-PinnedFill:before {
+    content: "\e842";
+}
+.mdl2-PeriodKey:before {
+    content: "\e843";
+}
+.mdl2-PuncKey:before {
+    content: "\e844";
+}
+.mdl2-RevToggleKey:before {
+    content: "\e845";
+}
+.mdl2-RightArrowKeyTime1:before {
+    content: "\e846";
+}
+.mdl2-RightArrowKeyTime2:before {
+    content: "\e847";
+}
+.mdl2-LeftQuote:before {
+    content: "\e848";
+}
+.mdl2-RightQuote:before {
+    content: "\e849";
+}
+.mdl2-DownShiftKey:before {
+    content: "\e84a";
+}
+.mdl2-UpShiftKey:before {
+    content: "\e84b";
+}
+.mdl2-PuncKey0:before {
+    content: "\e84c";
+}
+.mdl2-PuncKeyLeftBottom:before {
+    content: "\e84d";
+}
+.mdl2-RightArrowKeyTime3:before {
+    content: "\e84e";
+}
+.mdl2-RightArrowKeyTime4:before {
+    content: "\e84f";
+}
+.mdl2-Battery0:before {
+    content: "\e850";
+}
+.mdl2-Battery1:before {
+    content: "\e851";
+}
+.mdl2-Battery2:before {
+    content: "\e852";
+}
+.mdl2-Battery3:before {
+    content: "\e853";
+}
+.mdl2-Battery4:before {
+    content: "\e854";
+}
+.mdl2-Battery5:before {
+    content: "\e855";
+}
+.mdl2-Battery6:before {
+    content: "\e856";
+}
+.mdl2-Battery7:before {
+    content: "\e857";
+}
+.mdl2-Battery8:before {
+    content: "\e858";
+}
+.mdl2-Battery9:before {
+    content: "\e859";
+}
+.mdl2-BatteryCharging0:before {
+    content: "\e85a";
+}
+.mdl2-BatteryCharging1:before {
+    content: "\e85b";
+}
+.mdl2-BatteryCharging2:before {
+    content: "\e85c";
+}
+.mdl2-BatteryCharging3:before {
+    content: "\e85d";
+}
+.mdl2-BatteryCharging4:before {
+    content: "\e85e";
+}
+.mdl2-BatteryCharging5:before {
+    content: "\e85f";
+}
+.mdl2-BatteryCharging6:before {
+    content: "\e860";
+}
+.mdl2-BatteryCharging7:before {
+    content: "\e861";
+}
+.mdl2-BatteryCharging8:before {
+    content: "\e862";
+}
+.mdl2-BatterySaver0:before {
+    content: "\e863";
+}
+.mdl2-BatterySaver1:before {
+    content: "\e864";
+}
+.mdl2-BatterySaver2:before {
+    content: "\e865";
+}
+.mdl2-BatterySaver3:before {
+    content: "\e866";
+}
+.mdl2-BatterySaver4:before {
+    content: "\e867";
+}
+.mdl2-BatterySaver5:before {
+    content: "\e868";
+}
+.mdl2-BatterySaver6:before {
+    content: "\e869";
+}
+.mdl2-BatterySaver7:before {
+    content: "\e86a";
+}
+.mdl2-BatterySaver8:before {
+    content: "\e86b";
+}
+.mdl2-SignalBars1:before {
+    content: "\e86c";
+}
+.mdl2-SignalBars2:before {
+    content: "\e86d";
+}
+.mdl2-SignalBars3:before {
+    content: "\e86e";
+}
+.mdl2-SignalBars4:before {
+    content: "\e86f";
+}
+.mdl2-SignalBars5:before {
+    content: "\e870";
+}
+.mdl2-SignalNotConnected:before {
+    content: "\e871";
+}
+.mdl2-Wifi1:before {
+    content: "\e872";
+}
+.mdl2-Wifi2:before {
+    content: "\e873";
+}
+.mdl2-Wifi3:before {
+    content: "\e874";
+}
+.mdl2-MobSIMLock:before {
+    content: "\e875";
+}
+.mdl2-MobSIMMissing:before {
+    content: "\e876";
+}
+.mdl2-Vibrate:before {
+    content: "\e877";
+}
+.mdl2-RoamingInternational:before {
+    content: "\e878";
+}
+.mdl2-RoamingDomestic:before {
+    content: "\e879";
+}
+.mdl2-CallForwardInternational:before {
+    content: "\e87a";
+}
+.mdl2-CallForwardRoaming:before {
+    content: "\e87b";
+}
+.mdl2-JpnRomanji:before {
+    content: "\e87c";
+}
+.mdl2-JpnRomanjiLock:before {
+    content: "\e87d";
+}
+.mdl2-JpnRomanjiShift:before {
+    content: "\e87e";
+}
+.mdl2-JpnRomanjiShiftLock:before {
+    content: "\e87f";
+}
+.mdl2-StatusDataTransfer:before {
+    content: "\e880";
+}
+.mdl2-StatusDataTransferVPN:before {
+    content: "\e881";
+}
+.mdl2-StatusDualSIM2:before {
+    content: "\e882";
+}
+.mdl2-StatusDualSIM2VPN:before {
+    content: "\e883";
+}
+.mdl2-StatusDualSIM1:before {
+    content: "\e884";
+}
+.mdl2-StatusDualSIM1VPN:before {
+    content: "\e885";
+}
+.mdl2-StatusSGLTE:before {
+    content: "\e886";
+}
+.mdl2-StatusSGLTECell:before {
+    content: "\e887";
+}
+.mdl2-StatusSGLTEDataVPN:before {
+    content: "\e888";
+}
+.mdl2-StatusVPN:before {
+    content: "\e889";
+}
+.mdl2-WifiHotspot:before {
+    content: "\e88a";
+}
+.mdl2-LanguageKor:before {
+    content: "\e88b";
+}
+.mdl2-LanguageCht:before {
+    content: "\e88c";
+}
+.mdl2-LanguageChs:before {
+    content: "\e88d";
+}
+.mdl2-USB:before {
+    content: "\e88e";
+}
+.mdl2-InkingToolFill:before {
+    content: "\e88f";
+}
+.mdl2-View:before {
+    content: "\e890";
+}
+.mdl2-HighlightFill:before {
+    content: "\e891";
+}
+.mdl2-Previous:before {
+    content: "\e892";
+}
+.mdl2-Next:before {
+    content: "\e893";
+}
+.mdl2-Clear:before {
+    content: "\e894";
+}
+.mdl2-Sync:before {
+    content: "\e895";
+}
+.mdl2-Download:before {
+    content: "\e896";
+}
+.mdl2-Help:before {
+    content: "\e897";
+}
+.mdl2-Upload:before {
+    content: "\e898";
+}
+.mdl2-Emoji:before {
+    content: "\e899";
+}
+.mdl2-TwoPage:before {
+    content: "\e89a";
+}
+.mdl2-LeaveChat:before {
+    content: "\e89b";
+}
+.mdl2-MailForward:before {
+    content: "\e89c";
+}
+.mdl2-RotateCamera:before {
+    content: "\e89e";
+}
+.mdl2-ClosePane:before {
+    content: "\e89f";
+}
+.mdl2-OpenPane:before {
+    content: "\e8a0";
+}
+.mdl2-PreviewLink:before {
+    content: "\e8a1";
+}
+.mdl2-AttachCamera:before {
+    content: "\e8a2";
+}
+.mdl2-ZoomIn:before {
+    content: "\e8a3";
+}
+.mdl2-Bookmarks:before {
+    content: "\e8a4";
+}
+.mdl2-Document:before {
+    content: "\e8a5";
+}
+.mdl2-ProtectedDocument:before {
+    content: "\e8a6";
+}
+.mdl2-OpenInNewWindow:before {
+    content: "\e8a7";
+}
+.mdl2-MailFill:before {
+    content: "\e8a8";
+}
+.mdl2-ViewAll:before {
+    content: "\e8a9";
+}
+.mdl2-VideoChat:before {
+    content: "\e8aa";
+}
+.mdl2-Switch:before {
+    content: "\e8ab";
+}
+.mdl2-Rename:before {
+    content: "\e8ac";
+}
+.mdl2-Go:before {
+    content: "\e8ad";
+}
+.mdl2-SurfaceHub:before {
+    content: "\e8ae";
+}
+.mdl2-Remote:before {
+    content: "\e8af";
+}
+.mdl2-Click:before {
+    content: "\e8b0";
+}
+.mdl2-Shuffle:before {
+    content: "\e8b1";
+}
+.mdl2-Movies:before {
+    content: "\e8b2";
+}
+.mdl2-SelectAll:before {
+    content: "\e8b3";
+}
+.mdl2-Orientation:before {
+    content: "\e8b4";
+}
+.mdl2-Import:before {
+    content: "\e8b5";
+}
+.mdl2-ImportAll:before {
+    content: "\e8b6";
+}
+.mdl2-Folder:before {
+    content: "\e8b7";
+}
+.mdl2-Webcam:before {
+    content: "\e8b8";
+}
+.mdl2-Picture:before {
+    content: "\e8b9";
+}
+.mdl2-Caption:before {
+    content: "\e8ba";
+}
+.mdl2-ChromeClose:before {
+    content: "\e8bb";
+}
+.mdl2-ShowResults:before {
+    content: "\e8bc";
+}
+.mdl2-Message:before {
+    content: "\e8bd";
+}
+.mdl2-Leaf:before {
+    content: "\e8be";
+}
+.mdl2-CalendarDay:before {
+    content: "\e8bf";
+}
+.mdl2-CalendarWeek:before {
+    content: "\e8c0";
+}
+.mdl2-Characters:before {
+    content: "\e8c1";
+}
+.mdl2-MailReplyAll:before {
+    content: "\e8c2";
+}
+.mdl2-Read:before {
+    content: "\e8c3";
+}
+.mdl2-ShowBcc:before {
+    content: "\e8c4";
+}
+.mdl2-HideBcc:before {
+    content: "\e8c5";
+}
+.mdl2-Cut:before {
+    content: "\e8c6";
+}
+.mdl2-PaymentCard:before {
+    content: "\e8c7";
+}
+.mdl2-Copy:before {
+    content: "\e8c8";
+}
+.mdl2-Important:before {
+    content: "\e8c9";
+}
+.mdl2-MailReply:before {
+    content: "\e8ca";
+}
+.mdl2-Sort:before {
+    content: "\e8cb";
+}
+.mdl2-MobileTablet:before {
+    content: "\e8cc";
+}
+.mdl2-DisconnectDrive:before {
+    content: "\e8cd";
+}
+.mdl2-MapDrive:before {
+    content: "\e8ce";
+}
+.mdl2-ContactPresence:before {
+    content: "\e8cf";
+}
+.mdl2-Priority:before {
+    content: "\e8d0";
+}
+.mdl2-GotoToday:before {
+    content: "\e8d1";
+}
+.mdl2-Font:before {
+    content: "\e8d2";
+}
+.mdl2-FontColor:before {
+    content: "\e8d3";
+}
+.mdl2-Contact2:before {
+    content: "\e8d4";
+}
+.mdl2-FolderFill:before {
+    content: "\e8d5";
+}
+.mdl2-Audio:before {
+    content: "\e8d6";
+}
+.mdl2-Permissions:before {
+    content: "\e8d7";
+}
+.mdl2-DisableUpdates:before {
+    content: "\e8d8";
+}
+.mdl2-Unfavorite:before {
+    content: "\e8d9";
+}
+.mdl2-OpenLocal:before {
+    content: "\e8da";
+}
+.mdl2-Italic:before {
+    content: "\e8db";
+}
+.mdl2-Underline:before {
+    content: "\e8dc";
+}
+.mdl2-Bold:before {
+    content: "\e8dd";
+}
+.mdl2-MoveToFolder:before {
+    content: "\e8de";
+}
+.mdl2-LikeDislike:before {
+    content: "\e8df";
+}
+.mdl2-Dislike:before {
+    content: "\e8e0";
+}
+.mdl2-Like:before {
+    content: "\e8e1";
+}
+.mdl2-AlignRight:before {
+    content: "\e8e2";
+}
+.mdl2-AlignCenter:before {
+    content: "\e8e3";
+}
+.mdl2-AlignLeft:before {
+    content: "\e8e4";
+}
+.mdl2-OpenFile:before {
+    content: "\e8e5";
+}
+.mdl2-ClearSelection:before {
+    content: "\e8e6";
+}
+.mdl2-FontDecrease:before {
+    content: "\e8e7";
+}
+.mdl2-FontIncrease:before {
+    content: "\e8e8";
+}
+.mdl2-FontSize:before {
+    content: "\e8e9";
+}
+.mdl2-CellPhone:before {
+    content: "\e8ea";
+}
+.mdl2-Reshare:before {
+    content: "\e8eb";
+}
+.mdl2-Tag:before {
+    content: "\e8ec";
+}
+.mdl2-RepeatOne:before {
+    content: "\e8ed";
+}
+.mdl2-RepeatAll:before {
+    content: "\e8ee";
+}
+.mdl2-Calculator:before {
+    content: "\e8ef";
+}
+.mdl2-Directions:before {
+    content: "\e8f0";
+}
+.mdl2-Library:before {
+    content: "\e8f1";
+}
+.mdl2-ChatBubbles:before {
+    content: "\e8f2";
+}
+.mdl2-PostUpdate:before {
+    content: "\e8f3";
+}
+.mdl2-NewFolder:before {
+    content: "\e8f4";
+}
+.mdl2-CalendarReply:before {
+    content: "\e8f5";
+}
+.mdl2-UnsyncFolder:before {
+    content: "\e8f6";
+}
+.mdl2-SyncFolder:before {
+    content: "\e8f7";
+}
+.mdl2-BlockContact:before {
+    content: "\e8f8";
+}
+.mdl2-SwitchApps:before {
+    content: "\e8f9";
+}
+.mdl2-AddFriend:before {
+    content: "\e8fa";
+}
+.mdl2-Accept:before {
+    content: "\e8fb";
+}
+.mdl2-GoToStart:before {
+    content: "\e8fc";
+}
+.mdl2-BulletedList:before {
+    content: "\e8fd";
+}
+.mdl2-Scan:before {
+    content: "\e8fe";
+}
+.mdl2-Preview:before {
+    content: "\e8ff";
+}
+.mdl2-Group:before {
+    content: "\e902";
+}
+.mdl2-ZeroBars:before {
+    content: "\e904";
+}
+.mdl2-OneBar:before {
+    content: "\e905";
+}
+.mdl2-TwoBars:before {
+    content: "\e906";
+}
+.mdl2-ThreeBars:before {
+    content: "\e907";
+}
+.mdl2-FourBars:before {
+    content: "\e908";
+}
+.mdl2-World:before {
+    content: "\e909";
+}
+.mdl2-Comment:before {
+    content: "\e90a";
+}
+.mdl2-MusicInfo:before {
+    content: "\e90b";
+}
+.mdl2-DockLeft:before {
+    content: "\e90c";
+}
+.mdl2-DockRight:before {
+    content: "\e90d";
+}
+.mdl2-DockBottom:before {
+    content: "\e90e";
+}
+.mdl2-Repair:before {
+    content: "\e90f";
+}
+.mdl2-Accounts:before {
+    content: "\e910";
+}
+.mdl2-DullSound:before {
+    content: "\e911";
+}
+.mdl2-Manage:before {
+    content: "\e912";
+}
+.mdl2-Street:before {
+    content: "\e913";
+}
+.mdl2-Printer3D:before {
+    content: "\e914";
+}
+.mdl2-RadioBullet:before {
+    content: "\e915";
+}
+.mdl2-Stopwatch:before {
+    content: "\e916";
+}
+.mdl2-Photo:before {
+    content: "\e91b";
+}
+.mdl2-ActionCenter:before {
+    content: "\e91c";
+}
+.mdl2-FullCircleMask:before {
+    content: "\e91f";
+}
+.mdl2-ChromeMinimize:before {
+    content: "\e921";
+}
+.mdl2-ChromeMaximize:before {
+    content: "\e922";
+}
+.mdl2-ChromeRestore:before {
+    content: "\e923";
+}
+.mdl2-Annotation:before {
+    content: "\e924";
+}
+.mdl2-BackSpaceQWERTYSm:before {
+    content: "\e925";
+}
+.mdl2-BackSpaceQWERTYMd:before {
+    content: "\e926";
+}
+.mdl2-Swipe:before {
+    content: "\e927";
+}
+.mdl2-Fingerprint:before {
+    content: "\e928";
+}
+.mdl2-Handwriting:before {
+    content: "\e929";
+}
+.mdl2-ChromeBackToWindow:before {
+    content: "\e92c";
+}
+.mdl2-ChromeFullScreen:before {
+    content: "\e92d";
+}
+.mdl2-KeyboardStandard:before {
+    content: "\e92e";
+}
+.mdl2-KeyboardDismiss:before {
+    content: "\e92f";
+}
+.mdl2-Completed:before {
+    content: "\e930";
+}
+.mdl2-ChromeAnnotate:before {
+    content: "\e931";
+}
+.mdl2-Label:before {
+    content: "\e932";
+}
+.mdl2-IBeam:before {
+    content: "\e933";
+}
+.mdl2-IBeamOutline:before {
+    content: "\e934";
+}
+.mdl2-FlickDown:before {
+    content: "\e935";
+}
+.mdl2-FlickUp:before {
+    content: "\e936";
+}
+.mdl2-FlickLeft:before {
+    content: "\e937";
+}
+.mdl2-FlickRight:before {
+    content: "\e938";
+}
+.mdl2-FeedbackApp:before {
+    content: "\e939";
+}
+.mdl2-MusicAlbum:before {
+    content: "\e93c";
+}
+.mdl2-Streaming:before {
+    content: "\e93e";
+}
+.mdl2-Code:before {
+    content: "\e943";
+}
+.mdl2-ReturnToWindow:before {
+    content: "\e944";
+}
+.mdl2-LightningBolt:before {
+    content: "\e945";
+}
+.mdl2-Info:before {
+    content: "\e946";
+}
+.mdl2-CalculatorMultiply:before {
+    content: "\e947";
+}
+.mdl2-CalculatorAddition:before {
+    content: "\e948";
+}
+.mdl2-CalculatorSubtract:before {
+    content: "\e949";
+}
+.mdl2-CalculatorDivide:before {
+    content: "\e94a";
+}
+.mdl2-CalculatorSquareroot:before {
+    content: "\e94b";
+}
+.mdl2-CalculatorPercentage:before {
+    content: "\e94c";
+}
+.mdl2-CalculatorNegate:before {
+    content: "\e94d";
+}
+.mdl2-CalculatorEqualTo:before {
+    content: "\e94e";
+}
+.mdl2-CalculatorBackspace:before {
+    content: "\e94f";
+}
+.mdl2-Component:before {
+    content: "\e950";
+}
+.mdl2-DMC:before {
+    content: "\e951";
+}
+.mdl2-Dock:before {
+    content: "\e952";
+}
+.mdl2-MultimediaDMS:before {
+    content: "\e953";
+}
+.mdl2-MultimediaDVR:before {
+    content: "\e954";
+}
+.mdl2-MultimediaPMP:before {
+    content: "\e955";
+}
+.mdl2-PrintfaxPrinterFile:before {
+    content: "\e956";
+}
+.mdl2-Sensor:before {
+    content: "\e957";
+}
+.mdl2-StorageOptical:before {
+    content: "\e958";
+}
+.mdl2-Communications:before {
+    content: "\e95a";
+}
+.mdl2-Headset:before {
+    content: "\e95b";
+}
+.mdl2-Projector:before {
+    content: "\e95d";
+}
+.mdl2-Health:before {
+    content: "\e95e";
+}
+.mdl2-Wire:before {
+    content: "\e95f";
+}
+.mdl2-Webcam2:before {
+    content: "\e960";
+}
+.mdl2-Input:before {
+    content: "\e961";
+}
+.mdl2-Mouse:before {
+    content: "\e962";
+}
+.mdl2-Smartcard:before {
+    content: "\e963";
+}
+.mdl2-SmartcardVirtual:before {
+    content: "\e964";
+}
+.mdl2-MediaStorageTower:before {
+    content: "\e965";
+}
+.mdl2-ReturnKeySm:before {
+    content: "\e966";
+}
+.mdl2-GameConsole:before {
+    content: "\e967";
+}
+.mdl2-Network:before {
+    content: "\e968";
+}
+.mdl2-StorageNetworkWireless:before {
+    content: "\e969";
+}
+.mdl2-StorageTape:before {
+    content: "\e96a";
+}
+.mdl2-ChevronUpSmall:before {
+    content: "\e96d";
+}
+.mdl2-ChevronDownSmall:before {
+    content: "\e96e";
+}
+.mdl2-ChevronLeftSmall:before {
+    content: "\e96f";
+}
+.mdl2-ChevronRightSmall:before {
+    content: "\e970";
+}
+.mdl2-ChevronUpMed:before {
+    content: "\e971";
+}
+.mdl2-ChevronDownMed:before {
+    content: "\e972";
+}
+.mdl2-ChevronLeftMed:before {
+    content: "\e973";
+}
+.mdl2-ChevronRightMed:before {
+    content: "\e974";
+}
+.mdl2-Devices2:before {
+    content: "\e975";
+}
+.mdl2-ExpandTile:before {
+    content: "\e976";
+}
+.mdl2-PC1:before {
+    content: "\e977";
+}
+.mdl2-PresenceChicklet:before {
+    content: "\e978";
+}
+.mdl2-PresenceChickletVideo:before {
+    content: "\e979";
+}
+.mdl2-Reply:before {
+    content: "\e97a";
+}
+.mdl2-SetTile:before {
+    content: "\e97b";
+}
+.mdl2-Type:before {
+    content: "\e97c";
+}
+.mdl2-Korean:before {
+    content: "\e97d";
+}
+.mdl2-HalfAlpha:before {
+    content: "\e97e";
+}
+.mdl2-FullAlpha:before {
+    content: "\e97f";
+}
+.mdl2-Key12On:before {
+    content: "\e980";
+}
+.mdl2-ChineseChangjie:before {
+    content: "\e981";
+}
+.mdl2-QWERTYOn:before {
+    content: "\e982";
+}
+.mdl2-QWERTYOff:before {
+    content: "\e983";
+}
+.mdl2-ChineseQuick:before {
+    content: "\e984";
+}
+.mdl2-Japanese:before {
+    content: "\e985";
+}
+.mdl2-FullHiragana:before {
+    content: "\e986";
+}
+.mdl2-FullKatakana:before {
+    content: "\e987";
+}
+.mdl2-HalfKatakana:before {
+    content: "\e988";
+}
+.mdl2-ChineseBoPoMoFo:before {
+    content: "\e989";
+}
+.mdl2-ChinesePinyin:before {
+    content: "\e98a";
+}
+.mdl2-ConstructionCone:before {
+    content: "\e98f";
+}
+.mdl2-XboxOneConsole:before {
+    content: "\e990";
+}
+.mdl2-Volume0:before {
+    content: "\e992";
+}
+.mdl2-Volume1:before {
+    content: "\e993";
+}
+.mdl2-Volume2:before {
+    content: "\e994";
+}
+.mdl2-Volume3:before {
+    content: "\e995";
+}
+.mdl2-BatteryUnknown:before {
+    content: "\e996";
+}
+.mdl2-WifiAttentionOverlay:before {
+    content: "\e998";
+}
+.mdl2-Robot:before {
+    content: "\e99a";
+}
+.mdl2-TapAndSend:before {
+    content: "\e9a1";
+}
+.mdl2-FitPage:before {
+    content: "\e9a6";
+}
+.mdl2-PasswordKeyShow:before {
+    content: "\e9a8";
+}
+.mdl2-PasswordKeyHide:before {
+    content: "\e9a9";
+}
+.mdl2-BidiLtr:before {
+    content: "\e9aa";
+}
+.mdl2-BidiRtl:before {
+    content: "\e9ab";
+}
+.mdl2-ForwardSm:before {
+    content: "\e9ac";
+}
+.mdl2-CommaKey:before {
+    content: "\e9ad";
+}
+.mdl2-DashKey:before {
+    content: "\e9ae";
+}
+.mdl2-DullSoundKey:before {
+    content: "\e9af";
+}
+.mdl2-HalfDullSound:before {
+    content: "\e9b0";
+}
+.mdl2-RightDoubleQuote:before {
+    content: "\e9b1";
+}
+.mdl2-LeftDoubleQuote:before {
+    content: "\e9b2";
+}
+.mdl2-PuncKeyRightBottom:before {
+    content: "\e9b3";
+}
+.mdl2-PuncKey1:before {
+    content: "\e9b4";
+}
+.mdl2-PuncKey2:before {
+    content: "\e9b5";
+}
+.mdl2-PuncKey3:before {
+    content: "\e9b6";
+}
+.mdl2-PuncKey4:before {
+    content: "\e9b7";
+}
+.mdl2-PuncKey5:before {
+    content: "\e9b8";
+}
+.mdl2-PuncKey6:before {
+    content: "\e9b9";
+}
+.mdl2-PuncKey9:before {
+    content: "\e9ba";
+}
+.mdl2-PuncKey7:before {
+    content: "\e9bb";
+}
+.mdl2-PuncKey8:before {
+    content: "\e9bc";
+}
+.mdl2-Frigid:before {
+    content: "\e9ca";
+}
+.mdl2-Unknown:before {
+    content: "\e9ce";
+}
+.mdl2-AreaChart:before {
+    content: "\e9d2";
+}
+.mdl2-CheckList:before {
+    content: "\e9d5";
+}
+.mdl2-Diagnostic:before {
+    content: "\e9d9";
+}
+.mdl2-Equalizer:before {
+    content: "\e9e9";
+}
+.mdl2-Process:before {
+    content: "\e9f3";
+}
+.mdl2-Processing:before {
+    content: "\e9f5";
+}
+.mdl2-ReportDocument:before {
+    content: "\e9f9";
+}
+.mdl2-VideoSolid:before {
+    content: "\ea0c";
+}
+.mdl2-MixedMediaBadge:before {
+    content: "\ea0d";
+}
+.mdl2-DisconnectDisplay:before {
+    content: "\ea14";
+}
+.mdl2-Shield:before {
+    content: "\ea18";
+}
+.mdl2-Info2:before {
+    content: "\ea1f";
+}
+.mdl2-ActionCenterAsterisk:before {
+    content: "\ea21";
+}
+.mdl2-Beta:before {
+    content: "\ea24";
+}
+.mdl2-SaveCopy:before {
+    content: "\ea35";
+}
+.mdl2-List:before {
+    content: "\ea37";
+}
+.mdl2-Asterisk:before {
+    content: "\ea38";
+}
+.mdl2-ErrorBadge:before {
+    content: "\ea39";
+}
+.mdl2-CircleRing:before {
+    content: "\ea3a";
+}
+.mdl2-CircleFill:before {
+    content: "\ea3b";
+}
+.mdl2-MergeCall:before {
+    content: "\ea3c";
+}
+.mdl2-PrivateCall:before {
+    content: "\ea3d";
+}
+.mdl2-Record2:before {
+    content: "\ea3f";
+}
+.mdl2-AllAppsMirrored:before {
+    content: "\ea40";
+}
+.mdl2-BookmarksMirrored:before {
+    content: "\ea41";
+}
+.mdl2-BulletedListMirrored:before {
+    content: "\ea42";
+}
+.mdl2-CallForwardInternationalMirrored:before {
+    content: "\ea43";
+}
+.mdl2-CallForwardRoamingMirrored:before {
+    content: "\ea44";
+}
+.mdl2-ChromeBackMirrored:before {
+    content: "\ea47";
+}
+.mdl2-ClearSelectionMirrored:before {
+    content: "\ea48";
+}
+.mdl2-ClosePaneMirrored:before {
+    content: "\ea49";
+}
+.mdl2-ContactInfoMirrored:before {
+    content: "\ea4a";
+}
+.mdl2-DockRightMirrored:before {
+    content: "\ea4b";
+}
+.mdl2-DockLeftMirrored:before {
+    content: "\ea4c";
+}
+.mdl2-ExpandTileMirrored:before {
+    content: "\ea4e";
+}
+.mdl2-GoMirrored:before {
+    content: "\ea4f";
+}
+.mdl2-GripperResizeMirrored:before {
+    content: "\ea50";
+}
+.mdl2-HelpMirrored:before {
+    content: "\ea51";
+}
+.mdl2-ImportMirrored:before {
+    content: "\ea52";
+}
+.mdl2-ImportAllMirrored:before {
+    content: "\ea53";
+}
+.mdl2-LeaveChatMirrored:before {
+    content: "\ea54";
+}
+.mdl2-ListMirrored:before {
+    content: "\ea55";
+}
+.mdl2-MailForwardMirrored:before {
+    content: "\ea56";
+}
+.mdl2-MailReplyMirrored:before {
+    content: "\ea57";
+}
+.mdl2-MailReplyAllMirrored:before {
+    content: "\ea58";
+}
+.mdl2-OpenPaneMirrored:before {
+    content: "\ea5b";
+}
+.mdl2-OpenWithMirrored:before {
+    content: "\ea5c";
+}
+.mdl2-ParkingLocationMirrored:before {
+    content: "\ea5e";
+}
+.mdl2-ResizeMouseMediumMirrored:before {
+    content: "\ea5f";
+}
+.mdl2-ResizeMouseSmallMirrored:before {
+    content: "\ea60";
+}
+.mdl2-ResizeMouseTallMirrored:before {
+    content: "\ea61";
+}
+.mdl2-ResizeTouchNarrowerMirrored:before {
+    content: "\ea62";
+}
+.mdl2-SendMirrored:before {
+    content: "\ea63";
+}
+.mdl2-SendFillMirrored:before {
+    content: "\ea64";
+}
+.mdl2-ShowResultsMirrored:before {
+    content: "\ea65";
+}
+.mdl2-Media:before {
+    content: "\ea69";
+}
+.mdl2-SyncError:before {
+    content: "\ea6a";
+}
+.mdl2-Devices3:before {
+    content: "\ea6c";
+}
+.mdl2-SlowMotionOn:before {
+    content: "\ea79";
+}
+.mdl2-Lightbulb:before {
+    content: "\ea80";
+}
+.mdl2-StatusCircle:before {
+    content: "\ea81";
+}
+.mdl2-StatusTriangle:before {
+    content: "\ea82";
+}
+.mdl2-StatusError:before {
+    content: "\ea83";
+}
+.mdl2-StatusWarning:before {
+    content: "\ea84";
+}
+.mdl2-Puzzle:before {
+    content: "\ea86";
+}
+.mdl2-CalendarSolid:before {
+    content: "\ea89";
+}
+.mdl2-HomeSolid:before {
+    content: "\ea8a";
+}
+.mdl2-ParkingLocationSolid:before {
+    content: "\ea8b";
+}
+.mdl2-ContactSolid:before {
+    content: "\ea8c";
+}
+.mdl2-ConstructionSolid:before {
+    content: "\ea8d";
+}
+.mdl2-AccidentSolid:before {
+    content: "\ea8e";
+}
+.mdl2-Ringer:before {
+    content: "\ea8f";
+}
+.mdl2-PDF:before {
+    content: "\ea90";
+}
+.mdl2-ThoughtBubble:before {
+    content: "\ea91";
+}
+.mdl2-HeartBroken:before {
+    content: "\ea92";
+}
+.mdl2-BatteryCharging10:before {
+    content: "\ea93";
+}
+.mdl2-BatterySaver9:before {
+    content: "\ea94";
+}
+.mdl2-BatterySaver10:before {
+    content: "\ea95";
+}
+.mdl2-CallForwardingMirrored:before {
+    content: "\ea97";
+}
+.mdl2-MultiSelectMirrored:before {
+    content: "\ea98";
+}
+.mdl2-Broom:before {
+    content: "\ea99";
+}
+.mdl2-ForwardCall:before {
+    content: "\eac2";
+}
+.mdl2-Trackers:before {
+    content: "\eadf";
+}
+.mdl2-Market:before {
+    content: "\eafc";
+}
+.mdl2-PieSingle:before {
+    content: "\eb05";
+}
+.mdl2-StockDown:before {
+    content: "\eb0f";
+}
+.mdl2-StockUp:before {
+    content: "\eb11";
+}
+.mdl2-Design:before {
+    content: "\eb3c";
+}
+.mdl2-Website:before {
+    content: "\eb41";
+}
+.mdl2-Drop:before {
+    content: "\eb42";
+}
+.mdl2-Radar:before {
+    content: "\eb44";
+}
+.mdl2-BusSolid:before {
+    content: "\eb47";
+}
+.mdl2-FerrySolid:before {
+    content: "\eb48";
+}
+.mdl2-StartPointSolid:before {
+    content: "\eb49";
+}
+.mdl2-StopPointSolid:before {
+    content: "\eb4a";
+}
+.mdl2-EndPointSolid:before {
+    content: "\eb4b";
+}
+.mdl2-AirplaneSolid:before {
+    content: "\eb4c";
+}
+.mdl2-TrainSolid:before {
+    content: "\eb4d";
+}
+.mdl2-WorkSolid:before {
+    content: "\eb4e";
+}
+.mdl2-ReminderFill:before {
+    content: "\eb4f";
+}
+.mdl2-Reminder:before {
+    content: "\eb50";
+}
+.mdl2-Heart:before {
+    content: "\eb51";
+}
+.mdl2-HeartFill:before {
+    content: "\eb52";
+}
+.mdl2-EthernetError:before {
+    content: "\eb55";
+}
+.mdl2-EthernetWarning:before {
+    content: "\eb56";
+}
+.mdl2-StatusConnecting1:before {
+    content: "\eb57";
+}
+.mdl2-StatusConnecting2:before {
+    content: "\eb58";
+}
+.mdl2-StatusUnsecure:before {
+    content: "\eb59";
+}
+.mdl2-WifiError0:before {
+    content: "\eb5a";
+}
+.mdl2-WifiError1:before {
+    content: "\eb5b";
+}
+.mdl2-WifiError2:before {
+    content: "\eb5c";
+}
+.mdl2-WifiError3:before {
+    content: "\eb5d";
+}
+.mdl2-WifiError4:before {
+    content: "\eb5e";
+}
+.mdl2-WifiWarning0:before {
+    content: "\eb5f";
+}
+.mdl2-WifiWarning1:before {
+    content: "\eb60";
+}
+.mdl2-WifiWarning2:before {
+    content: "\eb61";
+}
+.mdl2-WifiWarning3:before {
+    content: "\eb62";
+}
+.mdl2-WifiWarning4:before {
+    content: "\eb63";
+}
+.mdl2-Devices4:before {
+    content: "\eb66";
+}
+.mdl2-NUIIris:before {
+    content: "\eb67";
+}
+.mdl2-NUIFace:before {
+    content: "\eb68";
+}
+.mdl2-EditMirrored:before {
+    content: "\eb7e";
+}
+.mdl2-NUIFPStartSlideHand:before  {
+    content: "\eb82";
+}
+.mdl2-NUIFPStartSlideAction:before  {
+    content: "\eb83";
+}
+.mdl2-NUIFPContinueSlideHand:before  {
+    content: "\eb84";
+}
+.mdl2-NUIFPContinueSlideAction:before {
+    content: "\eb85";
+}
+.mdl2-NUIFPRollRightHand:before  {
+    content: "\eb86";
+}
+.mdl2-NUIFPRollRightHandAction:before {
+    content: "\eb87";
+}
+.mdl2-NUIFPRollLeftHand:before  {
+    content: "\eb88";
+}
+.mdl2-NUIFPRollLeftAction:before {
+    content: "\eb89";
+}
+.mdl2-NUIFPPressHand:before  {
+    content: "\eb8a";
+}
+.mdl2-NUIFPPressAction:before {
+    content: "\eb8b";
+}
+.mdl2-NUIFPPressRepeatHand:before  {
+    content: "\eb8c";
+}
+.mdl2-NUIFPPressRepeatAction:before {
+    content: "\eb8d";
+}
+.mdl2-StatusErrorFull:before {
+    content: "\eb90";
+}
+.mdl2-TaskViewExpanded:before {
+    content: "\eb91";
+}
+.mdl2-Certificate:before {
+    content: "\eb95";
+}
+.mdl2-BackSpaceQWERTYLg:before {
+    content: "\eb96";
+}
+.mdl2-ReturnKeyLg:before {
+    content: "\eb97";
+}
+.mdl2-FastForward:before {
+    content: "\eb9d";
+}
+.mdl2-Rewind:before {
+    content: "\eb9e";
+}
+.mdl2-Photo2:before {
+    content: "\eb9f";
+}
+ .mdl2-MobBattery0:before {
+     content: "\eba0";
+ }
+ .mdl2-MobBattery1:before {
+     content: "\eba1";
+ }
+ .mdl2-MobBattery2:before {
+     content: "\eba2";
+ }
+ .mdl2-MobBattery3:before {
+     content: "\eba3";
+ }
+ .mdl2-MobBattery4:before {
+     content: "\eba4";
+ }
+ .mdl2-MobBattery5:before {
+     content: "\eba5";
+ }
+ .mdl2-MobBattery6:before {
+     content: "\eba6";
+ }
+ .mdl2-MobBattery7:before {
+     content: "\eba7";
+ }
+ .mdl2-MobBattery8:before {
+     content: "\eba8";
+ }
+ .mdl2-MobBattery9:before {
+     content: "\eba9";
+ }
+.mdl2-MobBattery10:before {
+    content: "\ebaa";
+}
+ .mdl2-MobBatteryCharging0:before {
+     content: "\ebab";
+ }
+ .mdl2-MobBatteryCharging1:before {
+     content: "\ebac";
+ }
+ .mdl2-MobBatteryCharging2:before {
+     content: "\ebad";
+ }
+ .mdl2-MobBatteryCharging3:before {
+     content: "\ebae";
+ }
+ .mdl2-MobBatteryCharging4:before {
+     content: "\ebaf";
+ }
+ .mdl2-MobBatteryCharging5:before {
+     content: "\ebb0";
+ }
+ .mdl2-MobBatteryCharging6:before {
+     content: "\ebb1";
+ }
+ .mdl2-MobBatteryCharging7:before {
+     content: "\ebb2";
+ }
+ .mdl2-MobBatteryCharging8:before {
+     content: "\ebb3";
+ }
+ .mdl2-MobBatteryCharging9:before {
+     content: "\ebb4";
+ }
+ .mdl2-MobBatteryCharging10:before {
+     content: "\ebb5";
+ }
+ .mdl2-MobBatterySaver0:before {
+     content: "\ebb6";
+ }
+ .mdl2-MobBatterySaver1:before {
+     content: "\ebb7";
+ }
+ .mdl2-MobBatterySaver2:before {
+     content: "\ebb8";
+ }
+ .mdl2-MobBatterySaver3:before {
+     content: "\ebb9";
+ }
+ .mdl2-MobBatterySaver4:before {
+     content: "\ebba";
+ }
+ .mdl2-MobBatterySaver5:before {
+     content: "\ebbb";
+ }
+ .mdl2-MobBatterySaver6:before {
+     content: "\ebbc";
+ }
+ .mdl2-MobBatterySaver7:before {
+     content: "\ebbd";
+ }
+ .mdl2-MobBatterySaver8:before {
+     content: "\ebbe";
+ }
+ .mdl2-MobBatterySaver9:before {
+     content: "\ebbf";
+ }
+ .mdl2-MobBatterySaver10:before {
+     content: "\ebc0";
+ }
+.mdl2-DictionaryCloud:before {
+    content: "\ebc3";
+}
+.mdl2-ResetDrive:before {
+    content: "\ebc4";
+}
+.mdl2-VolumeBars:before {
+    content: "\ebc5";
+}
+.mdl2-Project:before {
+    content: "\ebc6";
+}
+.mdl2-AdjustHologram:before {
+    content: "\ebd2";
+}
+.mdl2-WifiCallBars:before {
+    content: "\ebd4";
+}
+.mdl2-WifiCall0:before {
+    content: "\ebd5";
+}
+.mdl2-WifiCall1:before {
+    content: "\ebd6";
+}
+.mdl2-WifiCall2:before {
+    content: "\ebd7";
+}
+.mdl2-WifiCall3:before {
+    content: "\ebd8";
+}
+.mdl2-WifiCall4:before {
+    content: "\ebd9";
+}
+.mdl2-Family:before {
+    content: "\ebda";
+}
+.mdl2-LockFeedback:before {
+    content: "\ebdb";
+}
+.mdl2-DeviceDiscovery:before {
+    content: "\ebde";
+}
+.mdl2-WindDirection:before {
+    content: "\ebe6";
+}
+.mdl2-RightArrowKeyTime0:before {
+    content: "\ebe7";
+}
+.mdl2-Bug:before {
+    content: "\ebe8";
+}
+.mdl2-TabletMode:before {
+    content: "\ebfc";
+}
+.mdl2-StatusCircleLeft:before {
+    content: "\ebfd";
+}
+.mdl2-StatusTriangleLeft:before {
+    content: "\ebfe";
+}
+.mdl2-StatusErrorLeft:before {
+    content: "\ebff";
+}
+.mdl2-StatusWarningLeft:before {
+    content: "\ec00";
+}
+.mdl2-MobBatteryUnknown:before {
+    content: "\ec02";
+}
+.mdl2-NetworkTower:before {
+    content: "\ec05";
+}
+.mdl2-CityNext:before {
+    content: "\ec06";
+}
+.mdl2-CityNext2:before {
+    content: "\ec07";
+}
+.mdl2-Courthouse:before {
+    content: "\ec08";
+}
+.mdl2-Groceries:before {
+    content: "\ec09";
+}
+.mdl2-Sustainable:before {
+    content: "\ec0a";
+}
+.mdl2-BuildingEnergy:before {
+    content: "\ec0b";
+}
+.mdl2-ToggleFilled:before {
+    content: "\ec11";
+}
+.mdl2-ToggleBorder:before {
+    content: "\ec12";
+}
+.mdl2-SliderThumb:before {
+    content: "\ec13";
+}
+.mdl2-ToggleThumb:before {
+    content: "\ec14";
+}
+.mdl2-MiracastLogoSmall:before {
+    content: "\ec15";
+}
+.mdl2-MiracastLogoLarge:before {
+    content: "\ec16";
+}
+.mdl2-PLAP:before {
+    content: "\ec19";
+}
+.mdl2-Badge:before {
+    content: "\ec1b";
+}
+.mdl2-SignalRoaming:before {
+    content: "\ec1e";
+}
+.mdl2-MobileLocked:before {
+    content: "\ec20";
+}
+.mdl2-InsiderHubApp:before {
+    content: "\ec24";
+}
+.mdl2-PersonalFolder:before {
+    content: "\ec25";
+}
+.mdl2-HomeGroup:before {
+    content: "\ec26";
+}
+.mdl2-MyNetwork:before {
+    content: "\ec27";
+}
+.mdl2-KeyboardFull:before {
+    content: "\ec31";
+}
+.mdl2-Cafe:before {
+    content: "\ec32";
+}
+.mdl2-MobSignal1:before {
+    content: "\ec37";
+}
+.mdl2-MobSignal2:before {
+    content: "\ec38";
+}
+.mdl2-MobSignal3:before {
+    content: "\ec39";
+}
+.mdl2-MobSignal4:before {
+    content: "\ec3a";
+}
+.mdl2-MobSignal5:before {
+    content: "\ec3b";
+}
+.mdl2-MobWifi1:before {
+    content: "\ec3c";
+}
+.mdl2-MobWifi2:before {
+    content: "\ec3d";
+}
+.mdl2-MobWifi3:before {
+    content: "\ec3e";
+}
+.mdl2-MobWifi4:before {
+    content: "\ec3f";
+}
+.mdl2-MobAirplane:before {
+    content: "\ec40";
+}
+.mdl2-MobBluetooth:before {
+    content: "\ec41";
+}
+.mdl2-MobActionCenter:before {
+    content: "\ec42";
+}
+.mdl2-MobLocation:before {
+    content: "\ec43";
+}
+.mdl2-MobWifiHotspot:before {
+    content: "\ec44";
+}
+.mdl2-LanguageJpn:before {
+    content: "\ec45";
+}
+.mdl2-MobQuietHours:before {
+    content: "\ec46";
+}
+.mdl2-MobDrivingMode:before {
+    content: "\ec47";
+}
+.mdl2-SpeedOff:before {
+    content: "\ec48";
+}
+.mdl2-SpeedMedium:before {
+    content: "\ec49";
+}
+.mdl2-SpeedHigh:before {
+    content: "\ec4a";
+}
+.mdl2-ThisPC:before {
+    content: "\ec4e";
+}
+.mdl2-MusicNote:before {
+    content: "\ec4f";
+}
+.mdl2-FileExplorer:before {
+    content: "\ec50";
+}
+.mdl2-FileExplorerApp:before {
+    content: "\ec51";
+}
+.mdl2-LeftArrowKeyTime0:before {
+    content: "\ec52";
+}
+.mdl2-MicOff:before {
+    content: "\ec54";
+}
+.mdl2-MicSleep:before {
+    content: "\ec55";
+}
+.mdl2-MicError:before {
+    content: "\ec56";
+}
+.mdl2-PlaybackRate1x:before {
+    content: "\ec57";
+}
+.mdl2-PlaybackRateOther:before {
+    content: "\ec58";
+}
+.mdl2-CashDrawer:before {
+    content: "\ec59";
+}
+.mdl2-BarcodeScanner:before {
+    content: "\ec5a";
+}
+.mdl2-ReceiptPrinter:before {
+    content: "\ec5b";
+}
+.mdl2-MagStripeReader:before {
+    content: "\ec5c";
+}
+.mdl2-CompletedSolid:before {
+    content: "\ec61";
+}
+.mdl2-CompanionApp:before {
+    content: "\ec64";
+}
+.mdl2-Favicon2:before {
+    content: "\ec6c";
+}
+.mdl2-SwipeRevealArt:before {
+    content: "\ec6d";
+}
+.mdl2-MicOn:before {
+    content: "\ec71";
+}
+.mdl2-MicClipping:before {
+    content: "\ec72";
+}
+.mdl2-TabletSelected:before {
+    content: "\ec74";
+}
+.mdl2-MobileSelected:before {
+    content: "\ec75";
+}
+.mdl2-LaptopSelected:before {
+    content: "\ec76";
+}
+.mdl2-TVMonitorSelected:before {
+    content: "\ec77";
+}
+.mdl2-DeveloperTools:before {
+    content: "\ec7a";
+}
+.mdl2-MobCallForwarding:before {
+    content: "\ec7e";
+}
+.mdl2-MobCallForwardingMirrored:before {
+    content: "\ec7f";
+}
+.mdl2-BodyCam:before {
+    content: "\ec80";
+}
+.mdl2-PoliceCar:before {
+    content: "\ec81";
+}
+.mdl2-Draw:before {
+    content: "\ec87";
+}
+.mdl2-DrawSolid:before {
+    content: "\ec88";
+}
+.mdl2-LowerBrightness:before {
+    content: "\ec8a";
+}
+.mdl2-ScrollUpDown:before {
+    content: "\ec8f";
+}
+.mdl2-DateTime:before {
+    content: "\ec92";
+}
+.mdl2-Tiles:before {
+    content: "\eca5";
+}
+.mdl2-PartyLeader:before {
+    content: "\eca7";
+}
+.mdl2-AppIconDefault:before {
+    content: "\ecaa";
+}
+.mdl2-Calories:before {
+    content: "\ecad";
+}
+.mdl2-BandBattery0:before {
+    content: "\ecb9";
+}
+.mdl2-BandBattery1:before {
+    content: "\ecba";
+}
+.mdl2-BandBattery2:before {
+    content: "\ecbb";
+}
+.mdl2-BandBattery3:before {
+    content: "\ecbc";
+}
+.mdl2-BandBattery4:before {
+    content: "\ecbd";
+}
+.mdl2-BandBattery5:before {
+    content: "\ecbe";
+}
+.mdl2-BandBattery6:before {
+    content: "\ecbf";
+}
+.mdl2-AddSurfaceHub:before {
+    content: "\ecc4";
+}
+.mdl2-DevUpdate:before {
+    content: "\ecc5";
+}
+.mdl2-Unit:before {
+    content: "\ecc6";
+}
+.mdl2-AddTo:before {
+    content: "\ecc8";
+}
+.mdl2-RemoveFrom:before {
+    content: "\ecc9";
+}
+.mdl2-RadioBtnOff:before {
+    content: "\ecca";
+}
+.mdl2-RadioBtnOn:before {
+    content: "\eccb";
+}
+.mdl2-RadioBullet2:before {
+    content: "\eccc";
+}
+.mdl2-ExploreContent:before {
+    content: "\eccd";
+}
+.mdl2-Blocked2:before {
+    content: "\ece4";
+}
+.mdl2-ScrollMode:before {
+    content: "\ece7";
+}
+.mdl2-ZoomMode:before {
+    content: "\ece8";
+}
+.mdl2-PanMode:before {
+    content: "\ece9";
+}
+.mdl2-WiredUSB:before   {
+    content: "\ecf0";
+}
+.mdl2-WirelessUSB:before {
+    content: "\ecf1";
+}
+.mdl2-USBSafeConnect:before {
+    content: "\ecf3";
+}
+.mdl2-ActionCenterNotificationMirrored:before {
+    content: "\ed0c";
+}
+.mdl2-ActionCenterMirrored:before {
+    content: "\ed0d";
+}
+.mdl2-SubscriptionAdd:before {
+    content: "\ed0e";
+}
+.mdl2-ResetDevice:before {
+    content: "\ed10";
+}
+.mdl2-SubscriptionAddMirrored:before {
+    content: "\ed11";
+}
+.mdl2-QRCode:before {
+    content: "\ed14";
+}
+.mdl2-Feedback:before {
+    content: "\ed15";
+}
+.mdl2-Subtitles:before {
+    content: "\ed1e";
+}
+.mdl2-SubtitlesAudio:before {
+    content: "\ed1f";
+}
+.mdl2-OpenFolderHorizontal:before {
+    content: "\ed25";
+}
+.mdl2-CalendarMirrored:before {
+    content: "\ed28";
+}
+.mdl2-MobeSIM:before {
+    content: "\ed2a";
+}
+.mdl2-MobeSIMNoProfile:before {
+    content: "\ed2b";
+}
+.mdl2-MobeSIMLocked:before {
+    content: "\ed2c";
+}
+.mdl2-MobeSIMBusy:before {
+    content: "\ed2d";
+}
+.mdl2-SignalError:before {
+    content: "\ed2e";
+}
+.mdl2-StreamingEnterprise:before {
+    content: "\ed2f";
+}
+.mdl2-Headphone0:before {
+    content: "\ed30";
+}
+.mdl2-Headphone1:before {
+    content: "\ed31";
+}
+.mdl2-Headphone2:before {
+    content: "\ed32";
+}
+.mdl2-Headphone3:before {
+    content: "\ed33";
+}
+.mdl2-Apps:before {
+    content: "\ed35";
+}
+.mdl2-KeyboardBrightness:before {
+    content: "\ed39";
+}
+.mdl2-KeyboardLowerBrightness:before {
+    content: "\ed3a";
+}
+.mdl2-SkipBack10:before {
+    content: "\ed3c";
+}
+.mdl2-SkipForward30:before  {
+    content: "\ed3d";
+}
+.mdl2-TreeFolderFolder:before {
+    content: "\ed41";
+}
+.mdl2-TreeFolderFolderFill:before {
+    content: "\ed42";
+}
+.mdl2-TreeFolderFolderOpen:before {
+    content: "\ed43";
+}
+.mdl2-TreeFolderFolderOpenFill:before {
+    content: "\ed44";
+}
+.mdl2-MultimediaDMP:before {
+    content: "\ed47";
+}
+.mdl2-KeyboardOneHanded:before {
+    content: "\ed4c";
+}
+.mdl2-Narrator:before {
+    content: "\ed4d";
+}
+.mdl2-EmojiTabPeople:before {
+    content: "\ed53";
+}
+.mdl2-EmojiTabSmilesAnimals:before {
+    content: "\ed54";
+}
+.mdl2-EmojiTabCelebrationObjects:before {
+    content: "\ed55";
+}
+.mdl2-EmojiTabFoodPlants:before {
+    content: "\ed56";
+}
+.mdl2-EmojiTabTransitPlaces:before {
+    content: "\ed57";
+}
+.mdl2-EmojiTabSymbols:before {
+    content: "\ed58";
+}
+.mdl2-EmojiTabTextSmiles:before {
+    content: "\ed59";
+}
+.mdl2-EmojiTabFavorites:before {
+    content: "\ed5a";
+}
+.mdl2-EmojiSwatch:before {
+    content: "\ed5b";
+}
+.mdl2-ConnectApp:before {
+    content: "\ed5c";
+}
+.mdl2-CompanionDeviceFramework:before {
+    content: "\ed5d";
+}
+.mdl2-Ruler:before {
+    content: "\ed5e";
+}
+.mdl2-FingerInking:before {
+    content: "\ed5f";
+}
+.mdl2-StrokeErase:before {
+    content: "\ed60";
+}
+.mdl2-PointErase:before {
+    content: "\ed61";
+}
+.mdl2-ClearAllInk:before {
+    content: "\ed62";
+}
+.mdl2-Pencil:before {
+    content: "\ed63";
+}
+.mdl2-Marker:before {
+    content: "\ed64";
+}
+.mdl2-InkingCaret:before {
+    content: "\ed65";
+}
+.mdl2-InkingColorOutline:before {
+    content: "\ed66";
+}
+.mdl2-InkingColorFill:before {
+    content: "\ed67";
+}
+.mdl2-HardDrive:before {
+    content: "\eda2";
+}
+.mdl2-NetworkAdapter:before {
+    content: "\eda3";
+}
+.mdl2-Touchscreen:before {
+    content: "\eda4";
+}
+.mdl2-NetworkPrinter:before {
+    content: "\eda5";
+}
+.mdl2-CloudPrinter:before {
+    content: "\eda6";
+}
+.mdl2-KeyboardShortcut:before {
+    content: "\eda7";
+}
+.mdl2-BrushSize:before {
+    content: "\eda8";
+}
+.mdl2-NarratorForward:before {
+    content: "\eda9";
+}
+.mdl2-NarratorForwardMirrored:before {
+    content: "\edaa";
+}
+.mdl2-SyncBadge12:before {
+    content: "\edab";
+}
+.mdl2-RingerBadge12:before {
+    content: "\edac";
+}
+.mdl2-AsteriskBadge12:before {
+    content: "\edad";
+}
+.mdl2-ErrorBadge12:before {
+    content: "\edae";
+}
+.mdl2-CircleRingBadge12:before {
+    content: "\edaf";
+}
+.mdl2-CircleFillBadge12:before {
+    content: "\edb0";
+}
+.mdl2-ImportantBadge12:before {
+    content: "\edb1";
+}
+.mdl2-MailBadge12:before {
+    content: "\edb3";
+}
+.mdl2-PauseBadge12:before {
+    content: "\edb4";
+}
+.mdl2-PlayBadge12:before {
+    content: "\edb5";
+}
+.mdl2-PenWorkspace:before {
+    content: "\edc6";
+}
+.mdl2-CaretRight8:before {
+    content: "\edd6";
+}
+.mdl2-CaretLeftSolid8:before {
+    content: "\edd9";
+}
+.mdl2-CaretRightSolid8:before {
+    content: "\edda";
+}
+.mdl2-CaretUpSolid8:before {
+    content: "\eddb";
+}
+.mdl2-CaretDownSolid8:before {
+    content: "\eddc";
+}
+.mdl2-Export:before {
+    content: "\ede1";
+}
+.mdl2-ExportMirrored:before {
+    content: "\ede2";
+}
+.mdl2-ButtonMenu:before {
+    content: "\ede3";
+}
+.mdl2-CloudSearch:before {
+    content: "\ede4";
+}
+.mdl2-PinyinIMELogo:before {
+    content: "\ede5";
+}
+.mdl2-CalligraphyPen:before {
+    content: "\edfb";
+}
+.mdl2-ReplyMirrored:before {
+    content: "\ee35";
+}
+.mdl2-LockscreenDesktop:before {
+    content: "\ee3f";
+}
+.mdl2-TaskViewSettings:before {
+    content: "\ee40";
+}
+.mdl2-Play36:before {
+    content: "\ee4a";
+}
+.mdl2-PenPalette:before {
+    content: "\ee56";
+}
+.mdl2-GuestUser:before {
+    content: "\ee57";
+}
+.mdl2-SettingsBattery:before {
+    content: "\ee63";
+}
+.mdl2-TaskbarPhone:before {
+    content: "\ee64";
+}
+.mdl2-LockScreenGlance:before {
+    content: "\ee65";
+}
+.mdl2-GenericScan:before {
+    content: "\ee6f";
+}
+.mdl2-ImageExport:before  {
+    content: "\ee71";
+}
+.mdl2-WifiEthernet:before {
+    content: "\ee77";
+}
+.mdl2-ActionCenterQuiet:before {
+    content: "\ee79";
+}
+.mdl2-ActionCenterQuietNotification:before {
+    content: "\ee7a";
+}
+.mdl2-TrackersMirrored:before {
+    content: "\ee92";
+}
+.mdl2-DateTimeMirrored:before {
+    content: "\ee93";
+}
+.mdl2-Wheel:before {
+    content: "\ee94";
+}
+.mdl2-VirtualMachineGroup:before {
+    content: "\eea3";
+}
+.mdl2-ButtonView2:before {
+    content: "\eeca";
+}
+.mdl2-PenWorkspaceMirrored:before {
+    content: "\ef15";
+}
+.mdl2-PenPaletteMirrored:before {
+    content: "\ef16";
+}
+.mdl2-StrokeEraseMirrored:before {
+    content: "\ef17";
+}
+.mdl2-PointEraseMirrored:before {
+    content: "\ef18";
+}
+.mdl2-ClearAllInkMirrored:before {
+    content: "\ef19";
+}
+.mdl2-BackgroundToggle:before {
+    content: "\ef1f";
+}
+.mdl2-Marquee:before {
+    content: "\ef20";
+}
+.mdl2-ChromeCloseContrast:before {
+    content: "\ef2c";
+}
+.mdl2-ChromeMinimizeContrast:before {
+    content: "\ef2d";
+}
+.mdl2-ChromeMaximizeContrast:before {
+    content: "\ef2e";
+}
+.mdl2-ChromeRestoreContrast:before {
+    content: "\ef2f";
+}
+.mdl2-TrafficLight:before {
+    content: "\ef31";
+}
+.mdl2-Replay:before {
+    content: "\ef3b";
+}
+.mdl2-Eyedropper:before {
+    content: "\ef3c";
+}
+.mdl2-LineDisplay:before {
+    content: "\ef3d";
+}
+.mdl2-PINPad:before {
+    content: "\ef3e";
+}
+.mdl2-SignatureCapture:before {
+    content: "\ef3f";
+}
+.mdl2-ChipCardCreditCardReader:before {
+    content: "\ef40";
+}
+.mdl2-PlayerSettings:before {
+    content: "\ef58";
+}
+.mdl2-LandscapeOrientation:before {
+    content: "\ef6b";
+}
+.mdl2-Flow:before {
+    content: "\ef90";
+}
+.mdl2-Touchpad:before {
+    content: "\efa5";
+}
+.mdl2-Speech:before {
+    content: "\efa9";
+}
+.mdl2-KnowledgeArticle:before {
+    content: "\f000";
+}
+.mdl2-Relationship:before {
+    content: "\f003";
+}
+.mdl2-DefaultAPN:before {
+    content: "\f080";
+}
+.mdl2-UserAPN:before  {
+    content: "\f081";
+}
+.mdl2-DoublePinyin:before {
+    content: "\f085";
+}
+.mdl2-BlueLight:before {
+    content: "\f08c";
+}
+.mdl2-ButtonA:before {
+    content: "\f093";
+}
+.mdl2-ButtonB:before {
+    content: "\f094";
+}
+.mdl2-ButtonY:before {
+    content: "\f095";
+}
+.mdl2-ButtonX:before {
+    content: "\f096";
+}
+.mdl2-ArrowUp8:before {
+    content: "\f0ad";
+}
+.mdl2-ArrowDown8:before {
+    content: "\f0ae";
+}
+.mdl2-ArrowRight8:before {
+    content: "\f0af";
+}
+.mdl2-ArrowLeft8:before {
+    content: "\f0b0";
+}
+.mdl2-QuarentinedItems:before {
+    content: "\f0b2";
+}
+.mdl2-QuarentinedItemsMirrored:before {
+    content: "\f0b3";
+}
+.mdl2-Protractor:before {
+    content: "\f0b4";
+}
+.mdl2-ChecklistMirrored:before {
+    content: "\f0b5";
+}
+.mdl2-StatusCircle7:before {
+    content: "\f0b6";
+}
+.mdl2-StatusCheckmark7:before {
+    content: "\f0b7";
+}
+.mdl2-StatusErrorCircle7:before {
+    content: "\f0b8";
+}
+.mdl2-Connected:before {
+    content: "\f0b9";
+}
+.mdl2-PencilFill:before {
+    content: "\f0c6";
+}
+.mdl2-CalligraphyFill:before {
+    content: "\f0c7";
+}
+.mdl2-QuarterStarLeft:before {
+    content: "\f0ca";
+}
+.mdl2-QuarterStarRight:before {
+    content: "\f0cb";
+}
+.mdl2-ThreeQuarterStarLeft:before {
+    content: "\f0cc";
+}
+.mdl2-ThreeQuarterStarRight:before {
+    content: "\f0cd";
+}
+.mdl2-QuietHoursBadge12:before {
+    content: "\f0ce";
+}
+.mdl2-BackMirrored:before {
+    content: "\f0d2";
+}
+.mdl2-ForwardMirrored:before {
+    content: "\f0d3";
+}
+.mdl2-ChromeBackContrast:before {
+    content: "\f0d5";
+}
+.mdl2-ChromeBackContrastMirrored:before {
+    content: "\f0d6";
+}
+.mdl2-ChromeBackToWindowContrast:before {
+    content: "\f0d7";
+}
+.mdl2-ChromeFullScreenContrast:before {
+    content: "\f0d8";
+}
+.mdl2-GridView:before {
+    content: "\f0e2";
+}
+.mdl2-ClipboardList:before {
+    content: "\f0e3";
+}
+.mdl2-ClipboardListMirrored:before {
+    content: "\f0e4";
+}
+.mdl2-OutlineQuarterStarLeft:before {
+    content: "\f0e5";
+}
+.mdl2-OutlineQuarterStarRight:before {
+    content: "\f0e6";
+}
+.mdl2-OutlineHalfStarLeft:before {
+    content: "\f0e7";
+}
+.mdl2-OutlineHalfStarRight:before {
+    content: "\f0e8";
+}
+.mdl2-OutlineThreeQuarterStarLeft:before {
+    content: "\f0e9";
+}
+.mdl2-OutlineThreeQuarterStarRight:before {
+    content: "\f0ea";
+}
+.mdl2-SpatialVolume0:before {
+    content: "\f0eb";
+}
+.mdl2-SpatialVolume1:before {
+    content: "\f0ec";
+}
+.mdl2-SpatialVolume2:before {
+    content: "\f0ed";
+}
+.mdl2-SpatialVolume3:before {
+    content: "\f0ee";
+}
+.mdl2-OutlineStarLeftHalf:before {
+    content: "\f0f7";
+}
+.mdl2-OutlineStarRightHalf:before {
+    content: "\f0f8";
+}
+.mdl2-ChromeAnnotateContrast:before {
+    content: "\f0f9";
+}
+.mdl2-DefenderBadge12:before {
+    content: "\f0fb";
+}
+.mdl2-DetachablePC:before {
+    content: "\f103";
+}
+.mdl2-LeftStick:before {
+    content: "\f108";
+}
+.mdl2-RightStick:before {
+    content: "\f109";
+}
+.mdl2-TriggerLeft:before {
+    content: "\f10a";
+}
+.mdl2-TriggerRight:before {
+    content: "\f10b";
+}
+.mdl2-BumperLeft:before {
+    content: "\f10c";
+}
+.mdl2-BumperRight:before {
+    content: "\f10d";
+}
+.mdl2-Dpad:before {
+    content: "\f10e";
+}
+.mdl2-EnglishPunctuation:before {
+    content: "\f110";
+}
+.mdl2-ChinesePunctuation:before {
+    content: "\f111";
+}
+.mdl2-HMD:before {
+    content: "\f119";
+}
+.mdl2-CtrlSpatialRight:before {
+    content: "\f11b";
+}
+.mdl2-PaginationDotOutline10:before {
+    content: "\f126";
+}
+.mdl2-PaginationDotSolid10:before {
+    content: "\f127";
+}
+.mdl2-StrokeErase2:before {
+    content: "\f128";
+}
+.mdl2-SmallErase:before {
+    content: "\f129";
+}
+.mdl2-LargeErase:before {
+    content: "\f12a";
+}
+.mdl2-FolderHorizontal:before {
+    content: "\f12b";
+}
+.mdl2-MicrophoneListening:before {
+    content: "\f12e";
+}
+.mdl2-StatusExclamationCircle7:before  {
+    content: "\f12f";
+}
+.mdl2-Video360:before {
+    content: "\f131";
+}
+.mdl2-GiftboxOpen:before {
+    content: "\f133";
+}
+.mdl2-StatusCircleOuter:before {
+    content: "\f136";
+}
+.mdl2-StatusCircleInner:before {
+    content: "\f137";
+}
+.mdl2-StatusCircleRing:before {
+    content: "\f138";
+}
+.mdl2-StatusTriangleOuter:before {
+    content: "\f139";
+}
+.mdl2-StatusTriangleInner:before {
+    content: "\f13a";
+}
+.mdl2-StatusTriangleExclamation:before {
+    content: "\f13b";
+}
+.mdl2-StatusCircleExclamation:before {
+    content: "\f13c";
+}
+.mdl2-StatusCircleErrorX:before {
+    content: "\f13d";
+}
+.mdl2-StatusCircleCheckmark:before {
+    content: "\f13e";
+}
+.mdl2-StatusCircleInfo:before {
+    content: "\f13f";
+}
+.mdl2-StatusCircleBlock:before {
+    content: "\f140";
+}
+.mdl2-StatusCircleBlock2:before {
+    content: "\f141";
+}
+.mdl2-StatusCircleQuestionMark:before {
+    content: "\f142";
+}
+.mdl2-StatusCircleSync:before {
+    content: "\f143";
+}
+.mdl2-Dial1:before {
+    content: "\f146";
+}
+.mdl2-Dial2:before {
+    content: "\f147";
+}
+.mdl2-Dial3:before {
+    content: "\f148";
+}
+.mdl2-Dial4:before {
+    content: "\f149";
+}
+.mdl2-Dial5:before {
+    content: "\f14a";
+}
+.mdl2-Dial6:before {
+    content: "\f14b";
+}
+.mdl2-Dial7:before {
+    content: "\f14c";
+}
+.mdl2-Dial8:before {
+    content: "\f14d";
+}
+.mdl2-Dial9:before {
+    content: "\f14e";
+}
+.mdl2-Dial10:before {
+    content: "\f14f";
+}
+.mdl2-Dial11:before {
+    content: "\f150";
+}
+.mdl2-Dial12:before {
+    content: "\f151";
+}
+.mdl2-Dial13:before {
+    content: "\f152";
+}
+.mdl2-Dial14:before {
+    content: "\f153";
+}
+.mdl2-Dial15:before {
+    content: "\f154";
+}
+.mdl2-Dial16:before {
+    content: "\f155";
+}
+.mdl2-DialShape1:before {
+    content: "\f156";
+}
+.mdl2-DialShape2:before {
+    content: "\f157";
+}
+.mdl2-DialShape3:before {
+    content: "\f158";
+}
+.mdl2-DialShape4:before {
+    content: "\f159";
+}
+.mdl2-TollSolid:before {
+    content: "\f161";
+}
+.mdl2-TrafficCongestionSolid:before {
+    content: "\f163";
+}
+.mdl2-ExploreContentSingle:before {
+    content: "\f164";
+}
+.mdl2-CollapseContent:before {
+    content: "\f165";
+}
+.mdl2-CollapseContentSingle:before {
+    content: "\f166";
+}
+.mdl2-InfoSolid:before {
+    content: "\f167";
+}
+.mdl2-GroupList:before {
+    content: "\f168";
+}
+.mdl2-CaretBottomRightSolidCenter8:before {
+    content: "\f169";
+}
+.mdl2-ProgressRingDots:before {
+    content: "\f16a";
+}
+.mdl2-Checkbox14:before {
+    content: "\f16b";
+}
+.mdl2-CheckboxComposite14:before {
+    content: "\f16c";
+}
+.mdl2-CheckboxIndeterminateCombo14:before {
+    content: "\f16d";
+}
+.mdl2-CheckboxIndeterminateCombo:before {
+    content: "\f16e";
+}
+.mdl2-StatusPause7:before {
+    content: "\f175";
+}
+.mdl2-CharacterAppearance:before {
+    content: "\f17f";
+}
+.mdl2-Lexicon:before  {
+    content: "\f180";
+}
+.mdl2-ScreenTime:before {
+    content: "\f182";
+}
+.mdl2-HeadlessDevice:before {
+    content: "\f191";
+}
+.mdl2-NetworkSharing:before {
+    content: "\f193";
+}
+.mdl2-EyeGaze:before {
+    content: "\f19d";
+}
+.mdl2-WindowsInsider:before {
+    content: "\f1ad";
+}
+.mdl2-ChromeSwitch:before {
+    content: "\f1cb";
+}
+.mdl2-ChromeSwitchContast:before {
+    content: "\f1cc";
+}
+.mdl2-StatusCheckmark:before {
+    content: "\f1d8";
+}
+.mdl2-StatusCheckmarkLeft:before {
+    content: "\f1d9";
+}
+.mdl2-KeyboardLeftAligned:before {
+    content: "\f20c";
+}
+.mdl2-KeyboardRightAligned:before {
+    content: "\f20d";
+}
+.mdl2-KeyboardSettings:before {
+    content: "\f210";
+}
+.mdl2-NetworkPhysical:before {
+    content: "\f211";
+}
+.mdl2-IOT:before {
+    content: "\f22c";
+}
+.mdl2-UnknownMirrored:before {
+    content: "\f22e";
+}
+.mdl2-ViewDashboard:before {
+    content: "\f246";
+}
+.mdl2-ExploitProtectionSettings:before {
+    content: "\f259";
+}
+.mdl2-KeyboardNarrow:before {
+    content: "\f260";
+}
+.mdl2-Keyboard12Key:before {
+    content: "\f261";
+}
+.mdl2-KeyboardDock:before {
+    content: "\f26b";
+}
+.mdl2-KeyboardUndock:before {
+    content: "\f26c";
+}
+.mdl2-KeyboardLeftDock:before {
+    content: "\f26d";
+}
+.mdl2-KeyboardRightDock:before {
+    content: "\f26e";
+}
+.mdl2-Ear:before {
+    content: "\f270";
+}
+.mdl2-PointerHand:before {
+    content: "\f271";
+}
+.mdl2-Bullseye:before {
+    content: "\f272";
+}
+.mdl2-LocaleLanguage:before {
+    content: "\f2b7";
+}
+.mdl2-PassiveAuthentication:before {
+    content: "\f32a";
+}
+.mdl2-NetworkOffline:before {
+    content: "\f384";
+}
+.mdl2-NetworkConnected:before {
+    content: "\f385";
+}
+.mdl2-NetworkConnectedCheckmark:before {
+    content: "\f386";
+}
+.mdl2-SignOut:before {
+    content: "\f3b1";
+}
+.mdl2-StatusInfo:before {
+    content: "\f3cc";
+}
+.mdl2-StatusInfoLeft:before {
+    content: "\f3cd";
+}
+.mdl2-NearbySharing:before {
+    content: "\f3e2";
+}
+.mdl2-CtrlSpatialLeft:before {
+    content: "\f3e7";
+}
+.mdl2-InteractiveDashboard:before {
+    content: "\f404";
+}
+.mdl2-ClippingTool:before {
+    content: "\f406";
+}
+.mdl2-RectangularClipping:before  {
+    content: "\f407";
+}
+.mdl2-FreeFormClipping:before {
+    content: "\f408";
+}
+.mdl2-CopyTo:before {
+    content: "\f413";
+}
+.mdl2-DynamicLock:before {
+    content: "\f439";
+}
+.mdl2-PenTips:before {
+    content: "\f45e";
+}
+.mdl2-PenTipsMirrored:before {
+    content: "\f45f";
+}
+.mdl2-HWPJoin:before {
+    content: "\f460";
+}
+.mdl2-HWPInsert:before {
+    content: "\f461";
+}
+.mdl2-HWPStrikeThrough:before {
+    content: "\f462";
+}
+.mdl2-HWPScratchOut:before {
+    content: "\f463";
+}
+.mdl2-HWPSplit:before {
+    content: "\f464";
+}
+.mdl2-HWPNewLine:before {
+    content: "\f465";
+}
+.mdl2-HWPOverwrite:before {
+    content: "\f466";
+}
+.mdl2-MobWifiWarning1:before {
+    content: "\f473";
+}
+.mdl2-MobWifiWarning2:before {
+    content: "\f474";
+}
+.mdl2-MobWifiWarning3:before {
+    content: "\f475";
+}
+.mdl2-MobWifiWarning4:before {
+    content: "\f476";
+}
+.mdl2-Globe2:before {
+    content: "\f49a";
+}
+.mdl2-GIF:before {
+    content: "\f4a9";
+}
+.mdl2-Sticker2:before {
+    content: "\f4aa";
+}
+.mdl2-SurfaceHubSelected:before {
+    content: "\f4be";
+}
+.mdl2-HoloLensSelected:before {
+    content: "\f4bf";
+}
+.mdl2-Earbud:before {
+    content: "\f4c0";
+}
+.mdl2-MixVolumes:before {
+    content: "\f4c3";
+}
+.mdl2-Safe:before {
+    content: "\f540";
+}
+.mdl2-LaptopSecure:before {
+    content: "\f552";
+}
+.mdl2-PrintDefault:before {
+    content: "\f56d";
+}
+.mdl2-PageMirrored:before {
+    content: "\f56e";
+}
+.mdl2-LandscapeOrientationMirrored:before {
+    content: "\f56f";
+}
+.mdl2-ColorOff:before {
+    content: "\f570";
+}
+.mdl2-PrintAllPages:before {
+    content: "\f571";
+}
+.mdl2-PrintCustomRange:before {
+    content: "\f572";
+}
+.mdl2-PageMarginPortraitNarrow:before {
+    content: "\f573";
+}
+.mdl2-PageMarginPortraitNormal:before {
+    content: "\f574";
+}
+.mdl2-PageMarginPortraitModerate:before {
+    content: "\f575";
+}
+.mdl2-PageMarginPortraitWide:before {
+    content: "\f576";
+}
+.mdl2-PageMarginLandscapeNarrow:before {
+    content: "\f577";
+}
+.mdl2-PageMarginLandscapeNormal:before {
+    content: "\f578";
+}
+.mdl2-PageMarginLandscapeModerate:before {
+    content: "\f579";
+}
+.mdl2-PageMarginLandscapeWide:before {
+    content: "\f57a";
+}
+.mdl2-CollateLandscape:before {
+    content: "\f57b";
+}
+.mdl2-CollatePortrait:before {
+    content: "\f57c";
+}
+.mdl2-CollatePortraitSeparated:before {
+    content: "\f57d";
+}
+.mdl2-DuplexLandscapeOneSided:before {
+    content: "\f57e";
+}
+.mdl2-DuplexLandscapeOneSidedMirrored:before {
+    content: "\f57f";
+}
+.mdl2-DuplexLandscapeTwoSidedLongEdge:before {
+    content: "\f580";
+}
+.mdl2-DuplexLandscapeTwoSidedLongEdgeMirrored:before {
+    content: "\f581";
+}
+.mdl2-DuplexLandscapeTwoSidedShortEdge:before {
+    content: "\f582";
+}
+.mdl2-DuplexLandscapeTwoSidedShortEdgeMirrored:before {
+    content: "\f583";
+}
+.mdl2-DuplexPortraitOneSided:before {
+    content: "\f584";
+}
+.mdl2-DuplexPortraitOneSidedMirrored:before {
+    content: "\f585";
+}
+.mdl2-DuplexPortraitTwoSidedLongEdge:before {
+    content: "\f586";
+}
+.mdl2-DuplexPortraitTwoSidedLongEdgeMirrored:before {
+    content: "\f587";
+}
+.mdl2-DuplexPortraitTwoSidedShortEdge:before {
+    content: "\f588";
+}
+.mdl2-DuplexPortraitTwoSidedShortEdgeMirrored:before {
+    content: "\f589";
+}
+.mdl2-PPSOneLandscape:before {
+    content: "\f58a";
+}
+.mdl2-PPSTwoLandscape:before {
+    content: "\f58b";
+}
+.mdl2-PPSTwoPortrait:before {
+    content: "\f58c";
+}
+.mdl2-PPSFourLandscape:before {
+    content: "\f58d";
+}
+.mdl2-PPSFourPortrait:before {
+    content: "\f58e";
+}
+.mdl2-HolePunchOff:before {
+    content: "\f58f";
+}
+.mdl2-HolePunchPortraitLeft:before {
+    content: "\f590";
+}
+.mdl2-HolePunchPortraitRight:before {
+    content: "\f591";
+}
+.mdl2-HolePunchPortraitTop:before {
+    content: "\f592";
+}
+.mdl2-HolePunchPortraitBottom:before {
+    content: "\f593";
+}
+.mdl2-HolePunchLandscapeLeft:before {
+    content: "\f594";
+}
+.mdl2-HolePunchLandscapeRight:before {
+    content: "\f595";
+}
+.mdl2-HolePunchLandscapeTop:before {
+    content: "\f596";
+}
+.mdl2-HolePunchLandscapeBottom:before {
+    content: "\f597";
+}
+.mdl2-StaplingOff:before {
+    content: "\f598";
+}
+.mdl2-StaplingPortraitTopLeft:before {
+    content: "\f599";
+}
+.mdl2-StaplingPortraitTopRight:before {
+    content: "\f59a";
+}
+.mdl2-StaplingPortraitBottomRight:before {
+    content: "\f59b";
+}
+.mdl2-StaplingPortraitTwoLeft:before {
+    content: "\f59c";
+}
+.mdl2-StaplingPortraitTwoRight:before {
+    content: "\f59d";
+}
+.mdl2-StaplingPortraitTwoTop:before {
+    content: "\f59e";
+}
+.mdl2-StaplingPortraitTwoBottom:before {
+    content: "\f59f";
+}
+.mdl2-StaplingPortraitBookBinding:before {
+    content: "\f5a0";
+}
+.mdl2-StaplingLandscapeTopLeft:before {
+    content: "\f5a1";
+}
+.mdl2-StaplingLandscapeTopRight:before {
+    content: "\f5a2";
+}
+.mdl2-StaplingLandscapeBottomLeft:before {
+    content: "\f5a3";
+}
+.mdl2-StaplingLandscapeBottomRight:before {
+    content: "\f5a4";
+}
+.mdl2-StaplingLandscapeTwoLeft:before {
+    content: "\f5a5";
+}
+.mdl2-StaplingLandscapeTwoRight:before {
+    content: "\f5a6";
+}
+.mdl2-StaplingLandscapeTwoTop:before {
+    content: "\f5a7";
+}
+.mdl2-StaplingLandscapeTwoBottom:before {
+    content: "\f5a8";
+}
+.mdl2-StaplingLandscapeBookBinding:before {
+    content: "\f5a9";
+}
+.mdl2-StatusDataTransferRoaming:before {
+    content: "\f5aa";
+}
+.mdl2-MobSIMError:before {
+    content: "\f5ab";
+}
+.mdl2-CollateLandscapeSeparated:before {
+    content: "\f5ac";
+}
+.mdl2-PPSOnePortrait:before {
+    content: "\f5ad";
+}
+.mdl2-StaplingPortraitBottomLeft:before {
+    content: "\f5ae";
+}
+.mdl2-PlaySolid:before {
+    content: "\f5b0";
+}
+.mdl2-RepeatOff:before {
+    content: "\f5e7";
+}
+.mdl2-Set:before {
+    content: "\f5ed";
+}
+.mdl2-SetSolid:before {
+    content: "\f5ee";
+}
+.mdl2-FuzzyReading:before {
+    content: "\f5ef";
+}
+.mdl2-VerticalBattery0:before {
+    content: "\f5f2";
+}
+.mdl2-VerticalBattery1:before {
+    content: "\f5f3";
+}
+.mdl2-VerticalBattery2:before {
+    content: "\f5f4";
+}
+.mdl2-VerticalBattery3:before {
+    content: "\f5f5";
+}
+.mdl2-VerticalBattery4:before {
+    content: "\f5f6";
+}
+.mdl2-VerticalBattery5:before {
+    content: "\f5f7";
+}
+.mdl2-VerticalBattery6:before {
+    content: "\f5f8";
+}
+.mdl2-VerticalBattery7:before {
+    content: "\f5f9";
+}
+.mdl2-VerticalBattery8:before {
+    content: "\f5fa";
+}
+.mdl2-VerticalBattery9:before {
+    content: "\f5fb";
+}
+.mdl2-VerticalBattery10:before {
+    content: "\f5fc";
+}
+.mdl2-VerticalBatteryCharging0:before {
+    content: "\f5fd";
+}
+.mdl2-VerticalBatteryCharging1:before {
+    content: "\f5fe";
+}
+.mdl2-VerticalBatteryCharging2:before {
+    content: "\f5ff";
+}
+.mdl2-VerticalBatteryCharging3:before {
+    content: "\f600";
+}
+.mdl2-VerticalBatteryCharging4:before {
+    content: "\f601";
+}
+.mdl2-VerticalBatteryCharging5:before {
+    content: "\f602";
+}
+.mdl2-VerticalBatteryCharging6:before {
+    content: "\f603";
+}
+.mdl2-VerticalBatteryCharging7:before {
+    content: "\f604";
+}
+.mdl2-VerticalBatteryCharging8:before {
+    content: "\f605";
+}
+.mdl2-VerticalBatteryCharging9:before {
+    content: "\f606";
+}
+.mdl2-VerticalBatteryCharging10:before {
+    content: "\f607";
+}
+.mdl2-VerticalBatteryUnknown:before {
+    content: "\f608";
+}
+.mdl2-DoublePortrait:before {
+    content: "\f614";
+}
+.mdl2-DoubleLandscape:before {
+    content: "\f615";
+}
+.mdl2-SinglePortrait:before {
+    content: "\f616";
+}
+.mdl2-SingleLandscape:before {
+    content: "\f617";
+}
+.mdl2-SIMError:before {
+    content: "\f618";
+}
+.mdl2-SIMMissing:before {
+    content: "\f619";
+}
+.mdl2-SIMLock:before {
+    content: "\f61a";
+}
+.mdl2-eSIM:before {
+    content: "\f61b";
+}
+.mdl2-eSIMNoProfile:before {
+    content: "\f61c";
+}
+.mdl2-eSIMLocked:before {
+    content: "\f61d";
+}
+.mdl2-eSIMBusy:before {
+    content: "\f61e";
+}
+.mdl2-NoiseCancelation:before {
+    content: "\f61f";
+}
+.mdl2-NoiseCancelationOff:before {
+    content: "\f620";
+}
+.mdl2-MusicSharing:before {
+    content: "\f623";
+}
+.mdl2-MusicSharingOff:before {
+    content: "\f624";
+}
+.mdl2-CircleShapeSolid:before {
+    content: "\f63c";
+}
+.mdl2-WifiCallBars:before {
+    content: "\f657";
+}
+.mdl2-WifiCall0:before {
+    content: "\f658";
+}
+.mdl2-WifiCall1:before {
+    content: "\f659";
+}
+.mdl2-WifiCall2:before {
+    content: "\f65a";
+}
+.mdl2-WifiCall3:before {
+    content: "\f65b";
+}
+.mdl2-WifiCall4:before {
+    content: "\f65c";
+}
+.mdl2-CHTLanguageBar:before {
+    content: "\f69e";
+}
+.mdl2-EmojiTabMoreSymbols:before {
+    content: "\f6ba";
+}
+.mdl2-WebSearch:before {
+    content: "\f6fa";
+}
+.mdl2-Kiosk:before {
+    content: "\f712";
+}
+.mdl2-RTTLogo:before {
+    content: "\f714";
+}
+.mdl2-VoiceCall:before {
+    content: "\f715";
+}
+.mdl2-GoToMessage:before {
+    content: "\f716";
+}
+.mdl2-ReturnToCall:before {
+    content: "\f71a";
+}
+.mdl2-StartPresenting:before {
+    content: "\f71c";
+}
+.mdl2-StopPresenting:before {
+    content: "\f71d";
+}
+.mdl2-ProductivityMode:before {
+    content: "\f71e";
+}
+.mdl2-SetHistoryStatus:before {
+    content: "\f738";
+}
+.mdl2-SetHistoryStatus2:before {
+    content: "\f739";
+}
+.mdl2-Keyboardsettings20:before {
+    content: "\f73d";
+}
+.mdl2-OneHandedRight20:before {
+    content: "\f73e";
+}
+.mdl2-OneHandedLeft20:before {
+    content: "\f73f";
+}
+.mdl2-Split20:before {
+    content: "\f740";
+}
+.mdl2-Full20:before {
+    content: "\f741";
+}
+.mdl2-Handwriting20:before {
+    content: "\f742";
+}
+.mdl2-CheveronLeft20:before {
+    content: "\f743";
+}
+.mdl2-CheveronLeft32:before {
+    content: "\f744";
+}
+.mdl2-CheveronRight20:before {
+    content: "\f745";
+}
+.mdl2-CheveronRight32:before {
+    content: "\f746";
+}
+.mdl2-MicOff2:before {
+    content: "\f781";
+}
+.mdl2-DeliveryOptimization:before {
+    content: "\f785";
+}
+.mdl2-CancelMedium:before {
+    content: "\f78a";
+}
+.mdl2-SearchMedium:before {
+    content: "\f78b";
+}
+.mdl2-AcceptMedium:before {
+    content: "\f78c";
+}
+.mdl2-RevealPasswordMedium:before {
+    content: "\f78d";
+}
+.mdl2-DeleteWord:before {
+    content: "\f7ad";
+}
+.mdl2-DeleteWordFill:before {
+    content: "\f7ae";
+}
+.mdl2-DeleteLines:before {
+    content: "\f7af";
+}
+.mdl2-DeleteLinesFill:before {
+    content: "\f7b0";
+}
+.mdl2-InstertWords:before {
+    content: "\f7b1";
+}
+.mdl2-InstertWordsFill:before {
+    content: "\f7b2";
+}
+.mdl2-JoinWords:before {
+    content: "\f7b3";
+}
+.mdl2-JoinWordsFill:before {
+    content: "\f7b4";
+}
+.mdl2-OverwriteWords:before {
+    content: "\f7b5";
+}
+.mdl2-OverwriteWordsFill:before {
+    content: "\f7b6";
+}
+.mdl2-AddNewLine:before {
+    content: "\f7b7";
+}
+.mdl2-AddNewLineFill:before {
+    content: "\f7b8";
+}
+.mdl2-OverwriteWordsKorean:before {
+    content: "\f7b9";
+}
+.mdl2-OverwriteWordsFillKorean:before {
+    content: "\f7ba";
+}
+.mdl2-EducationIcon:before {
+    content: "\f7bb";
+}
+.mdl2-WindowSnipping:before {
+    content: "\f7ed";
+}
+.mdl2-VideoCapture:before {
+    content: "\f7ee";
+}
+.mdl2-StatusSecured:before {
+    content: "\f809";
+}
+.mdl2-NarratorApp:before {
+    content: "\f83b";
+}
+.mdl2-PowerButtonUpdate:before {
+    content: "\f83d";
+}
+.mdl2-RestartUpdate:before {
+    content: "\f83e";
+}
+.mdl2-UpdateStatusDot:before {
+    content: "\f83f";
+}
+.mdl2-Eject:before {
+    content: "\f847";
+}

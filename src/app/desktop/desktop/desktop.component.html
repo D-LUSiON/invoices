@@ -1,0 +1,33 @@
+<div id="DesktopContainer">
+    <div role="titlebar">
+        <inv-titlebar></inv-titlebar>
+    </div>
+    <div role="tools">
+        <div class="tools-start">
+            <div
+                class="icon-container"
+                [class.active]="module.active"
+                [title]="module.title"
+                *ngFor="let module of loadedModules; let idx = index"
+                (click)="activateSidebarModule(idx)"
+            >
+                <span [class]="module.icon"></span>
+            </div>
+        </div>
+        <div class="tools-end">
+            <div class="icon-container" title="Settings" (click)="openSettings()">
+                <span class="ti ti-settings"></span>
+            </div>
+        </div>
+    </div>
+    <div role="sidebar">
+        <ng-container #sidebarContent></ng-container>
+    </div>
+    <div role="tabs">
+        <lib-tabs [tabs]="openedDocuments" (tabClose)="closeTab($event)" (tabActivate)="activateTab($event)"></lib-tabs>
+    </div>
+    <div role="main">
+        <ng-container #mainContent></ng-container>
+    </div>
+    <div role="footer">footer</div>
+</div>

@@ -1,2 +1,3 @@
-export * from './extension';
-export * from './tab';
+export * from './document';
+export * from './module';
+export * from './opened-documents';

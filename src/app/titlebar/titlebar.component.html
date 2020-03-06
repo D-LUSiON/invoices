@@ -1,0 +1,20 @@
+<div id="Titlebar">
+    <div class="app-icon">
+        <div id="AppIcon" [ngStyle]="{ 'background-image': 'url(./assets/icon.png)' }"></div>
+    </div>
+    <div class="draggable"></div>
+    <div class="window-controls" [class.maximized]="maximized">
+        <div class="button min-button" (click)="minimize()">
+            <span class="mdl2-ChromeMinimize"></span>
+        </div>
+        <div class="button max-button" (click)="maximize()">
+            <span class="mdl2-ChromeMaximize"></span>
+        </div>
+        <div class="button restore-button" (click)="restore()">
+            <span class="mdl2-ChromeRestore"></span>
+        </div>
+        <div class="button close-button" (click)="quit()">
+            <span class="mdl2-ChromeClose"></span>
+        </div>
+    </div>
+</div>

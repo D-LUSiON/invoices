@@ -1,47 +1,34 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { AccordionComponent } from './accordion/accordion.component';
+import { AccordionGroupComponent } from './accordion/accordion-group/accordion-group.component';
+import { TabsComponent } from './tabs/tabs.component';
+import { TreeComponent } from './tree/tree.component';
+import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-import { NgxElectronModule } from 'ngx-electron';
 
-import { KeysPipe } from './pipes/keys.pipe';
-import { LogPipe } from './pipes/log.pipe';
-import { SortPipe } from './pipes/sort.pipe';
-import { CurrencyPipe } from './pipes/currency.pipe';
-import { AppStateSharedService } from './services/app-state.service';
 
 @NgModule({
     declarations: [
-        KeysPipe,
-        LogPipe,
-        SortPipe,
-        CurrencyPipe,
+        AccordionComponent,
+        AccordionGroupComponent,
+        TabsComponent,
+        TreeComponent
     ],
     imports: [
-        HttpClientModule,
-        NgxElectronModule,
+        CommonModule,
         ReactiveFormsModule,
         FormsModule,
     ],
     exports: [
-        HttpClientModule,
-        NgxElectronModule,
+        CommonModule,
         ReactiveFormsModule,
         FormsModule,
 
-        KeysPipe,
-        LogPipe,
-        SortPipe,
-        CurrencyPipe,
+        AccordionComponent,
+        AccordionGroupComponent,
+        TabsComponent,
+        TreeComponent
     ]
 })
-export class SharedModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: SharedModule,
-            providers: [
-                // AppStateSharedService
-            ]
-        }
-    }
-}
+export class SharedModule { }

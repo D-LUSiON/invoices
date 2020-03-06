@@ -1,101 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
-:root {
-    --color-white: #fff;
-    --color-black: #282828;
-    --color-grey: #c0c0c0;
-    --color-light-grey: #bbb;
-    --color-dark-grey: #666;
-    --color-deep-grey: #484848;
-    --color-black: #333;
-
-    --padding: 15px;
-
-    --transition: .3s ease-in-out;
-}
+@import './assets/theme-dark.scss';
 
 * {
-    user-select: none;
     box-sizing: border-box;
-}
-
-.selectable,
-.selectable *,
-input,
-textarea,
-select {
-    user-select: initial;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    background-color: #f1f1f1;
-    color: var(--color-black);
-    font-family: 'Liberation Mono', monospace;
-    font-size: 10pt;
-}
-
-button:focus,
-button:active {
-    outline: none;
-}
-
-.tabs-container {
-    display: flex;
-    align-items: stretch;
-    justify-content: flex-start;
-    flex-wrap: nowrap;
-
-    &:after {
-        content: '';
-        display: table;
-        clear: both;
-    }
-
-    &,
-    ul,
-    li {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
-
-    .tab {
-        display: flex;
-        align-items: center;
-        flex-shrink: 0;
-        width: 120px;
-        min-width: fit-content;
-        margin-right: 2px;
-        border: 1px solid transparent;
-        padding: calc(var(--padding) / 2);
-        transition: background-color var(--transition);
-        cursor: pointer;
-
-        &.active {
-            border: 1px solid var(--color-grey);
-            border-bottom: 1px solid #fff;
-            background-color: #fff;
-        }
-
-        .fas {
-            margin-left: 5px;
-        }
-
-        .fa-circle {
-            font-size: 0.666em;
-        }
-
-        .fa-times {
-            opacity: 0;
-        }
-
-        &:hover {
-            &:not(.active) {
-                background-color: var(--color-light-grey);
-            }
-
-            & .fas {
-                opacity: 1;
-            }
-        }
-    }
+    font-family: monospace;
+    font-size: var(--font-size);
 }

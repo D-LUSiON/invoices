@@ -1,0 +1,23 @@
+<ul *ngIf="nodes?.length">
+    <ng-container *ngFor="let node of nodes">
+        <ng-container *ngTemplateOutlet="node_item; context: { $implicit: node }"></ng-container>
+    </ng-container>
+</ul>
+
+<ng-template #node_item let-node>
+    <li [class.collapsed]="!node.expanded">
+        <div class="node-title" [title]="node.title || node.heading" [class.node-branch]="node.branch" (click)="onNodeClick(node)" (dblclick)="onNodeDblClick(node)">
+            <span
+                class="ti"
+                [class.ti-pencil-alt]="!node.branch"
+                [class.mdl2-TreeFolderFolder]="node.branch && !node.expanded"
+                [class.mdl2-TreeFolderFolderOpen]="node.branch && node.expanded"
+            ></span> {{ node.heading || node.title }}
+        </div>
+        <ul *ngIf="node.branch && node.children.length">
+            <ng-container *ngFor="let child_node of node.children">
+                <ng-container *ngTemplateOutlet="node_item; context: { $implicit: child_node }"></ng-container>
+            </ng-container>
+        </ul>
+    </li>
+</ng-template>

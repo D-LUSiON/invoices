@@ -1,14 +1,16 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/release
-/www
 /www-*
+/www
+/release
 /build
 /dist-*
 /dist
 /tmp
 /out-tsc
+/src/modules/*
+/resources/modules/*/ng
 # Only exists if Bazel was run
 /bazel-out
 
