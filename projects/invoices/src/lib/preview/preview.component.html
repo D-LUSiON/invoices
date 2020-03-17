@@ -1,2 +1,117 @@
-<p>preview works!</p>
-<p>{{ invoice|json }}</p>
+<div class="preview-container">
+    <div class="invoice-container">
+        <div class="invoice-head">
+            <div class="invoice-recipient">
+                <div class="form-group">
+                    <label>Получател</label>
+                    <div class="form-control" readonly>Любомир Пейков</div>
+                </div>
+                <div class="form-group">
+                    <label>ЕИК</label>
+                    <div class="form-control" readonly>7811051085</div>
+                </div>
+                <div class="form-group">
+                    <label>ДДС Номер</label>
+                    <div class="form-control" readonly>BG7811051085</div>
+                </div>
+                <div class="form-group">
+                    <label>Адрес</label>
+                    <div class="form-control" readonly>София, ул. 11-ти Август №29</div>
+                </div>
+            </div>
+            <div class="invoice-heading">
+                <h1 class="text-center">Фактура</h1>
+                <div class="form-group">
+                    <label class="text-center">Номер</label>
+                    <div class="text-center">{{ invoice.number }}</div>
+                </div>
+                <div class="form-group">
+                    <label class="text-center">Дата на издаване</label>
+                    <div class="text-center">{{ invoice.issue_date|date:'MMM d, y' }}</div>
+                </div>
+                <div class="form-group">
+                    <label class="text-center">Дата на въвеждане</label>
+                    <div class="form-control text-center">{{ invoice.creation_date|date:'MMM d, y' }}</div>
+                </div>
+            </div>
+            <div class="invoice-issuer">
+                <div class="form-group">
+                    <label>Доставчик</label>
+                    <p>{{ invoice.provider.organization }}</p>
+                </div>
+                <div class="form-group">
+                    <label>VAT</label>
+                    <p>{{ invoice.provider?.vat || '---'}}</p>
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <p>{{ invoice.provider?.address || '---'}}</p>
+                </div>
+                <div class="form-group">
+                    <label>Accountable person</label>
+                    <p>{{ invoice.provider?.acc_person || '---'}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="invoice-goods-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30px">#</th>
+                        <th>Name of goods/service</th>
+                        <th style="width: 10%">Measure</th>
+                        <th style="width: 10%">Qty.</th>
+                        <th style="width: 10%">Unit price</th>
+                        <th style="width: 5%">VAT (%)</th>
+                        <th style="width: 10%">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of invoice.goods; let idx = index">
+                        <td>{{ idx + 1 }}</td>
+                        <td>
+                            {{ row.title }}
+                        </td>
+                        <td>
+                            <div class="text-right">
+                                {{ row.measure }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">
+                                {{ row.quantity }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">
+                                {{ row.price }}
+                            </div>
+                        </td>
+                        <td>
+                            20%
+                        </td>
+                        <td class="text-right">
+                            {{ invoice.goods[idx].quantity * invoice.goods[idx].price }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="invoice-sum-container">
+            <div class="invoice-notes-container">
+                <label>Notes:</label>
+                <div class="invoice-notes">{{ invoice.notes }}</div>
+            </div>
+            <div class="sum-container">
+                <div class="cell">Tax base (20%)</div>
+                <div class="cell text-right">{{ invoice.total_sum }} лв.</div>
+                <div class="cell">VAT charged</div>
+                <div class="cell text-right">{{ invoice.total_vat }} лв.</div>
+                <div class="cell">
+                    <strong>Payment amount</strong>
+                </div>
+                <div class="cell text-right">{{ invoice.payment_amount }} лв.</div>
+            </div>
+        </div>
+    </div>
+</div>

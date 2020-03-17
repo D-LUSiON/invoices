@@ -3,7 +3,7 @@
     <div class="actions">
         <div class="msg msg-danger" *ngIf="invoiceForm?.invalid; else saveButton">Invalid</div>
         <ng-template #saveButton>
-            <button type="button" class="btn" [disabled]="invoiceForm?.pristine" (click)="onSubmit()">
+            <button type="button" class="btn" *ngIf="invoiceForm?.dirty" (click)="onSubmit()">
                 <div class="ti ti-save"></div>
             </button>
         </ng-template>
@@ -34,33 +34,37 @@
                 <h1 class="text-center">Фактура</h1>
                 <div class="form-group">
                     <label class="text-center">Номер</label>
-                    <input type="text" class="form-control" placeholder="Invoice number" formControlName="number">
+                    <input type="text" class="form-control text-center" placeholder="Invoice number" formControlName="number">
                 </div>
                 <div class="form-group">
                     <label class="text-center">Дата на издаване</label>
-                    <input type="date" class="form-control" placeholder="Date of issuing" formControlName="issue_date" [max]="today">
+                    <input type="date" class="form-control text-center" placeholder="Date of issuing" formControlName="issue_date" [max]="today">
                 </div>
                 <div class="form-group">
                     <label class="text-center">Дата на въвеждане</label>
-                    <div class="form-control" readonly>{{ invoice.creation_date }}</div>
+                    <div class="form-control text-center">{{ invoice.creation_date|date:'MMM d, y' }}</div>
                 </div>
             </div>
-            <div class="invoice-issuer" formGroupName="provider">
+            <div class="invoice-issuer">
                 <div class="form-group">
                     <label>Доставчик</label>
-                    <input type="text" class="form-control" placeholder="Issuer" formControlName="organization">
+                    <!-- <input type="text" class="form-control" placeholder="Issuer" formControlName="organization"> -->
+                    <lib-autocomplete [results]="providers" labelField="organization" idField="id" formControlName="provider"></lib-autocomplete>
                 </div>
                 <div class="form-group">
                     <label>VAT</label>
-                    <input type="text" class="form-control" placeholder="VAT" [attr.readonly]="invoiceForm.value['provider']['id']" formControlName="vat">
+                    <p>{{ choosen_provider?.vat || '---'}}</p>
+                    <!-- <input type="text" class="form-control" placeholder="---" [value]="choosen_provider?.vat" readonly> -->
                 </div>
                 <div class="form-group">
                     <label>Address</label>
-                    <input type="text" class="form-control" placeholder="Address" [attr.readonly]="invoiceForm.value['provider']['id']" formControlName="address">
+                    <p>{{ choosen_provider?.address || '---'}}</p>
+                    <!-- <input type="text" class="form-control" placeholder="---" [value]="choosen_provider?.address" readonly> -->
                 </div>
                 <div class="form-group">
                     <label>Accountable person</label>
-                    <input type="text" class="form-control" placeholder="Accountable person" [attr.readonly]="invoiceForm.value['provider']['id']" formControlName="acc_person">
+                    <p>{{ choosen_provider?.acc_person || '---'}}</p>
+                    <!-- <input type="text" class="form-control" placeholder="---" [value]="choosen_provider?.acc_person" readonly> -->
                 </div>
             </div>
         </div>
@@ -79,7 +83,7 @@
                     </tr>
                 </thead>
                 <tbody formGroupName="goods">
-                    <tr [formArrayName]="idx" *ngFor="let row of invoiceForm.value['goods']; let idx = index">
+                    <tr [formArrayName]="idx" *ngFor="let row of invoiceForm.get('goods')['controls']; let idx = index">
                         <td>{{ idx + 1 }}</td>
                         <td>
                             <input type="text" class="form-control" formControlName="title">
@@ -100,7 +104,7 @@
                             {{ invoiceForm.value['goods'][idx].quantity * invoiceForm.value['goods'][idx].price }}
                         </td>
                         <td>
-                            <button type="button" class="btn btn-default" *ngIf="idx < invoiceForm.value['goods'].length - 1" (click)="removeNewGoodsRow(idx)">
+                            <button type="button" class="btn btn-default" (click)="removeNewGoodsRow(idx)">
                                 <span class="mdl2-RemoveFrom"></span>
                             </button>
                             <button type="button" class="btn btn-default" *ngIf="idx === invoiceForm.value['goods'].length - 1" (click)="addNewGoodsRow()">
@@ -112,6 +116,10 @@
             </table>
         </div>
         <div class="invoice-sum-container">
+            <div class="invoice-notes-container">
+                <label>Notes:</label>
+                <textarea class="form-control invoice-notes" formControlName="notes"></textarea>
+            </div>
             <div class="sum-container">
                 <div class="cell">Tax base (20%)</div>
                 <div class="cell text-right">{{ invoice.total_sum }} лв.</div>

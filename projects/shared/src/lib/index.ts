@@ -1,5 +1,7 @@
 export * from './accordion';
+export * from './autocomplete';
 export * from './tabs';
+export * from './pipes';
 export * from './tree';
 export * from './tools';
 export * from './shared.module';

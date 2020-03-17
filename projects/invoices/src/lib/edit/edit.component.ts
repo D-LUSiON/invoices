@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnChanges, HostListener, Output, EventEmitter
 import { Invoice } from '../classes/invoice';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Tools, StateManagerService } from '@shared';
-import { ProvidersService } from '@providers';
+import { ProvidersService, Provider } from '@providers';
 import { InvoicesService } from '../invoices.service';
 import { Goods } from '../classes';
 
@@ -10,7 +10,7 @@ import { Goods } from '../classes';
     selector: 'inv-edit',
     templateUrl: './edit.component.html',
     styleUrls: ['./edit.component.scss'],
-    // changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditComponent implements OnInit, OnChanges {
 
@@ -18,6 +18,9 @@ export class EditComponent implements OnInit, OnChanges {
     @Output() invoiceChange: EventEmitter<Invoice> = new EventEmitter();
 
     invoiceForm: FormGroup;
+
+    providers: Provider[] = [];
+    choosen_provider: Provider = new Provider();
 
     @HostListener('window:keyup', ['$event']) saveAccelerator(e: KeyboardEvent) {
         if (e.ctrlKey && e.key.toLowerCase() === 's' && this.invoiceForm.valid) {
@@ -31,11 +34,30 @@ export class EditComponent implements OnInit, OnChanges {
         private _stateManager: StateManagerService,
         private _fb: FormBuilder
     ) {
-        this._initForm();
+        console.log(`Invoices edit constructor`);
+
+        this._providersService.providers$.subscribe(providers => {
+            console.log(`this._providersService.providers$`, providers);
+            if (providers.length) {
+                this.providers = providers;
+                if (this.invoice.provider?.id) {
+                    this.choosen_provider = this.invoice.provider;
+
+                    this.invoiceForm.patchValue({
+                        provider: this.choosen_provider
+                    });
+                }
+            }
+        });
+        this._providersService.getSaved().then((providers: Provider[]) => {
+            console.log(`Providers retrieved`, providers);
+
+            this.providers = providers;
+        });
     }
 
     ngOnInit(): void {
-        console.log(`invoice edit ngOnInit`, this.invoice);
+        this._initForm();
 
         this.invoiceForm.patchValue({
             ...this.invoice,
@@ -44,35 +66,31 @@ export class EditComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes) {
-        console.log(`invoice edit change`, changes);
     }
 
     private _initForm() {
-        this.invoice.goods.push(new Goods());
+        if (!this.invoice.goods.length)
+            this.invoice.goods.push(new Goods());
         this.invoiceForm = this._fb.group({
-            '_id': this._fb.control(this.invoice._id),
+            'id': this._fb.control(this.invoice.id),
             'status': this._fb.control(this.invoice.status),
             'number': this._fb.control(this.invoice.number, [Validators.required]),
             'issue_date': this._fb.control(Tools.formatDate(this.invoice.issue_date, 'YYYY-MM-dd'), [Validators.required]),
             'issue_place': this._fb.control(this.invoice.issue_place),
-            // 'recipient': this._fb.control(this.invoice.recipient, [/* TODO: create custom validator */]),
             'type': this._fb.control(this.invoice.type),
             'notes': this._fb.control(this.invoice.notes),
-            'provider': this._fb.group({
-                'id': this._fb.control(this.invoice.provider.id),
-                'organization': this._fb.control(this.invoice.provider.organization, [Validators.required]),
-                'acc_person': this._fb.control(this.invoice.provider.acc_person),
-                'address': this._fb.control(this.invoice.provider.address),
-                'vat': this._fb.control(this.invoice.provider.vat, [Validators.required]),
-                'vat2': this._fb.control(this.invoice.provider.vat2)
-            }),
+            'provider': this._fb.control(this.invoice.provider, [Validators.required]),
             'goods': this._buildGoodsRows,
             'creation_date': this._fb.control(this.invoice.creation_date),
             'update_date': this._fb.control(this.invoice.update_date),
         });
 
         this.invoiceForm.valueChanges.subscribe(changes => {
+
             this.invoice = new Invoice(changes);
+            if (this.invoice.provider?.id) {
+                this.choosen_provider = this.providers.find(x => x.id === this.invoice.provider.id);
+            }
             this.invoiceChange.emit(this.invoice);
         });
     }
@@ -90,18 +108,15 @@ export class EditComponent implements OnInit, OnChanges {
                 })
             );
         });
-
         return this._fb.array(rows);
     }
 
     addNewGoodsRow() {
-        // this.invoiceForm.controls['goods'].
         this.invoice.goods.push(new Goods());
         this.invoiceForm.setControl('goods', this._buildGoodsRows);
     }
 
     removeNewGoodsRow(idx: number) {
-        // this.invoiceForm.controls['goods'].
         this.invoice.goods.splice(idx, 1);
         this.invoiceForm.setControl('goods', this._buildGoodsRows);
     }
@@ -123,7 +138,6 @@ export class EditComponent implements OnInit, OnChanges {
             this.invoice = invoice;
             this.invoiceForm.patchValue(this.invoice);
             this.invoiceForm.markAsPristine();
-            // this._invoicesService.
         }, err => {
             console.log(`Error saving invoice`, this.invoice, err);
         })

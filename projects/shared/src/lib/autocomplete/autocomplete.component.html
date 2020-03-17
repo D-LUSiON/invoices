@@ -1,0 +1,19 @@
+<div class="autocomplete-container">
+    <input
+        #input
+        type="text"
+        [value]="value?.label"
+        class="autocomplete-input form-control"
+        (keyup)="filterResults(input.value)"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+    >
+    <div class="autocomplete-dropdown-container" [class.hidden]="!dropdown_opened">
+        <div
+            class="autocomplete-result"
+            *ngFor="let item of filtered_results; let idx = index"
+            [class.highlighted]="highlighted_idx === idx"
+            (click)="onSelect(idx)"
+        >{{ item.label }}</div>
+    </div>
+</div>

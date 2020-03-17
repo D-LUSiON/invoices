@@ -59,7 +59,6 @@ export class StateManagerService {
     }
 
     addDocument(doc: Document) {
-
         const module = this._loadedModules.find(mod => mod.module_name === `${doc.module}Module`);
 
         if (module) {
@@ -68,16 +67,17 @@ export class StateManagerService {
                 d.active = false;
             });
 
-            const idx = this._openedDocuments.findIndex(opened => opened.module === doc.module && opened._id === doc._id);
+            const idx = this._openedDocuments.findIndex(opened => opened.module === doc.module && opened.id === doc.id);
+            console.log(idx, doc, this._openedDocuments.find(opened => opened.module === doc.module && opened.id === doc.id), this._openedDocuments);
 
             if (idx === -1) {
                 doc.mode = (!doc.mode) ? 'preview' : doc.mode;
 
-                const d_idx = this._openedDocuments.findIndex(d => d.mode === 'preview');
-                if (d_idx === -1) {
+                const didx = this._openedDocuments.findIndex(d => d.mode === 'preview');
+                if (didx === -1) {
                     this._openedDocuments.push(doc);
                 } else {
-                    this._openedDocuments[d_idx] = doc;
+                    this._openedDocuments[didx] = doc;
                 }
             } else {
                 if (this._openedDocuments[idx].active) {
@@ -108,6 +108,8 @@ export class StateManagerService {
     }
 
     closeTab(idx: number) {
+        console.log(`closeTab idx: ${idx}`);
+
         const active_idx = this._openedDocuments.findIndex(doc => doc.active);
         if (idx === active_idx) {
             if (idx === 0) {

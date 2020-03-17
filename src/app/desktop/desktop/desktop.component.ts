@@ -28,7 +28,7 @@ export class DesktopComponent implements OnInit, AfterViewInit {
             this.updateSidebar();
         });
         this._stateManager.openedDocuments$.subscribe(opened_documents => {
-            if (opened_documents.length) {
+            if (opened_documents instanceof Array) {
                 this.openedDocuments = [...opened_documents];
                 this.renderContent(this.openedDocuments.find(d => d.active));
             }
@@ -87,6 +87,8 @@ export class DesktopComponent implements OnInit, AfterViewInit {
         if (activeDocument) {
             const component = this._componentFactoryResolver.resolveComponentFactory(activeDocument.component);
             activeDocument.instance = this._mainContentContainerRef.createComponent(component);
+            console.log(`activeDocument`, activeDocument);
+
             Object.keys(activeDocument.inputs).forEach(key => {
                 activeDocument.instance.instance[key] = activeDocument.inputs[key];
             });

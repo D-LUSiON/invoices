@@ -32,6 +32,7 @@ export class SidebarComponent implements OnInit {
 
     newInvoice() {
         this._stateManager.addDocument(new Document({
+            id: 0,
             title: `New invoice`,
             module: 'Invoices',
             mode: 'edit',
@@ -42,7 +43,10 @@ export class SidebarComponent implements OnInit {
     }
 
     onTreeNodeClicked(node: TreeItem) {
+        console.log(`onTreeNodeClicked`, node);
+
         this._stateManager.addDocument(new Document({
+            id: node.obj.id,
             title: node.title || node.heading,
             module: 'Invoices',
             inputs: {

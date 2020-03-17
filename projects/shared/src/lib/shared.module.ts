@@ -5,6 +5,8 @@ import { TabsComponent } from './tabs/tabs.component';
 import { TreeComponent } from './tree/tree.component';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { AutocompleteComponent } from './autocomplete/autocomplete.component';
+import { ConsoleLogPipe } from './pipes/log.pipe';
 
 
 
@@ -13,7 +15,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
         AccordionComponent,
         AccordionGroupComponent,
         TabsComponent,
-        TreeComponent
+        TreeComponent,
+        AutocompleteComponent,
+        ConsoleLogPipe,
     ],
     imports: [
         CommonModule,
@@ -28,7 +32,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
         AccordionComponent,
         AccordionGroupComponent,
         TabsComponent,
-        TreeComponent
+        TreeComponent,
+        AutocompleteComponent,
+        ConsoleLogPipe,
     ]
 })
 export class SharedModule { }

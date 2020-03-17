@@ -1,34 +1,41 @@
 {
-  "blacklist": [],
-  "package": {
-    "name": "invoices-plg",
-    "productName": "invoices-plg",
-    "description": "",
-    "author": "",
-    "version": "1.0.0",
-    "license": "MIT",
-    "keywords": []
-  },
-  "angular": {
-    "prefix": "inv",
-    "routing": true,
-    "style": "SCSS",
-    "minimal": true,
-    "skipTests": true
-  },
-  "template": {
-    "name": "default",
-    "templateName": "Default template",
-    "language": "js",
-    "electronRoot": "electron",
-    "ngBuildDir": "www",
-    "eBuildDir": ""
-  },
-  "versions": {
-    "main": "1.0.0",
-    "electron": "1.0.0",
+    "blacklist": [],
+    "package": {
+        "name": "invoices",
+        "productName": "Invoices",
+        "description": "Application for managing VAT invoices",
+        "author": "D-LUSiON",
+        "version": "3.0.0",
+        "license": "MIT",
+        "keywords": [
+            "invoices",
+            "vat",
+            "tool",
+            "app",
+            "electron",
+            "angular"
+        ]
+    },
     "angular": {
-      "invoices-plg": "1.0.0"
+        "prefix": "inv",
+        "routing": true,
+        "style": "SCSS",
+        "minimal": true,
+        "skipTests": true
+    },
+    "template": {
+        "name": "default",
+        "templateName": "Default template",
+        "language": "js",
+        "electronRoot": "electron",
+        "ngBuildDir": "www",
+        "eBuildDir": ""
+    },
+    "versions": {
+        "main": "3.0.0",
+        "electron": "3.0.0",
+        "angular": {
+            "invoices": "3.0.0"
+        }
     }
-  }
 }

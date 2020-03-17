@@ -23,10 +23,12 @@
     .form-container {
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
 
         .invoice-container {
             width: 100%;
-            margin: var(--spacing);
+        max-width: 950px;
+        margin: var(--spacing);
             padding: calc(var(--spacing) * 2);
             border: 1px solid var(--c-main);
 
@@ -60,13 +62,32 @@
                 }
             }
 
+            .invoice-goods-container {
+                margin-bottom: calc(var(--spacing) * 2);
+            }
+
             .invoice-sum-container {
                 display: flex;
                 justify-content: flex-end;
 
+                .invoice-notes-container {
+                    flex: 1 1 auto;
+
+                    label {
+                        display: block;
+                    }
+
+                    .invoice-notes {
+                        height: 55px;
+                        resize: none;
+                    }
+                }
+
+
                 .sum-container {
                     width: 250px;
                     display: flex;
+                    flex: 0 0 auto;
                     justify-content: stretch;
                     flex-wrap: wrap;
 

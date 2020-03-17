@@ -1,15 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Provider } from '../classes';
 
 @Component({
-  selector: 'inv-preview',
-  templateUrl: './preview.component.html',
-  styleUrls: ['./preview.component.scss']
+    selector: 'inv-preview',
+    templateUrl: './preview.component.html',
+    styleUrls: ['./preview.component.scss']
 })
-export class PreviewComponent implements OnInit {
+export class PreviewComponent implements OnInit, OnChanges {
 
-  constructor() { }
+    @Input() provider: Provider;
 
-  ngOnInit(): void {
-  }
+    constructor() { }
+
+    ngOnInit(): void {
+
+    }
+
+    ngOnChanges(changes) {
+        console.log(`provider preview changes`, changes);
+
+    }
 
 }

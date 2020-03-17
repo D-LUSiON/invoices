@@ -1,6 +1,6 @@
-# invoices-plg
+# invoices
 
-This project was generated with: 
+This project was generated with:
 - [ElAn CLI](https://github.com/D-LUSiON/elan-cli) version 0.2.0-beta.4
 - [Angular CLI](https://github.com/angular/angular-cli) version 9.0.3
 - Angular version 9.0.2

@@ -7,16 +7,16 @@ export class Invoice {
     _id: string;
     id: number;
     status: Status = Status.New;
-    selected?: boolean = false;
+    selected: boolean = false;
     number: string = '';
     issue_date: Date;
-    issue_place?: string = 'София';
+    issue_place: string = 'София';
     type?: string = '';
     notes?: string = '';
     provider?: Provider = new Provider();
     goods: Goods[] = [];
-    creation_date?: Date;
-    update_date?: Date;
+    creation_date: Date = new Date();
+    update_date: Date = new Date();
 
     constructor(data?) {
         if (data) {
@@ -30,10 +30,19 @@ export class Invoice {
             if (data.hasOwnProperty('type')) this.type = data.type;
             if (data.hasOwnProperty('notes')) this.notes = data.notes;
             if (data.hasOwnProperty('provider')) this.provider = new Provider(data.provider);
-            if (data.hasOwnProperty('goods')) this.goods = data.goods.map(x => new Goods(x));
-            if (data.hasOwnProperty('creation_date')) this.creation_date = new Date(data.creation_date); else this.creation_date = new Date();
-            if (data.hasOwnProperty('update_date')) this.update_date = new Date(data.update_date);
+            if (data.hasOwnProperty('goods') && data['goods']) this.goods = data.goods.map(x => new Goods(x));
+            if (data.hasOwnProperty('creation_date') && data['creation_date']) this.creation_date = new Date(data.creation_date);
+            if (data.hasOwnProperty('update_date') && data['update_date']) this.update_date = new Date(data.update_date);
         }
+    }
+    get title() {
+        if (this.notes)
+            return this.notes;
+        else if (this.goods.length)
+            return this.goods.map(x => x.title).join(', ');
+        else
+            return 'no title';
+
     }
 
     get total_sum() {

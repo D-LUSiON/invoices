@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "invoices-plg": {
+        "invoices-core": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -41,7 +41,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/invoices-plg",
+                        "outputPath": "dist/invoices-core",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -115,18 +115,18 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "invoices-plg:build"
+                        "browserTarget": "invoices-core:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "invoices-plg:build:production"
+                            "browserTarget": "invoices-core:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "invoices-plg:build"
+                        "browserTarget": "invoices-core:build"
                     }
                 }
             }
@@ -292,5 +292,5 @@
             }
         }
     },
-    "defaultProject": "invoices-plg"
+    "defaultProject": "invoices-core"
 }

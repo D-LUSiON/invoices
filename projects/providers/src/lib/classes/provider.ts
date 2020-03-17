@@ -4,7 +4,6 @@ export class Provider {
     acc_person: string = '';
     address: string = '';
     vat: string = '';
-    vat2: string = '';
 
     constructor(data?) {
         if (data) {
@@ -13,7 +12,6 @@ export class Provider {
             if (data.acc_person) this.acc_person = data.acc_person;
             if (data.address) this.address = data.address;
             if (data.vat) this.vat = data.vat;
-            if (data.vat2) this.vat2 = data.vat2;
         }
     }
 
@@ -23,7 +21,6 @@ export class Provider {
             acc_person: this.acc_person,
             address: this.address,
             vat: this.vat,
-            vat2: this.vat2,
         };
     }
 }

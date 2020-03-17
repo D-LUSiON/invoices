@@ -32,21 +32,23 @@ export class SidebarComponent implements OnInit {
 
     newProvider() {
         this._stateManager.addDocument(new Document({
+            id: 0,
             title: `New provider`,
             module: 'Providers',
             mode: 'edit',
             inputs: {
-                invoice: new Provider()
+                provider: new Provider()
             }
         }));
     }
 
     onTreeNodeClicked(node: TreeItem) {
         this._stateManager.addDocument(new Document({
+            id: node.obj.id,
             title: node.title || node.heading,
             module: 'Providers',
             inputs: {
-                invoice: node.obj
+                provider: node.obj
             }
         }));
     }

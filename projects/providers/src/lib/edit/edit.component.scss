@@ -1,0 +1,21 @@
+.heading {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    margin-bottom: calc(var(--spacing) * 2);
+    background-color: var(--bg-color-accented);
+
+    h1 {
+        flex: 1 1 auto;
+    }
+    .actions {
+        flex: 0 0 auto;
+        display: flex;
+        justify-content: stretch;
+    }
+}
+
+.form-container {
+    padding: calc(var(--spacing) * 2);
+}

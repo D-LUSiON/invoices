@@ -2,7 +2,7 @@ import { Tools } from '../tools';
 import { ComponentRef, Type } from '@angular/core';
 
 export class Document {
-    _id: string = Tools.makeid();
+    id: string = Tools.makeid();
     title: string = '';
     module: string = '';
     dirty: boolean = false;
@@ -14,7 +14,7 @@ export class Document {
 
     constructor(data?) {
         if (data) {
-            if (data.hasOwnProperty('_id')) this._id = data['_id'];
+            if (data.hasOwnProperty('id')) this.id = data['id'];
             if (data.hasOwnProperty('title')) this.title = data['title'];
             if (data.hasOwnProperty('module')) this.module = data['module'];
             if (data.hasOwnProperty('dirty')) this.dirty = data['dirty'];

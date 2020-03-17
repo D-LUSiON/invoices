@@ -1,0 +1,40 @@
+.autocomplete-container {
+    position: relative;
+    cursor: default;
+
+    .autocomplete-input {
+        display: block;
+        // width: 100%;
+        // border: none;
+        // padding: var(--spacing);
+    }
+
+    .autocomplete-dropdown-container {
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        max-height: 150px;
+        border: 1px solid var(--c-main-darker);
+        overflow-y: auto;
+        background-color: var(--c-main-lightest);
+        transition: all var(--animation-speed) ease-in-out;
+        box-shadow: 0 8px 10px -2px #000;
+
+        &.hidden {
+            height: 0;
+            overflow: hidden;
+            border-width: 0;
+        }
+
+        .autocomplete-result {
+            padding: var(--spacing);
+            color: var(--c-black);
+
+            &.highlighted,
+            &:hover {
+                background-color: var(--c-accent-primary);
+                color: var(--text-color);
+            }
+        }
+    }
+}
