@@ -46,7 +46,7 @@ class InvoicesController {
                 `Providers.acc_person`,
                 `Providers.address`,
                 `Providers.vat`
-            ).table('invoices').innerJoin('Providers', 'invoices.provider', '=', 'Providers.id').then(results => {
+            ).table('invoices').innerJoin('Providers', 'invoices.provider', '=', 'Providers.id').orderBy('issue_date', 'desc').then(results => {
                 if (results && results.length) {
                     results = results.map(row => {
                         row.provider = {
@@ -83,24 +83,26 @@ class InvoicesController {
             console.log(`saving invoice...`, invoice);
             this.saveInvoice(invoice).then(res => {
                 event.sender.send('invoice:save:response', res);
-            });
+            }).catch(err => console.log(err));
         });
     }
 
     saveInvoice(invoice) {
         return new Promise((resolve, reject) => {
             if (invoice.id) {
-                this.database.where('id', '=', invoice.id).update({
+                this.database('invoices').update({
                     number: invoice.number,
                     issue_date: invoice.issue_date,
                     issue_place: invoice.issue_place,
-                    notes: invoice.notes || '',
+                    notes: invoice.notes,
                     goods: JSON.stringify(invoice.goods || []),
                     provider: invoice.provider.id || null,
                     total_sum: invoice.total_sum,
                     type: invoice.type,
-                }).then(result => {
+                }).where('id', '=', invoice.id).then(result => {
                     resolve(result);
+                }).catch((err) => {
+                    reject(err);
                 });
             } else {
                 this.database.insert({

@@ -290,6 +290,46 @@
                     }
                 }
             }
+        },
+        "settings": {
+            "projectType": "library",
+            "root": "projects/settings",
+            "sourceRoot": "projects/settings/src",
+            "prefix": "lib",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-ng-packagr:build",
+                    "options": {
+                        "tsConfig": "projects/settings/tsconfig.lib.json",
+                        "project": "projects/settings/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "projects/settings/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/settings/src/test.ts",
+                        "tsConfig": "projects/settings/tsconfig.spec.json",
+                        "karmaConfig": "projects/settings/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "projects/settings/tsconfig.lib.json",
+                            "projects/settings/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
         }
     },
     "defaultProject": "invoices-core"

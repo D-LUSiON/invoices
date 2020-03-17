@@ -10,7 +10,8 @@ import { ProvidersService } from '../providers.service';
 })
 export class SidebarComponent implements OnInit {
 
-    treeData: TreeData = new TreeData([]);
+    private _treeData: TreeData = new TreeData([]);
+    filteredTreeData: TreeData = new TreeData([]);
 
     expanded_idx: number = 0;
 
@@ -19,7 +20,8 @@ export class SidebarComponent implements OnInit {
         private _stateManager: StateManagerService,
     ) {
         this._providersService.tree$.subscribe(tree => {
-            this.treeData = tree;
+            this._treeData = tree;
+            this.filteredTreeData = this._treeData.slice();
         });
     }
 
@@ -40,6 +42,10 @@ export class SidebarComponent implements OnInit {
                 provider: new Provider()
             }
         }));
+    }
+
+    filterTree(substr: string) {
+        this.filteredTreeData = this._treeData.filter(x => substr === '' || x.title.toLowerCase().indexOf(substr) > -1);
     }
 
     onTreeNodeClicked(node: TreeItem) {

@@ -1,7 +1,7 @@
 :host-context(lib-accordion) {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: calc(100% - 66px);
 
     inv-accordion-group,
     .accordion-group {

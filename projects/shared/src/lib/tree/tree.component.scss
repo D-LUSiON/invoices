@@ -24,10 +24,13 @@
 
             .node-title {
                 display: flex;
-                align-items: center;
+                align-items: flex-start;
                 padding: var(--spacing);
                 margin-bottom: var(--spacing);
                 margin-left: calc(var(--spacing) / 2);
+                // overflow: hidden;
+                // white-space: nowrap;
+                // text-overflow: ellipsis;
                 cursor: pointer;
 
                 &.node-branch {
@@ -36,6 +39,9 @@
 
                 &:hover {
                     background-color: var(--bg-color-inv-backgrounded);
+                    // overflow: auto;
+                    // white-space: normal;
+                    // text-overflow: unset;
                 }
 
                 [class*="mdl2"],

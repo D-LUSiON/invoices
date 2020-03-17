@@ -3,12 +3,14 @@ const {
 } = require('electron');
 
 class SendingController {
-    constructor() {
+    constructor(db_instance) {
         console.log(`Hello from ${this.constructor.name}!`);
-        this.getSendingListener();
+        this.database = db_instance;
+
+        this.startListeners();
     }
 
-    getSendingListener() {
+    startListeners() {
         ipcMain.on('sending:all', (event, args) => {
             console.log(`requested all sending...`);
 

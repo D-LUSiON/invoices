@@ -95,6 +95,15 @@ export class StateManagerService {
         }
     }
 
+    updateDocument(doc: Document) {
+        console.log(`updateDocument`, doc);
+        const idx = this._openedDocuments.findIndex(d => d.id === doc.id && d.module === doc.module);
+        if (idx > -1) {
+            this._openedDocuments[idx].inputs = doc.inputs;
+            this.openedDocuments$.next(this._openedDocuments);
+        }
+    }
+
     removeDocument(idx: number) {
         this._openedDocuments.splice(idx, 1);
         this.openedDocuments$.next(this._openedDocuments);

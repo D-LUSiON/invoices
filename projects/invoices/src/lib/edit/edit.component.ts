@@ -37,7 +37,6 @@ export class EditComponent implements OnInit, OnChanges {
         console.log(`Invoices edit constructor`);
 
         this._providersService.providers$.subscribe(providers => {
-            console.log(`this._providersService.providers$`, providers);
             if (providers.length) {
                 this.providers = providers;
                 if (this.invoice.provider?.id) {
@@ -50,8 +49,6 @@ export class EditComponent implements OnInit, OnChanges {
             }
         });
         this._providersService.getSaved().then((providers: Provider[]) => {
-            console.log(`Providers retrieved`, providers);
-
             this.providers = providers;
         });
     }

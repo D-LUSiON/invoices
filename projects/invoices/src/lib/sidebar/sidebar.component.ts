@@ -10,7 +10,8 @@ import { Invoice } from '../classes/invoice';
 })
 export class SidebarComponent implements OnInit {
 
-    treeData: TreeData = new TreeData([]);
+    private _treeData: TreeData = new TreeData([]);
+    filteredTreeData: TreeData = new TreeData([]);
 
     expanded_idx: number = 0;
 
@@ -19,7 +20,8 @@ export class SidebarComponent implements OnInit {
         private _stateManager: StateManagerService,
     ) {
         this._invoicesService.tree$.subscribe(tree => {
-            this.treeData = tree;
+            this._treeData = tree;
+            this.filteredTreeData = this._treeData.slice();
         });
     }
 
@@ -40,6 +42,22 @@ export class SidebarComponent implements OnInit {
                 invoice: new Invoice()
             }
         }));
+    }
+
+    filterTree(substr: string) {
+        console.log(`invoices filterTree`, substr, this._treeData);
+        // FIXME: Recursive filtering
+        const filteredTreeData = this._treeData.filter(x => {
+            if (x.branch) {
+                console.log(`children`, x.children.filter(y => substr === '' || y.heading.toLowerCase().indexOf(substr) > -1));
+
+                return x.children.filter(y => substr === '' || y.heading.toLowerCase().indexOf(substr) > -1).length;
+            } else
+                return substr === '' || x.title.toLowerCase().indexOf(substr) > -1;
+        });
+        console.log(filteredTreeData);
+
+        this.filteredTreeData = filteredTreeData;
     }
 
     onTreeNodeClicked(node: TreeItem) {

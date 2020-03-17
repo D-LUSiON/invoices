@@ -12,6 +12,7 @@
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
     cursor: inherit;
+    color: inherit;
 }
 
 [class*="mdl2"]::before {

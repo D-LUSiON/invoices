@@ -37,7 +37,7 @@ class ProvidersController {
 
         ipcMain.on('provider:get', (event, args) => {
             console.log(`requested provider with ID:${args['id']}...`);
-            this.database('providers').where('id', args['id']).select().then(results => {
+            this.database('providers').where('id', args['id']).select().orderBy('organization', 'asc').then(results => {
                 event.sender.send('provider:response', results);
             });
         });

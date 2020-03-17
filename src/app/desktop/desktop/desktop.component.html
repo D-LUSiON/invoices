@@ -4,19 +4,22 @@
     </div>
     <div role="tools">
         <div class="tools-start">
-            <div
-                class="icon-container"
-                [class.active]="module.active"
-                [title]="module.title"
-                *ngFor="let module of loadedModules; let idx = index"
-                (click)="activateSidebarModule(idx)"
-            >
-                <span [class]="module.icon"></span>
-            </div>
+            <ng-container *ngFor="let module of loadedModules; let idx = index">
+                <ng-container *ngIf="module.component_sidebar">
+                    <div
+                        class="icon-container"
+                        [class.active]="module.active"
+                        [title]="module.title"
+                        (click)="activateSidebarModule(idx)"
+                    >
+                        <span [class]="module.icon"></span>
+                    </div>
+                </ng-container>
+            </ng-container>
         </div>
         <div class="tools-end">
             <div class="icon-container" title="Settings" (click)="openSettings()">
-                <span class="ti ti-settings"></span>
+                <span class="mdl2-Settings"></span>
             </div>
         </div>
     </div>

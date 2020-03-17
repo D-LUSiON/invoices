@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { TreeData, TreeItem, Tools, ElectronClientService } from '@shared';
+import { TreeData, TreeItem, Tools, ElectronClientService, StateManagerService, Document } from '@shared';
 import { Provider } from './classes';
 import { tap } from 'rxjs/operators';
 
@@ -10,36 +10,17 @@ import { tap } from 'rxjs/operators';
 export class ProvidersService {
     private _treeData = new TreeData([]);
 
-    private _providers: Provider[] = [
-        // new Provider({
-        //     _id: Tools.makeid(),
-        //     organization: 'Silhouette Fashion ltd.',
-        //     acc_person: 'Любомир Пейков',
-        //     address: 'София, ул. 11-ти Август №29',
-        //     vat: 'BG192168110',
-        //     vat2: ''
-        // }),
-        // new Provider({
-        //     _id: Tools.makeid(),
-        //     organization: 'Уеб Фешън ООД',
-        //     acc_person: 'Константин Дюлгеров',
-        //     address: 'София, ул. Ст. Л. Костов №3',
-        //     vat: 'BG101010120',
-        //     vat2: ''
-        // }),
-    ];
+    private _providers: Provider[] = [];
 
     providers$: BehaviorSubject<Provider[]> = new BehaviorSubject(this._providers);
     tree$: BehaviorSubject<TreeData> = new BehaviorSubject(this._treeData);
 
     constructor(
-        private _electronClient: ElectronClientService
+        private _electronClient: ElectronClientService,
+        private _stateManager: StateManagerService,
     ) {
         console.log(`Hello from providers service!`);
         this.getSaved();
-        this.providers$.subscribe(prov => {
-            console.log(`Providers service, providers changed:`, prov.length);
-        });
     }
 
     get tree() {
@@ -47,7 +28,6 @@ export class ProvidersService {
     }
 
     getSaved() {
-        console.log(`Getting saved providers...`);
         return new Promise((resolve, reject) => {
             this._electronClient.getAll('providers').subscribe(providers => {
                 this._providers = providers.map(x => new Provider(x));
@@ -98,6 +78,14 @@ export class ProvidersService {
             this.sortProvidersByName();
             this.providers$.next(this._providers);
             this._createTree();
+            this._stateManager.updateDocument(new Document({
+                id: provider.id,
+                title: provider.organization,
+                module: 'Providers',
+                inputs: {
+                    provider: provider
+                }
+            }));
             return provider;
         }));
     }

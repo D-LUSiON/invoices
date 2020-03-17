@@ -38,9 +38,9 @@ export class Invoice {
     get title() {
         if (this.notes)
             return this.notes;
-        else if (this.goods.length)
+        else if (this.goods.length) {
             return this.goods.map(x => x.title).join(', ');
-        else
+        } else
             return 'no title';
 
     }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Invoice } from './classes/invoice';
 import { Status } from './classes/status.enum';
-import { Tools, TreeData, TreeItem, ElectronClientService } from '@shared';
+import { Tools, TreeData, TreeItem, ElectronClientService, StateManagerService, Document } from '@shared';
 import { tap } from 'rxjs/operators';
 
 @Injectable({
@@ -18,13 +18,14 @@ export class InvoicesService {
     invoices$: BehaviorSubject<Invoice[]> = new BehaviorSubject([]);
 
     constructor(
-        private _electronClient: ElectronClientService
+        private _electronClient: ElectronClientService,
+        private _stateManager: StateManagerService,
     ) {
         console.log(`Hello from invoices service!`);
 
         this._electronClient.getAll('invoices').subscribe(results => {
-            console.log(`Loaded invoices:`, results);
             this.invoices = results.map(result => new Invoice(result));
+            console.log(`Loaded invoices:`, results, this.invoices);
             this.invoices$.next(this.invoices);
             this._createTree();
         });
@@ -37,28 +38,39 @@ export class InvoicesService {
     private _createTree() {
         const treeData = [];
 
-        const years = Array.from(new Set(this.invoices.map(invoice => invoice.issue_date.getFullYear()))).sort().reverse();
-        years.forEach((year, idx: number) => {
-            const treeItem = {
+        const years = Array.from(new Set(this.invoices.map(invoice => invoice.issue_date.getFullYear())));
+
+        years.forEach((year, idx_year: number) => {
+            const treeItemYear = {
                 title: year.toString(),
                 branch: true,
-                expanded: idx === 0,
+                expanded: idx_year === 0,
                 children: []
             };
             const filtered_by_year = this.invoices.filter(invoice => invoice.issue_date.getFullYear() === year);
-            const months = [...new Set(filtered_by_year.map(invoice => invoice.issue_date.getMonth() + 1))].reverse();
-            months.forEach(month => {
+            const months = [...new Set(filtered_by_year.map(invoice => invoice.issue_date.getMonth() + 1))];
+            months.forEach((month, idx_month: number) => {
+                const treeItemMonth = {
+                    title: month.toString(),
+                    branch: true,
+                    expanded: idx_month === 0,
+                    children: []
+                };
+
                 const filtered_by_month = filtered_by_year.filter(invoice => invoice.issue_date.getMonth() + 1 === month);
-                treeItem.children = filtered_by_month.map(x => new TreeItem({
+                treeItemMonth.children = filtered_by_month.map(x => new TreeItem({
                     id: x._id,
                     heading: `${x.title} / ${x.payment_amount}лв. / ${Tools.formatDate(x.issue_date, 'YYYY-MM-dd')}`,
                     title: x.title,
                     obj: x,
                     branch: false
                 }));
+                treeItemYear.children.push(treeItemMonth);
             });
-            treeData.push(treeItem);
+            treeData.push(treeItemYear);
         });
+        console.log(`treeData`, treeData);
+
         this.treeData = treeData;
         this.tree$.next(this.treeData);
     }
@@ -77,6 +89,14 @@ export class InvoicesService {
             }
             this.invoices$.next(this.invoices);
             this._createTree();
+            this._stateManager.updateDocument(new Document({
+                id: invoice.id,
+                title: invoice.title,
+                module: 'Invoices',
+                inputs: {
+                    invoice: invoice
+                }
+            }));
             return invoice;
         }));
     }

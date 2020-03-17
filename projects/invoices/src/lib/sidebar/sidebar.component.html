@@ -4,10 +4,10 @@
     </div>
 </section>
 <section>
-    <input type="text" class="form-control">
+    <input type="text" #search class="form-control" (keyup)="filterTree(search.value)">
 </section>
 <lib-accordion [expandOnInit]="false" (groupExpanded)="groupExpanded($event)">
     <lib-accordion-group heading="Invoices" [expand]="expanded_idx === 0">
-        <lib-tree [nodes]="treeData" (nodeClick)="onTreeNodeClicked($event)" (nodeDblClick)="onTreeNodeDblClicked($event)"></lib-tree>
+        <lib-tree [nodes]="filteredTreeData" (nodeClick)="onTreeNodeClicked($event)" (nodeDblClick)="onTreeNodeDblClicked($event)"></lib-tree>
     </lib-accordion-group>
 </lib-accordion>

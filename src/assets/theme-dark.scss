@@ -4,6 +4,7 @@
     --c-main: rgba(184, 186, 207, 1);
     --c-main-darker: rgba(153, 154, 198, 1);
     --c-main-darkest: rgba(121, 128, 113, 1);
+    --c-white: #fff;
     --c-black: rgba(51, 51, 51, 1);
     --c-grey: rgba(136, 136, 136, 1);
 
@@ -168,13 +169,17 @@ body {
     border: none;
     cursor: pointer;
 
-    &:hover:not(:disabled) {
-        background-color: var(--c-accent-primary);
+    &:active:not(:disabled),
+    &:focus:not(:disabled) {
+        outline: none;
+        color: var(--text-color);
+        background-color: transparent;
+        text-shadow: 0 0 3px var(--text-color);
     }
 
-    &:active,
-    &:focus {
-        outline: none;
+    &:hover:not(:disabled) {
+        background-color: var(--c-accent-primary);
+        color: var(--text-color);
     }
 
     &.btn-sm {
