@@ -29,21 +29,18 @@ class ProvidersController {
 
     startListeners() {
         ipcMain.on('providers:all', (event, args) => {
-            console.log(`requested all providers...`);
             this.database.select().table('providers').then(results => {
                 event.sender.send('providers:all:response', results);
             });
         });
 
         ipcMain.on('provider:get', (event, args) => {
-            console.log(`requested provider with ID:${args['id']}...`);
             this.database('providers').where('id', args['id']).select().orderBy('organization', 'asc').then(results => {
                 event.sender.send('provider:response', results);
             });
         });
 
         ipcMain.on('provider:save', (event, provider) => {
-            console.log(`saving provider...`, provider);
             this.saveProvider(provider).then(res => {
                 event.sender.send('provider:save:response', res);
             });

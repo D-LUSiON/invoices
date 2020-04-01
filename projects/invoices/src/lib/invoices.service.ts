@@ -21,11 +21,9 @@ export class InvoicesService {
         private _electronClient: ElectronClientService,
         private _stateManager: StateManagerService,
     ) {
-        console.log(`Hello from invoices service!`);
 
         this._electronClient.getAll('invoices').subscribe(results => {
             this.invoices = results.map(result => new Invoice(result));
-            console.log(`Loaded invoices:`, results, this.invoices);
             this.invoices$.next(this.invoices);
             this._createTree();
         });
@@ -69,17 +67,14 @@ export class InvoicesService {
             });
             treeData.push(treeItemYear);
         });
-        console.log(`treeData`, treeData);
 
         this.treeData = treeData;
         this.tree$.next(this.treeData);
     }
 
     saveInvoice(invoice: Invoice) {
-        console.log(`Saving invoice`, invoice);
 
         return this._electronClient.save('invoice', invoice).pipe(tap((data) => {
-            console.log(data);
             const idx = this.invoices.findIndex(inv => inv.id === data[0]);
             if (!invoice.id && idx === -1) {
                 invoice.id = data[0];

@@ -1,3 +1,61 @@
-<p>
-    settings works!
-</p>
+<form [formGroup]="settingsForm" class="settings-container">
+    <div class="settings-sidebar">
+        <div
+            class="settings-sidebar-row"
+            *ngFor="let key of settings_keys"
+            [class.active]="active_setting === key"
+            (click)="activateSetting(key)"
+        >
+            <div class="setting-row-title">{{ key }}</div>
+            <div class="setting-row-icon activated">
+                <span class="mdl2-ChevronRight"></span>
+            </div>
+        </div>
+    </div>
+    <div class="settings-main-container">
+        <div class="setting-container" [class.active]="active_setting === 'general'" formGroupName="general">
+            <div class="form-group">
+                <label>Language</label>
+                <select class="form-control" formControlName="language">
+                    <option *ngFor="let lang of languages" [value]="lang">{{ lang }}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Currency sign</label>
+                <input type="text" class="form-control" formControlName="currency_sign">
+            </div>
+        </div>
+        <div class="setting-container" [class.active]="active_setting === 'sender'" formGroupName="sender">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" formControlName="name">
+            </div>
+            <div class="form-group">
+                <label>BULSTAT</label>
+                <input type="text" class="form-control" formControlName="bulstat">
+            </div>
+            <div class="form-group">
+                <label>VAT</label>
+                <input type="text" class="form-control" formControlName="vat">
+            </div>
+            <div class="form-group">
+                <label>Addess</label>
+                <input type="text" class="form-control" formControlName="address">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="text" class="form-control" formControlName="email">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" formControlName="password">
+            </div>
+        </div>
+        <div class="setting-container" [class.active]="active_setting === 'accountant_email'"formGroupName="accountant_email">
+            <div class="form-group">
+                <label>Your accountant's email</label>
+                <input type="text" class="form-control" formControlName="email">
+            </div>
+        </div>
+    </div>
+</form>

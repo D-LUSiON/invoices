@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { AccordionComponent } from './accordion/accordion.component';
 import { AccordionGroupComponent } from './accordion/accordion-group/accordion-group.component';
 import { TabsComponent } from './tabs/tabs.component';
@@ -7,8 +7,6 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { ConsoleLogPipe } from './pipes/log.pipe';
-
-
 
 @NgModule({
     declarations: [

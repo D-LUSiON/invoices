@@ -20,6 +20,7 @@ class DataExchange {
         this.settings_ini_path = path.join(this.USER_DATA, 'settings.ini');
 
         this.moduleControllers = {};
+        this.moduleTranslations = {};
 
         this.database = knex({
             client: 'sqlite3',
@@ -27,12 +28,15 @@ class DataExchange {
                 filename: path.join(app.getPath('userData'), 'database.sqlite')
             },
             useNullAsDefault: true,
-            debug: true
+            // debug: true
         });
 
         this._loadControllers();
 
         this._loadCurrentSettings();
+
+        this.getTranslations();
+        this.getTranslationLangs();
 
         this.getSettingsAll();
         this.getDefaultSettings();
@@ -49,6 +53,23 @@ class DataExchange {
                         const Mod = require(ctrl_path);
                         this.moduleControllers[entry] = new Mod(this.database);
                     }
+
+                    const trans_path = path.resolve(modules_path, entry, 'i18n');
+                    this.moduleTranslations[entry] = {};
+                    if (fs.existsSync(trans_path) && fs.statSync(trans_path).isDirectory()) {
+                        console.log(`Reading ${trans_path} translations...`);
+                        fs.readdir(trans_path).then((trn_files) => {
+                            console.log(`Found translations for module "${entry}":`, trn_files);
+                            if (trn_files.length) {
+                                trn_files.forEach(trn_file => {
+                                    if (trn_file.endsWith('.json'))
+                                        requireJSON(path.join(trans_path, trn_file)).then(translation => {
+                                            this.moduleTranslations[entry][trn_file.replace('.json', '')] = translation;
+                                        });
+                                });
+                            }
+                        });
+                    }
                     // if (entry.endsWith('.js')) {
                     //     const mod_path = path.resolve(modules_path, entry);
                     //     if (fs.existsSync(mod_path)) {
@@ -57,7 +78,27 @@ class DataExchange {
                     //     }
                     // }
                 });
+
             }
+        });
+    }
+
+    _loadTranslations(module) {
+        return new Promise((resolve, reject) => {
+            if (this.moduleTranslations[module])
+                resolve(this.moduleTranslations[module]);
+            else
+                resolve({});
+        });
+    }
+
+    _getAvailableLanguages() {
+        return new Promise((resolve, reject) => {
+            let langs = [];
+            Object.keys(this.moduleTranslations).forEach(mod => {
+                langs = [...langs, ...Object.keys(this.moduleTranslations[mod])];
+            });
+            resolve([...new Set(langs)]);
         });
     }
 
@@ -80,43 +121,62 @@ class DataExchange {
         });
     }
 
-    getSettingsAll() {
-        ipcMain.on('settings:all', (event, args) => {
-            this._loadCurrentSettings().then(() => {
-                event.sender.send('settings:all:response', {
-                    ...this.settings,
-                    ...{
-                        cwd: process.cwd(),
-                        app_name: app.name,
-                        userData: app.getPath('userData'),
-                        version: package_json.version
-                    }
-                });
+    getTranslations() {
+        ipcMain.on('translations:all', (event, args) => {
+            this._loadTranslations(args.scope).then(result => {
+                event.sender.send('translations:all:response', result);
             });
         });
+    }
+
+    getTranslationLangs() {
+        ipcMain.on('translations:langs:all', (event, args) => {
+            this._getAvailableLanguages().then(result => {
+                event.sender.send('translations:langs:all:response', result);
+            });
+        });
+    }
+
+    getSettingsAll() {
+        // ipcMain.on('settings:all', (event, args) => {
+        //     this._loadCurrentSettings().then(() => {
+        //         const settings = { ...this.settings };
+        //         if (settings.sender && settings.sender.pasword)
+        //             delete settings.sender.pasword;
+        //         event.sender.send('settings:all:response', {
+        //             ...settings,
+        //             ...{
+        //                 cwd: process.cwd(),
+        //                 app_name: app.name,
+        //                 userData: app.getPath('userData'),
+        //                 version: package_json.version
+        //             }
+        //         });
+        //     });
+        // });
     }
 
     getDefaultSettings() {
-        ipcMain.on('settings:all', (event, args) => {
-            event.sender.send('settings:default:all:response', DEFAULT_SETTINGS);
-        });
+        // ipcMain.on('settings:all', (event, args) => {
+        //     event.sender.send('settings:default:all:response', DEFAULT_SETTINGS);
+        // });
     }
 
     saveSettings() {
-        ipcMain.on('settings:save', (event, args) => {
-            fs.writeFile(this.settings_ini_path, ini.stringify(args), { encoding: 'utf-8' });
-            this._loadCurrentSettings().then(() => {
-                event.sender.send('settings:save:response', {
-                    ...this.settings,
-                    ...{
-                        cwd: process.cwd(),
-                        app_name: app.name,
-                        userData: app.getPath('userData'),
-                        version: package_json.version
-                    }
-                });
-            });
-        });
+        // ipcMain.on('settings:save', (event, args) => {
+        //     fs.writeFile(this.settings_ini_path, ini.stringify(args), { encoding: 'utf-8' });
+        //     this._loadCurrentSettings().then(() => {
+        //         event.sender.send('settings:save:response', {
+        //             ...this.settings,
+        //             ...{
+        //                 cwd: process.cwd(),
+        //                 app_name: app.name,
+        //                 userData: app.getPath('userData'),
+        //                 version: package_json.version
+        //             }
+        //         });
+        //     });
+        // });
     }
 
 }

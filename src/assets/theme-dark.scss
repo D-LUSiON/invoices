@@ -116,6 +116,12 @@ body {
     }
 }
 
+select {
+    option {
+        color: var(--c-primary-dark-darker);
+    }
+}
+
 .form-control {
     display: block;
     width: 100%;

@@ -39,7 +39,6 @@ class InvoicesController {
 
     startListeners() {
         ipcMain.on('invoices:all', (event, args) => {
-            console.log(`requested all invoices...`);
             this.database.select(
                 `Invoices.*`,
                 `Providers.organization`,
@@ -73,14 +72,12 @@ class InvoicesController {
         });
 
         ipcMain.on('invoice:get', (event, args) => {
-            console.log(`requested all invoices...`);
             this.database('invoices').where('id', args['id']).select().then(results => {
                 event.sender.send('invoice:response', results);
             });
         });
 
         ipcMain.on('invoice:save', (event, invoice) => {
-            console.log(`saving invoice...`, invoice);
             this.saveInvoice(invoice).then(res => {
                 event.sender.send('invoice:save:response', res);
             }).catch(err => console.log(err));

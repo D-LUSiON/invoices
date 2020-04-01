@@ -12,8 +12,6 @@ class SendingController {
 
     startListeners() {
         ipcMain.on('sending:all', (event, args) => {
-            console.log(`requested all sending...`);
-
             event.sender.send('sending:all:response', []);
         });
     }

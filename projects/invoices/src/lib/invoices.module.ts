@@ -5,8 +5,6 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { SharedModule } from '@shared';
 import { CommonModule } from '@angular/common';
 
-
-
 @NgModule({
     declarations: [
         EditComponent,

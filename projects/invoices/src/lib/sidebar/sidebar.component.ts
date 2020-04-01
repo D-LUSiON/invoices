@@ -45,7 +45,6 @@ export class SidebarComponent implements OnInit {
     }
 
     filterTree(substr: string) {
-        console.log(`invoices filterTree`, substr, this._treeData);
         // FIXME: Recursive filtering
         const filteredTreeData = this._treeData.filter(x => {
             if (x.branch) {

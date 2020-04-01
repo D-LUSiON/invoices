@@ -1,0 +1,44 @@
+.settings-container {
+    display: flex;
+    justify-content: stretch;
+    padding: calc(var(--spacing) * 2);
+
+    .settings-sidebar {
+        flex: 0 0 250px;
+
+        .settings-sidebar-row {
+            display: flex;
+            justify-content: stretch;
+            padding: calc(var(--spacing) * 2);
+            cursor: pointer;
+
+            .setting-row-title {
+                flex: 1 1 auto;
+            }
+
+            .setting-row-icon {
+                display: none;
+                flex: 0 0 auto;
+            }
+
+            &.active {
+                .setting-row-icon {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    .settings-main-container {
+        flex: 1 1 auto;
+
+        .setting-container {
+            display: none;
+            padding: calc(var(--spacing) * 2);
+
+            &.active {
+                display: block;
+            }
+        }
+    }
+}

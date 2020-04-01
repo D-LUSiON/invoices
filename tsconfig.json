@@ -19,6 +19,9 @@
       "dom"
     ],
     "paths": {
+      "@env": [
+        "src/environments/environment"
+      ],
       "@app": [
         "src/app/*",
         "src/app"
@@ -43,9 +46,9 @@
         "resources/modules/sending/ng/sending",
         "resources/modules/sending/ng"
       ],
-      "settings": [
-        "dist/settings/settings",
-        "dist/settings"
+      "@settings": [
+        "resources/modules/settings/settings",
+        "resources/modules/settings"
       ]
     }
   },
