@@ -14,55 +14,55 @@
         <div class="invoice-head">
             <div class="invoice-recipient">
                 <div class="form-group">
-                    <label>Получател</label>
+                    <label translate="invoices">Receiver</label>
                     <div class="form-control" readonly>Любомир Пейков</div>
                 </div>
                 <div class="form-group">
-                    <label>ЕИК</label>
+                    <label translate="invoices">BULSTAT</label>
                     <div class="form-control" readonly>7811051085</div>
                 </div>
                 <div class="form-group">
-                    <label>ДДС Номер</label>
+                    <label translate="invoices">VAT</label>
                     <div class="form-control" readonly>BG7811051085</div>
                 </div>
                 <div class="form-group">
-                    <label>Адрес</label>
+                    <label translate="invoices">Address</label>
                     <div class="form-control" readonly>София, ул. 11-ти Август №29</div>
                 </div>
             </div>
             <div class="invoice-heading">
-                <h1 class="text-center">Фактура</h1>
+                <h1 class="text-center" translate="invoices">Invoice</h1>
                 <div class="form-group">
-                    <label class="text-center">Номер</label>
-                    <input type="text" class="form-control text-center" placeholder="Invoice number" formControlName="number">
+                    <label class="text-center" translate="invoices">Number</label>
+                    <input type="text" class="form-control text-center" placeholder="{{ 'Invoice number'|translate:'invoices' }}" formControlName="number">
                 </div>
                 <div class="form-group">
-                    <label class="text-center">Дата на издаване</label>
+                    <label class="text-center" translate="invoices">Issue date</label>
                     <input type="date" class="form-control text-center" placeholder="Date of issuing" formControlName="issue_date" [max]="today">
                 </div>
                 <div class="form-group">
-                    <label class="text-center">Дата на въвеждане</label>
+                    <label class="text-center" translate="invoices">Creation date</label>
                     <div class="form-control text-center">{{ invoice.creation_date|date:'MMM d, y' }}</div>
                 </div>
             </div>
             <div class="invoice-issuer">
                 <div class="form-group">
-                    <label>Доставчик</label>
+                    <label translate="invoices">Provider</label>
                     <!-- <input type="text" class="form-control" placeholder="Issuer" formControlName="organization"> -->
                     <lib-autocomplete [results]="providers" labelField="organization" idField="id" formControlName="provider"></lib-autocomplete>
                 </div>
                 <div class="form-group">
-                    <label>VAT</label>
+                    <label translate="invoices">VAT</label>
                     <p>{{ choosen_provider?.vat || '---'}}</p>
                     <!-- <input type="text" class="form-control" placeholder="---" [value]="choosen_provider?.vat" readonly> -->
                 </div>
                 <div class="form-group">
-                    <label>Address</label>
+                    <label translate="invoices">Address</label>
                     <p>{{ choosen_provider?.address || '---'}}</p>
                     <!-- <input type="text" class="form-control" placeholder="---" [value]="choosen_provider?.address" readonly> -->
                 </div>
                 <div class="form-group">
-                    <label>Accountable person</label>
+                    <label translate="invoices">Accountable person</label>
                     <p>{{ choosen_provider?.acc_person || '---'}}</p>
                     <!-- <input type="text" class="form-control" placeholder="---" [value]="choosen_provider?.acc_person" readonly> -->
                 </div>
@@ -72,13 +72,13 @@
             <table>
                 <thead>
                     <tr>
-                        <th style="width: 30px">#</th>
-                        <th>Name of goods/service</th>
-                        <th style="width: 10%">Measure</th>
-                        <th style="width: 10%">Qty.</th>
-                        <th style="width: 10%">Unit price</th>
-                        <th style="width: 5%">VAT (%)</th>
-                        <th style="width: 10%">Total</th>
+                        <th style="width: 30px" translate="invoices">#</th>
+                        <th translate="invoices">Name of goods/service</th>
+                        <th style="width: 10%" translate="invoices">Measure</th>
+                        <th style="width: 10%" translate="invoices">Qty.</th>
+                        <th style="width: 10%" translate="invoices">Unit price</th>
+                        <th style="width: 5%" translate="invoices">VAT (%)</th>
+                        <th style="width: 10%" translate="invoices">Total</th>
                         <th style="width: 5%"></th>
                     </tr>
                 </thead>
@@ -117,16 +117,16 @@
         </div>
         <div class="invoice-sum-container">
             <div class="invoice-notes-container">
-                <label>Notes:</label>
+                <label translate="invoices">Notes:</label>
                 <textarea class="form-control invoice-notes" formControlName="notes"></textarea>
             </div>
             <div class="sum-container">
-                <div class="cell">Tax base (20%)</div>
+                <div class="cell" translate="invoices">Tax base (20%)</div>
                 <div class="cell text-right">{{ invoice.total_sum }} лв.</div>
-                <div class="cell">VAT charged</div>
+                <div class="cell" translate="invoices">VAT charged</div>
                 <div class="cell text-right">{{ invoice.total_vat }} лв.</div>
                 <div class="cell">
-                    <strong>Payment amount</strong>
+                    <strong translate="invoices">Payment amount</strong>
                 </div>
                 <div class="cell text-right">{{ invoice.payment_amount }} лв.</div>
             </div>

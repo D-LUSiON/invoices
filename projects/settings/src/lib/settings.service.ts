@@ -13,8 +13,12 @@ export class SettingsService {
 
     private _languages: string[] = [];
 
+    private _current_language: string = 'en';
+
     settings$: BehaviorSubject<{ [key: string]: any }> = new BehaviorSubject(this.settings);
     languages$: BehaviorSubject<string[]> = new BehaviorSubject(this.languages);
+    language$: BehaviorSubject<string> = new BehaviorSubject(this.current_lang);
+
 
     constructor(
         private _electronClient: ElectronClientService,
@@ -29,6 +33,10 @@ export class SettingsService {
         return new Promise((resolve, reject) => {
             this._electronClient.getAll('settings').subscribe(settings => {
                 this._settings = settings;
+                if (this._settings?.general?.language) {
+                    this._current_language = this._settings.general.language;
+                    this.language$.next(this.current_lang);
+                }
                 this.settings$.next(this.settings);
                 resolve(this.settings);
             });
@@ -51,6 +59,10 @@ export class SettingsService {
 
     get languages() {
         return [...this._languages];
+    }
+
+    get current_lang() {
+        return this._current_language;
     }
 
     saveSettings(settings) {

@@ -10,6 +10,7 @@ const readline = require('readline');
 const requireJSON = require('./require-json');
 const package_json = requireJSON(path.resolve('package.json'));
 const knex = require('knex');
+const environment = require('../environment');
 
 const DEFAULT_SETTINGS = {};
 
@@ -30,7 +31,7 @@ class DataExchange {
             useNullAsDefault: true,
             // debug: true
         });
-
+        this._loadGeneralTranslations();
         this._loadControllers();
 
         this._loadCurrentSettings();
@@ -41,6 +42,24 @@ class DataExchange {
         this.getSettingsAll();
         this.getDefaultSettings();
         this.saveSettings();
+    }
+
+    _loadGeneralTranslations() {
+        this.moduleTranslations['_general'] = {};
+        // FIXME: Test this when compiled
+        const trn_path = path.resolve(environment.html_src, 'assets', 'i18n');
+        if (fs.existsSync(trn_path) && fs.statSync(trn_path).isDirectory()) {
+            fs.readdir(trn_path).then((dir) => {
+                if (dir.length) {
+                    dir.forEach(trn_file => {
+                        if (trn_file.endsWith('.json'))
+                            requireJSON(path.join(trn_path, trn_file)).then(translation => {
+                                this.moduleTranslations['_general'][trn_file.replace('.json', '')] = translation;
+                            });
+                    });
+                }
+            });
+        }
     }
 
     _loadControllers() {
@@ -57,9 +76,7 @@ class DataExchange {
                     const trans_path = path.resolve(modules_path, entry, 'i18n');
                     this.moduleTranslations[entry] = {};
                     if (fs.existsSync(trans_path) && fs.statSync(trans_path).isDirectory()) {
-                        console.log(`Reading ${trans_path} translations...`);
                         fs.readdir(trans_path).then((trn_files) => {
-                            console.log(`Found translations for module "${entry}":`, trn_files);
                             if (trn_files.length) {
                                 trn_files.forEach(trn_file => {
                                     if (trn_file.endsWith('.json'))
@@ -70,25 +87,21 @@ class DataExchange {
                             }
                         });
                     }
-                    // if (entry.endsWith('.js')) {
-                    //     const mod_path = path.resolve(modules_path, entry);
-                    //     if (fs.existsSync(mod_path)) {
-                    //         const Mod = require(mod_path);
-                    //         this.moduleControllers[entry] = new Mod(this.database);
-                    //     }
-                    // }
                 });
-
             }
         });
     }
 
     _loadTranslations(module) {
         return new Promise((resolve, reject) => {
-            if (this.moduleTranslations[module])
-                resolve(this.moduleTranslations[module]);
-            else
-                resolve({});
+            if (module) {
+                if (this.moduleTranslations[module])
+                    resolve(this.moduleTranslations[module]);
+                else
+                    resolve({});
+            } else {
+                resolve(this.moduleTranslations);
+            }
         });
     }
 
@@ -123,7 +136,7 @@ class DataExchange {
 
     getTranslations() {
         ipcMain.on('translations:all', (event, args) => {
-            this._loadTranslations(args.scope).then(result => {
+            this._loadTranslations(args && args.scope ? args.scope : null).then(result => {
                 event.sender.send('translations:all:response', result);
             });
         });

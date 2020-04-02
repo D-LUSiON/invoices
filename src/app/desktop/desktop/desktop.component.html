@@ -2,14 +2,14 @@
     <div role="titlebar">
         <inv-titlebar></inv-titlebar>
     </div>
-    <div role="tools">
+    <div role="tools" *ngIf="loaded">
         <div class="tools-start">
             <ng-container *ngFor="let module of loadedModules; let idx = index">
                 <ng-container *ngIf="module.component_sidebar">
                     <div
                         class="icon-container"
                         [class.active]="module.active"
-                        [title]="module.title"
+                        title="{{ module.title|translate:module.title }}"
                         (click)="activateSidebarModule(idx)"
                     >
                         <span [class]="module.icon"></span>
@@ -18,7 +18,7 @@
             </ng-container>
         </div>
         <div class="tools-end">
-            <div class="icon-container" title="Settings" (click)="openSettings()">
+            <div class="icon-container" title="{{ 'Settings'|translate:'settings' }}" (click)="openSettings()">
                 <span class="mdl2-Settings"></span>
             </div>
         </div>

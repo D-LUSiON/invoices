@@ -1,4 +1,10 @@
 {
+    "Settings": "Настройки",
+    "general": "Основни",
+    "sender": "Вашите данни",
+    "accountant_email": "Данни за счетоводителя",
+    "Interface language": "Език на интерфейса",
+    "Currency sign": "Валутен знак",
     "Name": "Име",
     "BULSTAT": "БУЛСТАТ",
     "VAT": "ДДС Номер",

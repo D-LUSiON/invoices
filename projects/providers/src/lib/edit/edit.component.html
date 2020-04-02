@@ -1,8 +1,8 @@
 <div class="form-container">
     <div class="heading">
-        <h1>Provider</h1>
+        <h1 translate="providers">Provider</h1>
         <div class="actions">
-            <div class="msg msg-danger" *ngIf="providerForm?.invalid; else saveButton">Invalid</div>
+            <div class="msg msg-danger" *ngIf="providerForm?.invalid; else saveButton" translate>Invalid</div>
             <ng-template #saveButton>
                 <button type="button" class="btn" *ngIf="providerForm?.dirty" (click)="onSubmit()">
                     <div class="ti ti-save"></div>
@@ -12,19 +12,19 @@
     </div>
     <form [formGroup]="providerForm" novalidate (ngSubmit)="onSubmit()">
         <div class="form-group">
-            <label>Organization name<span class="msg msg-danger">*</span></label>
+            <label translate="providers">Organization name<span class="msg msg-danger">*</span></label>
             <input type="text" class="form-control" placeholder="Organization name" formControlName="organization">
         </div>
         <div class="form-group">
-            <label>VAT<span class="msg msg-danger">*</span></label>
+            <label translate="providers">VAT<span class="msg msg-danger">*</span></label>
             <input type="text" class="form-control" placeholder="VAT" formControlName="vat">
         </div>
         <div class="form-group">
-            <label>Address</label>
+            <label translate="providers">Address</label>
             <input type="text" class="form-control" placeholder="Address" formControlName="address">
         </div>
         <div class="form-group">
-            <label>Accountable person</label>
+            <label translate="providers">Accountable person</label>
             <input type="text" class="form-control" placeholder="Accountable person" formControlName="acc_person">
         </div>
     </form>

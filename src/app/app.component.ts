@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'inv-root',
-  template: `<router-outlet></router-outlet>`,
-  styles: []
+    selector: 'inv-root',
+    template: `<router-outlet></router-outlet>`,
+    styles: []
 })
-export class AppComponent {}
+export class AppComponent { }

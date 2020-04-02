@@ -3,7 +3,6 @@ import { EditComponent } from './edit/edit.component';
 import { PreviewComponent } from './preview/preview.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SharedModule } from '@shared';
-import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [
@@ -12,7 +11,6 @@ import { CommonModule } from '@angular/common';
         SidebarComponent
     ],
     imports: [
-        CommonModule,
         SharedModule
     ],
     exports: [

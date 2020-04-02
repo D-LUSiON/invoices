@@ -1,4 +1,10 @@
 {
+    "Settings": "Settings",
+    "general": "General",
+    "sender": "Your data",
+    "accountant_email": "Your accountant",
+    "Interface language": "Interface language",
+    "Currency sign": "Currency sign",
     "Name": "Name",
     "BULSTAT": "BULSTAT",
     "VAT": "VAT",

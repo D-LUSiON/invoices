@@ -1,5 +1,5 @@
 import { Component, OnInit, ComponentFactoryResolver, AfterViewInit, ViewChild, ViewContainerRef, EventEmitter } from '@angular/core';
-import { ModulesProviderService, StateManagerService, Module, Document } from '@shared';
+import { ModulesProviderService, StateManagerService, Module, Document, TranslationsService } from '@shared';
 
 @Component({
     selector: 'inv-desktop',
@@ -17,11 +17,22 @@ export class DesktopComponent implements OnInit, AfterViewInit {
 
     openedDocuments: Document[] = [];
 
+    loaded: boolean = true;
+
     constructor(
+        private _translations: TranslationsService,
         private _modulesProvider: ModulesProviderService,
         private _stateManager: StateManagerService,
         private readonly _componentFactoryResolver: ComponentFactoryResolver,
     ) {
+        this._translations.current_lang$.subscribe((lang) => {
+            console.log(`Lang changed in desktop.component: ${lang}`);
+            this.loaded = false;
+            setTimeout(() => { this.loaded = true; });
+            this.updateSidebar();
+            this.renderContent(this.openedDocuments.find(d => d.active));
+        });
+
         this.preloadModules();
         this._stateManager.sidebar$.subscribe(sidebar => {
             this.loadedModules = sidebar;
@@ -127,7 +138,7 @@ export class DesktopComponent implements OnInit, AfterViewInit {
 
     openSettings() {
         this._stateManager.addDocument(new Document({
-            title: `Settings`,
+            title: this._translations.translate('Settings', 'settings'),
             module: 'Settings',
             mode: 'edit',
             inputs: {}

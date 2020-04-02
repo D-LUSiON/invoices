@@ -1,4 +1,5 @@
 const {
+    BrowserWindow,
     ipcMain
 } = require('electron');
 const CryptoJS = require('crypto-js');
@@ -31,10 +32,9 @@ class SettingsController {
     startListeners() {
         ipcMain.on('settings:all', (event, args) => {
             this.getAllSettings().then(results => {
-                console.log(`Settings requested and result is:`, results);
                 event.sender.send('settings:all:response', results);
             }).catch(err => {
-                console.log(`Error when getting settings from the database!`, err);
+                console.error(`Error when getting settings from the database!`, err);
                 event.sender.send('settings:save:response', {});
             });
         });
@@ -43,7 +43,19 @@ class SettingsController {
             this.saveSettings(settings).then(res => {
                 this.getAllSettings().then(settings => {
                     event.sender.send('settings:save:response', settings);
+                    const lang = (settings && settings.general && settings.general.language) ? settings.general.language : '';
+                    if (lang) {
+                        const window = BrowserWindow.getFocusedWindow();
+                        window.webContents.send('translations:current-lang', lang);
+                    }
                 });
+            });
+        });
+
+        ipcMain.on('translations:current-lang:get', (event) => {
+            this.getAllSettings().then(settings => {
+                const lang = (settings && settings.general && settings.general.language) ? settings.general.language : '';
+                event.sender.send('translations:current-lang:get:response', lang);
             });
         });
     }

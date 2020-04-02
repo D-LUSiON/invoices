@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { InvoicesService } from '../invoices.service';
-import { TreeData, TreeItem, Document, StateManagerService } from '@shared';
+import { TreeData, TreeItem, Document, StateManagerService, TranslationsService } from '@shared';
 import { Invoice } from '../classes/invoice';
 
 @Component({
@@ -18,6 +18,7 @@ export class SidebarComponent implements OnInit {
     constructor(
         private _invoicesService: InvoicesService,
         private _stateManager: StateManagerService,
+        private _translate: TranslationsService
     ) {
         this._invoicesService.tree$.subscribe(tree => {
             this._treeData = tree;
@@ -35,7 +36,7 @@ export class SidebarComponent implements OnInit {
     newInvoice() {
         this._stateManager.addDocument(new Document({
             id: 0,
-            title: `New invoice`,
+            title: this._translate.translate(`New invoice`, 'invoices'),
             module: 'Invoices',
             mode: 'edit',
             inputs: {
@@ -60,8 +61,6 @@ export class SidebarComponent implements OnInit {
     }
 
     onTreeNodeClicked(node: TreeItem) {
-        console.log(`onTreeNodeClicked`, node);
-
         this._stateManager.addDocument(new Document({
             id: node.obj.id,
             title: node.title || node.heading,

@@ -63,7 +63,7 @@ export class ElectronClientService {
             this._electron.once(`${event}:get:response`, (e, response) => {
                 this._electron.removeAllListeners(`${event}:get:progress`);
                 this._ngZone.run(() => {
-                    observer.next(response && response[0] ? response[0] : response);
+                    observer.next(response && response instanceof Array && response[0] ? response[0] : response);
                     observer.complete();
                 });
             });
@@ -113,5 +113,27 @@ export class ElectronClientService {
             });
             this._electron.send(event, data);
         });
+    }
+
+    /**
+     * Subscribe to event that is sent from main process
+     * @param event {string} Event name to listen to
+     */
+    subscribeTo(event: string): Observable<any> {
+        return Observable.create((observer: Observer<any>) => {
+            this._electron.on(event, (e, response) => {
+                this._ngZone.run(() => {
+                    observer.next(response ? response : null);
+                });
+            });
+        });
+    }
+
+    /**
+     * Unsubscribe from event that is sent from main process
+     * @param event {string} Event name to unsubscribe from
+     */
+    unsubscribeFrom(event) {
+        this._electron.removeAllListeners(event);
     }
 }

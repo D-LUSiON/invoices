@@ -10,7 +10,6 @@ import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [EditComponent, PreviewComponent, SidebarComponent],
   imports: [
-      CommonModule,
       SharedModule
   ],
   exports: [EditComponent, PreviewComponent, SidebarComponent]

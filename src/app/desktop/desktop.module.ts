@@ -13,7 +13,6 @@ import { TitlebarComponent } from '../titlebar/titlebar.component';
         TitlebarComponent
     ],
     imports: [
-        CommonModule,
         SharedModule,
         DesktopRoutingModule
     ]

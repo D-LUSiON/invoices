@@ -1,13 +1,13 @@
 <section>
     <div class="btn btn-icon btn-sm" (click)="newProvider()">
-        <span class="ti ti-plus"></span> New provider
+        <span class="ti ti-plus"></span> {{ 'New provider'|translate:'providers' }}
     </div>
 </section>
 <section>
     <input type="text" #search class="form-control" (keyup)="filterTree(search.value)">
 </section>
 <lib-accordion [expandOnInit]="false" (groupExpanded)="groupExpanded($event)">
-    <lib-accordion-group heading="Providers" [expand]="expanded_idx === 0">
+    <lib-accordion-group heading="{{ 'Providers'|translate:'providers' }}" [expand]="expanded_idx === 0">
         <lib-tree [nodes]="filteredTreeData" (nodeClick)="onTreeNodeClicked($event)" (nodeDblClick)="onTreeNodeDblClicked($event)"></lib-tree>
     </lib-accordion-group>
 </lib-accordion>

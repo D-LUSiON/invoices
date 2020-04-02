@@ -47,9 +47,10 @@
         "resources/modules/sending/ng"
       ],
       "@settings": [
-        "resources/modules/settings/settings",
-        "resources/modules/settings"
-      ]
+        "resources/modules/settings/ng/*",
+        "resources/modules/settings/ng/settings",
+        "resources/modules/settings/ng"
+      ],
     }
   },
   "angularCompilerOptions": {

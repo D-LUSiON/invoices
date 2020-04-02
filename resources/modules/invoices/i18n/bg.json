@@ -1,4 +1,26 @@
 {
+    "Invoices": "Фактури",
     "New invoice": "Нова фактура",
-    "Invoices": "Фактури"
+    "Receiver": "Получател",
+    "BULSTAT": "ЕИК",
+    "VAT": "ДДС Номер",
+    "Address": "Адрес",
+    "Invoice": "Фактура",
+    "Number": "Номер",
+    "Invoice number": "Номер на фактура",
+    "Issue date": "Дата на издаване",
+    "Creation date": "Дата на въвеждане",
+    "Provider": "Доставчик",
+    "Accountable person": "Материално отговорно лице",
+    "#": "№",
+    "Name of goods/service": "Име на стока/услуга",
+    "Measure": "Мярка",
+    "Qty.": "К-во",
+    "Unit price": "Ед. цена",
+    "VAT (%)": "ДДС (%)",
+    "Total": "Общо",
+    "Notes:": "Бележки:",
+    "Tax base (20%)": "Данъчна основа (20%)",
+    "VAT charged": "Начислен ДДС",
+    "Payment amount": "Сума за плащане"
 }

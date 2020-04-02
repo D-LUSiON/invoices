@@ -1,4 +1,26 @@
 {
+    "Invoices": "Invoices",
     "New invoice": "New invoice",
-    "Invoices": "Invoices"
+    "Receiver": "Receiver",
+    "BULSTAT": "BULSTAT",
+    "VAT": "VAT",
+    "Address": "Address",
+    "Invoice": "Invoice",
+    "Number": "Number",
+    "Invoice number": "Invoice number",
+    "Issue date": "Issue date",
+    "Creation date": "Creation date",
+    "Provider": "Provider",
+    "Accountable person": "Accountable person",
+    "#": "#",
+    "Name of goods/service": "Name of goods/service",
+    "Measure": "Measure",
+    "Qty.": "Qty.",
+    "Unit price": "Unit price",
+    "VAT (%)": "VAT (%)",
+    "Total": "Total",
+    "Notes:": "Notes:",
+    "Tax base (20%)": "Tax base (20%)",
+    "VAT charged": "VAT charged",
+    "Payment amount": "Payment amount"
 }

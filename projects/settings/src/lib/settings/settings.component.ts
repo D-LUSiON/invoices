@@ -37,7 +37,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.subs.add(
             this._settingsService.languages$.subscribe(languages => {
                 this.languages = languages;
-                console.log(`this.languages`, this.languages);
             })
         );
     }

@@ -7,6 +7,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { ConsoleLogPipe } from './pipes/log.pipe';
+import { TranslatePipe } from './pipes/translate.pipe';
+import { TranslateDirective } from './directives/translate.directive';
 
 @NgModule({
     declarations: [
@@ -16,6 +18,8 @@ import { ConsoleLogPipe } from './pipes/log.pipe';
         TreeComponent,
         AutocompleteComponent,
         ConsoleLogPipe,
+        TranslatePipe,
+        TranslateDirective,
     ],
     imports: [
         CommonModule,
@@ -33,6 +37,8 @@ import { ConsoleLogPipe } from './pipes/log.pipe';
         TreeComponent,
         AutocompleteComponent,
         ConsoleLogPipe,
+        TranslatePipe,
+        TranslateDirective,
     ]
 })
 export class SharedModule { }
