@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Invoice } from './classes/invoice';
-import { Status } from './classes/status.enum';
-import { Tools, TreeData, TreeItem, ElectronClientService, StateManagerService, Document } from '@shared';
+import { Tools, TreeData, TreeItem, ElectronClientService, StateManagerService, Document, Month, TranslationsService } from '@shared';
 import { tap } from 'rxjs/operators';
+import { ProvidersService } from '@providers';
 
 @Injectable({
     providedIn: 'root'
@@ -20,14 +20,11 @@ export class InvoicesService {
     constructor(
         private _electronClient: ElectronClientService,
         private _stateManager: StateManagerService,
+        private _providersService: ProvidersService,
+        private _translate: TranslationsService,
     ) {
-
         this._electronClient.getAll('invoices').subscribe(results => {
-            this.invoices = results.map(result => new Invoice(result));
-            this.invoices$.next(this.invoices);
-            const treeData = this._createTree();
-            this.treeData = treeData;
-            this.tree$.next(this.treeData);
+            this._manageInvoicesResults(results);
         });
     }
 
@@ -35,8 +32,21 @@ export class InvoicesService {
         return [];
     }
 
+    private _manageInvoicesResults(results: object[]) {
+        this.invoices = results.map(result => new Invoice(result));
+        this.invoices$.next(this.invoices);
+        const treeData = this._createTree();
+        this.treeData = treeData;
+        this.tree$.next(this.treeData);
+    }
+
     private _createTree(invoices?: Invoice[]) {
         if (!invoices) invoices = this.invoices;
+        invoices = invoices.sort((x, next) => {
+            if (x.issue_date < next.issue_date) return -1;
+            if (x.issue_date > next.issue_date) return 1;
+            if (x.issue_date === next.issue_date) return 0;
+        }).reverse();
         const treeData = [];
 
         const years = Array.from(new Set(invoices.map(invoice => invoice.issue_date.getFullYear())));
@@ -49,16 +59,16 @@ export class InvoicesService {
                 children: []
             };
             const filtered_by_year = invoices.filter(invoice => invoice.issue_date.getFullYear() === year);
-            const months = [...new Set(filtered_by_year.map(invoice => invoice.issue_date.getMonth() + 1))];
+            const months = [...new Set(filtered_by_year.map(invoice => invoice.issue_date.getMonth()))];
             months.forEach((month, idx_month: number) => {
                 const treeItemMonth = {
-                    title: month.toString(),
+                    title: this._translate.translate(Month[month]),
                     branch: true,
-                    expanded: idx_month === 0,
+                    expanded: idx_year === 0 && idx_month === 0,
                     children: []
                 };
 
-                const filtered_by_month = filtered_by_year.filter(invoice => invoice.issue_date.getMonth() + 1 === month);
+                const filtered_by_month = filtered_by_year.filter(invoice => invoice.issue_date.getMonth() === month);
                 treeItemMonth.children = filtered_by_month.map(x => new TreeItem({
                     id: x._id,
                     heading: `${x.title} / ${x.payment_amount}лв. / ${Tools.formatDate(x.issue_date, 'YYYY-MM-dd')}`,
@@ -77,6 +87,33 @@ export class InvoicesService {
     filterInvoices(str: string) {
         const filtered = this.invoices.filter(inv => inv.title.toLowerCase().includes(str.toLowerCase()));
         return this._createTree(filtered);
+    }
+
+    importInvoices(invoices: any[], mode: 'merge' | 'overwrite') {
+        const providers = this._providersService.providers;
+        invoices = invoices.map(x => {
+            x.goods = [
+                {
+                    title: x.notes,
+                    measure: 'бр.',
+                    quantity: 1,
+                    price: x.total_sum
+                }
+            ];
+            x.provider.id = providers.find(y => y.vat === x.provider.vat)?.id || null;
+            return new Invoice(x);
+        });
+
+        return this._electronClient.save('invoices:multiple', {
+            mode,
+            invoices: invoices.map(x => x.serialize)
+        }).pipe(
+            tap((results) => {
+                this._manageInvoicesResults(results);
+                return results;
+            })
+        );
+
     }
 
     saveInvoice(invoice: Invoice) {

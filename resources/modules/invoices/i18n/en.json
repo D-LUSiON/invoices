@@ -22,5 +22,13 @@
     "Notes:": "Notes:",
     "Tax base (20%)": "Tax base (20%)",
     "VAT charged": "VAT charged",
-    "Payment amount": "Payment amount"
+    "Payment amount": "Payment amount",
+    "Import invoices from v2.+": "Import invoices from v2.+",
+    "Choose a backup file...": "Choose a backup file...",
+    "JSON Files": "JSON Files",
+    "Invoices v2 database": "Invoices v2 database",
+    "Merge": "Merge",
+    "Overwrite": "Overwrite",
+    "Merge or Overwrite?" : "Merge or Overwrite?",
+    "What do you want to do with the imported results?": "What do you want to do with the imported results?"
 }

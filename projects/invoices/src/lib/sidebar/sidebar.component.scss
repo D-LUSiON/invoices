@@ -6,6 +6,11 @@
     section {
         padding: calc(var(--spacing) / 2);
         flex: 0 0 auto;
+
+        &.top-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
     }
 
     lib-accordion {

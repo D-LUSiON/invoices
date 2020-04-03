@@ -1,9 +1,9 @@
-<section>
-    <div class="btn btn-icon btn-sm" (click)="newInvoice()">
-        <span class="ti ti-plus"></span> <span translate="invoices">
-            New invoice
-        </span>
-        <!-- {{ 'New invoice'|translate:'invoices' }} -->
+<section class="top-buttons">
+    <div class="btn btn-icon btn-sm" (click)="newInvoice()" translate="invoices">
+        <span class="ti ti-plus"></span> New invoice
+    </div>
+    <div class="btn btn-sm" (click)="importInvoices()" translate="invoices" title="{{ 'Import invoices from v2.+'|translate:'invoices' }}">
+        <span class="ti ti-import"></span>
     </div>
 </section>
 <section>

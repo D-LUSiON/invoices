@@ -7,7 +7,7 @@ export class Invoice {
     _id: string;
     id: number;
     status: Status = Status.New;
-    selected: boolean = false;
+    // selected: boolean = false;
     number: string = '';
     issue_date: Date;
     issue_place: string = 'София';
@@ -22,8 +22,17 @@ export class Invoice {
         if (data) {
             if (data.hasOwnProperty('_id')) this._id = data._id;
             if (data.hasOwnProperty('id')) this.id = data.id;
-            if (data.hasOwnProperty('status')) this.status = data.status;
-            if (data.hasOwnProperty('selected')) this.selected = data.selected;
+            if (data.hasOwnProperty('status')) {
+                if (data['status'] > -1)
+                    this.status = data['status'];
+                else if (!data['status'] || data['status'] === 'new')
+                    this.status = Status.New;
+                else if (data['status'] === 'sent')
+                    this.status = Status.Sent;
+                else if (data['status'] === 'archived')
+                    this.status = Status.Archived;
+            }
+            // if (data.hasOwnProperty('selected')) this.selected = data.selected;
             if (data.hasOwnProperty('number')) this.number = data.number;
             if (data.hasOwnProperty('issue_date')) this.issue_date = new Date(data.issue_date);
             if (data.hasOwnProperty('issue_place')) this.issue_place = data.issue_place;
@@ -35,6 +44,11 @@ export class Invoice {
             if (data.hasOwnProperty('update_date') && data['update_date']) this.update_date = new Date(data.update_date);
         }
     }
+
+    get status_name() {
+        return Status[this.status];
+    }
+
     get title() {
         if (this.notes)
             return this.notes;
@@ -84,6 +98,23 @@ export class Invoice {
 
     get issue_date_formatted() {
         return Tools.formatDate(this.issue_date, 'dd-MM-yyyy');
+    }
+
+    get serialize() {
+        return {
+            id: this.id,
+            number: this.number,
+            creation_date: this.creation_date,
+            update_date: this.update_date,
+            issue_date: this.issue_date,
+            issue_place: this.issue_place,
+            notes: this.notes,
+            goods: this.goods,
+            provider: this.provider,
+            total_sum: this.total_sum,
+            type: this.type,
+            status: this.status
+        }
     }
 
     // get total() {

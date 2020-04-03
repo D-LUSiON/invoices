@@ -130,6 +130,7 @@ export class EditComponent implements OnInit, OnChanges {
     }
 
     onSubmit() {
+        this.invoice.update_date = new Date();
         this._invoicesService.saveInvoice(this.invoice).subscribe(invoice => {
             console.log(`Invoice saved:`, invoice);
             this.invoice = invoice;

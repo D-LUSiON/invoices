@@ -61,7 +61,13 @@ export class Tools {
      * @param path {string} Path of the property
      */
     static resolveObj(object: object = {}, path: string) {
-        path = path.replace(/\[([\w\*\$]+)\]/g, '.$1').replace(/^\./, '').replace(/\.$/, '~~').replace(/\.\./, '~~.').replace(/\.\s/, '~~ ');
+        path = path
+            .replace(/\[([\w\*\$]+)\]/g, '.$1')
+            .replace(/^\./, '')
+            .replace(/\.\.\./, '~~~~~~')
+            .replace(/\.\./, '~~.')
+            .replace(/\.$/, '~~')
+            .replace(/\.([\s\+\-_=\!])/, '~~$1');
 
         let idx = path.indexOf('.');
         if (path.startsWith('*') && Array.isArray(object)) {
@@ -77,7 +83,8 @@ export class Tools {
         } else if (idx > -1) {
             return Tools.resolveObj(object[path.substring(0, idx)], path.substr(idx + 1));
         }
-        path = path.replace('~~', '.');
+
+        path = path.replace(/~~/g, '.');
         return object[path] === undefined ? '' : object[path];
     }
 }

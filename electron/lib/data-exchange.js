@@ -36,12 +36,7 @@ class DataExchange {
 
         this._loadCurrentSettings();
 
-        this.getTranslations();
-        this.getTranslationLangs();
-
-        this.getSettingsAll();
-        this.getDefaultSettings();
-        this.saveSettings();
+        this.startListeners();
     }
 
     _loadGeneralTranslations() {
@@ -134,20 +129,37 @@ class DataExchange {
         });
     }
 
-    getTranslations() {
+    startListeners() {
         ipcMain.on('translations:all', (event, args) => {
             this._loadTranslations(args && args.scope ? args.scope : null).then(result => {
                 event.sender.send('translations:all:response', result);
             });
         });
-    }
 
-    getTranslationLangs() {
         ipcMain.on('translations:langs:all', (event, args) => {
             this._getAvailableLanguages().then(result => {
                 event.sender.send('translations:langs:all:response', result);
             });
         });
+
+        ipcMain.on('file:get', (event, args) => {
+            if (args instanceof Array)
+                Promise.all(
+                    args.map(file => fs.readFile(file, 'utf8'))
+                ).then(result => {
+                    event.sender.send('file:get:response', [...result]);
+                });
+            else
+                fs.readFile(args, 'utf8').then(result => {
+                    event.sender.send('file:get:response', result);
+                });
+        });
+    }
+
+    getTranslations() {
+    }
+
+    getTranslationLangs() {
     }
 
     getSettingsAll() {

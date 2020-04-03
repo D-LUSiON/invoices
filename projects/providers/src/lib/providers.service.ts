@@ -27,6 +27,10 @@ export class ProvidersService {
         return this._treeData;
     }
 
+    get providers() {
+        return [...this._providers];
+    }
+
     getSaved() {
         return new Promise((resolve, reject) => {
             this._electronClient.getAll('providers').subscribe(providers => {

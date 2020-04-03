@@ -63,7 +63,7 @@ export class ElectronClientService {
             this._electron.once(`${event}:get:response`, (e, response) => {
                 this._electron.removeAllListeners(`${event}:get:progress`);
                 this._ngZone.run(() => {
-                    observer.next(response && response instanceof Array && response[0] ? response[0] : response);
+                    observer.next(response);
                     observer.complete();
                 });
             });

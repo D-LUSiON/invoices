@@ -17,6 +17,7 @@ export class Provider {
 
     raw() {
         return {
+            id: this.id,
             organization: this.organization,
             acc_person: this.acc_person,
             address: this.address,

@@ -22,5 +22,13 @@
     "Notes:": "Бележки:",
     "Tax base (20%)": "Данъчна основа (20%)",
     "VAT charged": "Начислен ДДС",
-    "Payment amount": "Сума за плащане"
+    "Payment amount": "Сума за плащане",
+    "Import invoices from v2.+": "Импортиране на фактури от v2.+",
+    "Choose a backup file...": "Изберете бекъп файл...",
+    "JSON Files": "JSON файлове",
+    "Invoices v2 database": "Invoices v2 база данни",
+    "Merge": "Добави към старите",
+    "Overwrite": "Изтрий старите и добави",
+    "Merge or Overwrite?": "Добавяне или Изтриване и добавяне?",
+    "What do you want to do with the imported results?": "Какво искате да направите с импортираните резултати?"
 }
