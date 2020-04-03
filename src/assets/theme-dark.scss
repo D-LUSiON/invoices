@@ -146,6 +146,37 @@ select {
     &:read-only {
         border-bottom: none;
     }
+
+    &.ng-invalid:not(.ng-pristine) {
+        border-color: var(--c-accent-secondary);
+    }
+}
+
+.form-control-container {
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    border-bottom: 1px solid var(--c-main);
+
+    .form-control-icon {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        padding: calc(var(--spacing) / 2) var(--spacing);
+    }
+
+    .form-control {
+        flex: 1 1 auto;
+        border-bottom: none;
+    }
+}
+
+.cur-pointer {
+    cursor: pointer;
+}
+
+.cur-default {
+    cursor: default;
 }
 
 .text-left {

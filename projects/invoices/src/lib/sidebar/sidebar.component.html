@@ -7,7 +7,12 @@
     </div>
 </section>
 <section>
-    <input type="text" #search class="form-control" (keyup)="filterTree(search.value)">
+    <div class="form-control-container">
+        <div class="form-control-icon">
+            <span class="mdl2 mdl2-Search"></span>
+        </div>
+        <input type="text" #search class="form-control" (keyup)="filterTree(search.value)">
+    </div>
 </section>
 <lib-accordion [expandOnInit]="false" (groupExpanded)="groupExpanded($event)">
     <lib-accordion-group heading="{{ 'Invoices'|translate:'invoices' }}" [expand]="expanded_idx === 0">

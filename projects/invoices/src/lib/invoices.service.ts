@@ -25,7 +25,9 @@ export class InvoicesService {
         this._electronClient.getAll('invoices').subscribe(results => {
             this.invoices = results.map(result => new Invoice(result));
             this.invoices$.next(this.invoices);
-            this._createTree();
+            const treeData = this._createTree();
+            this.treeData = treeData;
+            this.tree$.next(this.treeData);
         });
     }
 
@@ -33,10 +35,11 @@ export class InvoicesService {
         return [];
     }
 
-    private _createTree() {
+    private _createTree(invoices?: Invoice[]) {
+        if (!invoices) invoices = this.invoices;
         const treeData = [];
 
-        const years = Array.from(new Set(this.invoices.map(invoice => invoice.issue_date.getFullYear())));
+        const years = Array.from(new Set(invoices.map(invoice => invoice.issue_date.getFullYear())));
 
         years.forEach((year, idx_year: number) => {
             const treeItemYear = {
@@ -45,7 +48,7 @@ export class InvoicesService {
                 expanded: idx_year === 0,
                 children: []
             };
-            const filtered_by_year = this.invoices.filter(invoice => invoice.issue_date.getFullYear() === year);
+            const filtered_by_year = invoices.filter(invoice => invoice.issue_date.getFullYear() === year);
             const months = [...new Set(filtered_by_year.map(invoice => invoice.issue_date.getMonth() + 1))];
             months.forEach((month, idx_month: number) => {
                 const treeItemMonth = {
@@ -68,12 +71,15 @@ export class InvoicesService {
             treeData.push(treeItemYear);
         });
 
-        this.treeData = treeData;
-        this.tree$.next(this.treeData);
+        return treeData;
+    }
+
+    filterInvoices(str: string) {
+        const filtered = this.invoices.filter(inv => inv.title.toLowerCase().includes(str.toLowerCase()));
+        return this._createTree(filtered);
     }
 
     saveInvoice(invoice: Invoice) {
-
         return this._electronClient.save('invoice', invoice).pipe(tap((data) => {
             const idx = this.invoices.findIndex(inv => inv.id === data[0]);
             if (!invoice.id && idx === -1) {
@@ -83,7 +89,11 @@ export class InvoicesService {
                 this.invoices[idx] = invoice;
             }
             this.invoices$.next(this.invoices);
-            this._createTree();
+
+            const treeData = this._createTree();
+            this.treeData = treeData;
+            this.tree$.next(this.treeData);
+
             this._stateManager.updateDocument(new Document({
                 id: invoice.id,
                 title: invoice.title,

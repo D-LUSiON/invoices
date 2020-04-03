@@ -46,18 +46,7 @@ export class SidebarComponent implements OnInit {
     }
 
     filterTree(substr: string) {
-        // FIXME: Recursive filtering
-        const filteredTreeData = this._treeData.filter(x => {
-            if (x.branch) {
-                console.log(`children`, x.children.filter(y => substr === '' || y.heading.toLowerCase().indexOf(substr) > -1));
-
-                return x.children.filter(y => substr === '' || y.heading.toLowerCase().indexOf(substr) > -1).length;
-            } else
-                return substr === '' || x.title.toLowerCase().indexOf(substr) > -1;
-        });
-        console.log(filteredTreeData);
-
-        this.filteredTreeData = filteredTreeData;
+        this.filteredTreeData = this._invoicesService.filterInvoices(substr);
     }
 
     onTreeNodeClicked(node: TreeItem) {
