@@ -2,7 +2,7 @@
     "Settings": "Настройки",
     "general": "Основни",
     "sender": "Вашите данни",
-    "accountant_email": "Данни за счетоводителя",
+    "accountant": "Счетоводител",
     "Interface language": "Език на интерфейса",
     "Currency sign": "Валутен знак",
     "Name": "Име",
@@ -11,5 +11,15 @@
     "Addess": "Адрес",
     "Email": "Е-мейл",
     "Password": "Парола",
-    "Your accountant's email": "Е-мейл на Вашият счетоводител"
+    "Your accountant's email": "Е-мейл на Вашият счетоводител",
+    "Invoice fields to be included in the Excel file:": "Полета на фактурата, които да бъдат включени в Екселският файл",
+    "Invoice number": "Номер на фактура",
+    "Invoice issue date": "Дата на издаване на фактура",
+    "Provider name": "Име на доставчик",
+    "Provider address": "Адрес на доставчика",
+    "Provider VAT number": "ЕИК на доставчика",
+    "Goods list": "Списък на стоките/услугите",
+    "Total sum without VAT": "Данъчна основа (сума на фактурата без ДДС)",
+    "Calculated VAT": "Начислено ДДС",
+    "Total sum with VAT": "Сума за плащане"
 }

@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 export class SettingsModule {
     readonly title = 'Settings';
     readonly icon = 'mdl2-Settings';
+    readonly sidebar_position = 'bottom';
 
     get sidebar() {
         return null;

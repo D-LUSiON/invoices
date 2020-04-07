@@ -2,7 +2,7 @@
     "Settings": "Settings",
     "general": "General",
     "sender": "Your data",
-    "accountant_email": "Your accountant",
+    "accountant": "Accountant",
     "Interface language": "Interface language",
     "Currency sign": "Currency sign",
     "Name": "Name",
@@ -11,5 +11,15 @@
     "Addess": "Addess",
     "Email": "Email",
     "Password": "Password",
-    "Your accountant's email": "Your accountant's email"
+    "Your accountant's email": "Your accountant's email",
+    "Invoice fields to be included in the Excel file:": "Invoice fields to be included in the Excel file:",
+    "Invoice number": "Invoice number",
+    "Invoice issue date": "Invoice issue date",
+    "Provider name": "Provider name",
+    "Provider address": "Provider address",
+    "Provider VAT number": "Provider VAT number",
+    "Goods list": "Goods list",
+    "Total sum without VAT": "Total sum without VAT",
+    "Calculated VAT": "Calculated VAT",
+    "Total sum with VAT": "Total sum with VAT"
 }

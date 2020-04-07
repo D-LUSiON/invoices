@@ -23,16 +23,73 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     subs: Subscription = new Subscription();
 
+    invoice_fields: { name: string, title: string, checked: boolean }[] = [
+        {
+            name: 'number',
+            title: this._translate.translate('Invoice number', 'settings'),
+            checked: true
+        },
+        {
+            name: 'issue_date',
+            title: this._translate.translate('Invoice issue date', 'settings'),
+            checked: true
+        },
+        {
+            name: 'provider.name',
+            title: this._translate.translate('Provider name', 'settings'),
+            checked: false
+        },
+        {
+            name: 'provider.address',
+            title: this._translate.translate('Provider address', 'settings'),
+            checked: false
+        },
+        {
+            name: 'provider.vat',
+            title: this._translate.translate('Provider VAT number', 'settings'),
+            checked: true
+        },
+        {
+            name: 'goods',
+            title: this._translate.translate('Goods list', 'settings'),
+            checked: false
+        },
+        {
+            name: 'total_sum',
+            title: this._translate.translate('Total sum without VAT', 'settings'),
+            checked: true
+        },
+        {
+            name: 'total_vat',
+            title: this._translate.translate('Calculated VAT', 'settings'),
+            checked: true
+        },
+        {
+            name: 'payment_amount',
+            title: this._translate.translate('Total sum with VAT', 'settings'),
+            checked: true
+        },
+    ];
+
     constructor(
         private _fb: FormBuilder,
         private _electron: ElectronClientService,
         private _translate: TranslationsService,
         private _settingsService: SettingsService,
     ) {
+        this.settings.accountant = {
+            invoice_fields: [...this.invoice_fields]
+        };
         this._initForm();
         this.subs.add(
             this._settingsService.settings$.subscribe(settings => {
-                this.settings = settings;
+                this.settings = {
+                    ...settings,
+                    accountant: {
+                        ...(settings?.accountant || {}),
+                        invoice_fields: settings?.accountant?.invoice_fields || this.invoice_fields
+                    }
+                };
                 this.settingsForm.patchValue(this.settings);
                 this.settingsForm.markAsPristine();
             })
@@ -62,16 +119,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
                 'email': this._fb.control('', [Validators.email]),
                 'password': this._fb.control(''),
             }),
-            'accountant_email': this._fb.group({
-                'email': this._fb.control('', [Validators.email])
+            'accountant': this._fb.group({
+                'email': this._fb.control('', [Validators.email]),
+                'invoice_fields': this._fb.control([...this.invoice_fields])
             }),
         });
         this.settings_keys = Object.keys(this.settingsForm.value);
         if (!this.active_setting) this.active_setting = this.settings_keys[0];
         let save_timeout;
         this.settingsForm.valueChanges.subscribe((changes) => {
-            console.log(changes);
-
             if (this.settingsForm.dirty && this.settingsForm.valid) {
                 this.settings = this.settingsForm.value;
                 if (save_timeout) clearTimeout(save_timeout);
@@ -98,11 +154,20 @@ export class SettingsComponent implements OnInit, OnDestroy {
                 }
             });
         }
-
     }
 
     activateSetting(key: string) {
         this.active_setting = key;
+    }
+
+    toggleField(idx, checked: boolean) {
+        this.invoice_fields[idx].checked = checked;
+        this.settingsForm.markAsDirty();
+        this.settingsForm.patchValue({
+            'accountant': {
+                'invoice_fields': this.invoice_fields
+            }
+        });
     }
 
     ngOnDestroy() {
