@@ -1,5 +1,6 @@
 import { Component, OnChanges, HostListener, ElementRef, Input, Output, EventEmitter, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { Tab } from './tab';
+import { TranslationsService } from '../services';
 
 @Component({
     selector: 'lib-tabs',
@@ -19,9 +20,11 @@ export class TabsComponent implements OnChanges {
     }
 
     active_tab_idx: number;
+    no_opened_documents_text: string = this._translate.translate('No opened documents');
 
     constructor(
-        private _elRef: ElementRef
+        private _elRef: ElementRef,
+        private _translate: TranslationsService
     ) { }
 
     ngOnChanges(changes: SimpleChanges): void {

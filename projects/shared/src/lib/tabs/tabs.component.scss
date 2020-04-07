@@ -17,7 +17,8 @@
         align-items: stretch;
 
         &:empty::after {
-            content: 'No opened documents';
+            content: attr(data-empty-text);
+            // content: 'No opened documents';
             padding: calc(var(--spacing) + 3px) var(--spacing);
             color: var(--c-main-darkest);
             font-style: italic;
