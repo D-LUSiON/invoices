@@ -61,6 +61,7 @@ export class DesktopComponent implements OnInit, AfterViewInit {
                 module_name,
                 title: this._modulesProvider.modules[module_name].title,
                 icon: this._modulesProvider.modules[module_name].icon,
+                sidebar_position: this._modulesProvider.modules[module_name].sidebar_position || 'top',
                 active: idx === 0,
                 component_sidebar: this._modulesProvider.modules[module_name].sidebar,
                 component_preview: this._modulesProvider.modules[module_name].preview,
@@ -116,12 +117,32 @@ export class DesktopComponent implements OnInit, AfterViewInit {
     }
 
     activateSidebarModule(idx: number) {
-        this.active_module_idx = 0;
-        this.loadedModules.forEach(module => {
-            module.active = false;
-        });
-        this.loadedModules[idx].active = true;
-        this._stateManager.sidebar$.next(this.loadedModules);
+        if (!this.loadedModules[idx].component_sidebar) {
+            if (this.loadedModules[idx].component_edit) {
+                this._stateManager.addDocument(new Document({
+                    title: this._translations.translate(this.loadedModules[idx].title, this.loadedModules[idx].title.toLowerCase()),
+                    module: this.loadedModules[idx].title,
+                    mode: 'edit',
+                    inputs: {}
+                }));
+            } else if (this.loadedModules[idx].component_preview) {
+                this._stateManager.addDocument(new Document({
+                    title: this._translations.translate(this.loadedModules[idx].title, this.loadedModules[idx].title.toLowerCase()),
+                    module: this.loadedModules[idx].title,
+                    mode: 'preview',
+                    inputs: {}
+                }));
+            } else {
+                console.error(`Module "${this.loadedModules[idx].title}" has no EditComponent, nor PreviewComponent!\nPlease, create SidebarComponent/EditComponent/PreviewComponent!`, this.loadedModules[idx]);
+            }
+        } else {
+            this.active_module_idx = 0;
+            this.loadedModules.forEach(module => {
+                module.active = false;
+            });
+            this.loadedModules[idx].active = true;
+            this._stateManager.sidebar$.next(this.loadedModules);
+        }
     }
 
     activateTab([tab, idx]) {

@@ -5,7 +5,7 @@
     <div role="tools" *ngIf="loaded">
         <div class="tools-start">
             <ng-container *ngFor="let module of loadedModules; let idx = index">
-                <ng-container *ngIf="module.component_sidebar">
+                <ng-container *ngIf="module.sidebar_position !== 'bottom' && module.icon">
                     <div
                         class="icon-container"
                         [class.active]="module.active"
@@ -18,9 +18,21 @@
             </ng-container>
         </div>
         <div class="tools-end">
-            <div class="icon-container" title="{{ 'Settings'|translate:'settings' }}" (click)="openSettings()">
+            <!-- <div class="icon-container" title="{{ 'Settings'|translate:'settings' }}" (click)="openSettings()">
                 <span class="mdl2-Settings"></span>
-            </div>
+            </div> -->
+            <ng-container *ngFor="let module of loadedModules; let idx = index">
+                <ng-container *ngIf="module.sidebar_position === 'bottom' && module.icon">
+                    <div
+                        class="icon-container"
+                        [class.active]="module.active"
+                        title="{{ module.title|translate:module.title }}"
+                        (click)="activateSidebarModule(idx)"
+                    >
+                        <span [class]="module.icon"></span>
+                    </div>
+                </ng-container>
+            </ng-container>
         </div>
     </div>
     <div role="sidebar">

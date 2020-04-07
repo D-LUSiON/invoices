@@ -113,6 +113,11 @@ body {
     label {
         display: block;
         font-weight: 900;
+        margin-bottom: calc(var(--spacing) * 3);
+
+        input {
+            vertical-align: middle;
+        }
     }
 }
 
