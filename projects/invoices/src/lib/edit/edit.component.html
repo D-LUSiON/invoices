@@ -122,13 +122,13 @@
             </div>
             <div class="sum-container">
                 <div class="cell" translate="invoices">Tax base (20%)</div>
-                <div class="cell text-right">{{ invoice.total_sum }} лв.</div>
+                <div class="cell text-right">{{ invoice.total_sum }} {{ currency_sign }}</div>
                 <div class="cell" translate="invoices">VAT charged</div>
-                <div class="cell text-right">{{ invoice.total_vat }} лв.</div>
+                <div class="cell text-right">{{ invoice.total_vat }} {{ currency_sign }}</div>
                 <div class="cell">
                     <strong translate="invoices">Payment amount</strong>
                 </div>
-                <div class="cell text-right">{{ invoice.payment_amount }} лв.</div>
+                <div class="cell text-right">{{ invoice.payment_amount }} {{ currency_sign }}</div>
             </div>
         </div>
     </div>

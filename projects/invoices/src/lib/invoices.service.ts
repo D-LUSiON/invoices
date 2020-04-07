@@ -5,6 +5,7 @@ import { Tools, TreeData, TreeItem, ElectronClientService, StateManagerService, 
 import { tap } from 'rxjs/operators';
 import { ProvidersService } from '@providers';
 import { Status } from './classes';
+import { SettingsService } from '@settings';
 
 @Injectable({
     providedIn: 'root'
@@ -22,15 +23,21 @@ export class InvoicesService {
     treeAll$: BehaviorSubject<TreeData> = new BehaviorSubject(this.treeDataAll);
     invoices$: BehaviorSubject<Invoice[]> = new BehaviorSubject([]);
 
+    currency_sign: string = '';
+
     constructor(
         private _electronClient: ElectronClientService,
         private _stateManager: StateManagerService,
         private _providersService: ProvidersService,
         private _translate: TranslationsService,
+        private _settingsService: SettingsService,
     ) {
         this._electronClient.getAll('invoices').subscribe(results => {
             this._manageInvoicesResults(results);
         });
+        this._settingsService.settings$.subscribe((settings) => {
+            this.currency_sign = settings?.general?.currency_sign || '';
+        })
     }
 
     get tree() {
@@ -79,7 +86,7 @@ export class InvoicesService {
                 const filtered_by_month = filtered_by_year.filter(invoice => invoice.issue_date.getMonth() === month);
                 treeItemMonth.children = filtered_by_month.map(x => new TreeItem({
                     id: x._id,
-                    heading: `${x.title} / ${x.payment_amount}лв. / ${Tools.formatDate(x.issue_date, 'YYYY-MM-dd')}`,
+                    heading: `${x.title} / ${x.payment_amount} ${this.currency_sign} / ${Tools.formatDate(x.issue_date, 'YYYY-MM-dd')}`,
                     title: x.title,
                     obj: x,
                     branch: false

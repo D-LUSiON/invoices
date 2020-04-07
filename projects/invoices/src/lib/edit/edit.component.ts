@@ -1,10 +1,12 @@
-import { Component, OnInit, Input, OnChanges, HostListener, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, HostListener, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { Invoice } from '../classes/invoice';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Tools, StateManagerService } from '@shared';
 import { ProvidersService, Provider } from '@providers';
 import { InvoicesService } from '../invoices.service';
 import { Goods } from '../classes';
+import { SettingsService } from '@settings';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'inv-edit',
@@ -12,10 +14,12 @@ import { Goods } from '../classes';
     styleUrls: ['./edit.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditComponent implements OnInit, OnChanges {
+export class EditComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() invoice: Invoice = new Invoice();
     @Output() invoiceChange: EventEmitter<Invoice> = new EventEmitter();
+
+    currency_sign: string = '';
 
     invoiceForm: FormGroup;
 
@@ -28,10 +32,13 @@ export class EditComponent implements OnInit, OnChanges {
         }
     }
 
+    subs: Subscription = new Subscription();
+
     constructor(
         private _invoicesService: InvoicesService,
         private _providersService: ProvidersService,
         private _stateManager: StateManagerService,
+        private _settingsService: SettingsService,
         private _fb: FormBuilder
     ) {
         console.log(`Invoices edit constructor`);
@@ -51,6 +58,12 @@ export class EditComponent implements OnInit, OnChanges {
         this._providersService.getSaved().then((providers: Provider[]) => {
             this.providers = providers;
         });
+
+        this.subs.add(
+            this._settingsService.settings$.subscribe((settings) => {
+                this.currency_sign = settings?.general?.currency_sign || '';
+            })
+        );
     }
 
     ngOnInit(): void {
@@ -139,6 +152,10 @@ export class EditComponent implements OnInit, OnChanges {
         }, err => {
             console.log(`Error saving invoice`, this.invoice, err);
         })
+    }
+
+    ngOnDestroy() {
+        this.subs.unsubscribe();
     }
 
 }
