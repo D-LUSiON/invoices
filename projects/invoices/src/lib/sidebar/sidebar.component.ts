@@ -1,30 +1,53 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { InvoicesService } from '../invoices.service';
 import { TreeData, TreeItem, Document, StateManagerService, TranslationsService, ElectronClientService } from '@shared';
 import { Invoice } from '../classes/invoice';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'inv-sidebar',
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
 
-    private _treeData: TreeData = new TreeData([]);
-    filteredTreeData: TreeData = new TreeData([]);
+    private _treeDataActive: TreeData = new TreeData([]);
+    filteredTreeDataActive: TreeData = new TreeData([]);
+
+    private _treeDataArchived: TreeData = new TreeData([]);
+    filteredTreeDataArchived: TreeData = new TreeData([]);
+
+    private _treeDataAll: TreeData = new TreeData([]);
+    filteredTreeDataAll: TreeData = new TreeData([]);
 
     expanded_idx: number = 0;
+
+    subs: Subscription = new Subscription();
 
     constructor(
         private _electron: ElectronClientService,
         private _invoicesService: InvoicesService,
         private _stateManager: StateManagerService,
-        private _translate: TranslationsService
+        private _translate: TranslationsService,
     ) {
-        this._invoicesService.tree$.subscribe(tree => {
-            this._treeData = tree;
-            this.filteredTreeData = this._treeData.slice();
-        });
+        this.subs.add(
+            this._invoicesService.treeActive$.subscribe(tree => {
+                this._treeDataActive = tree;
+                this.filteredTreeDataActive = this._treeDataActive.slice();
+            })
+        );
+        this.subs.add(
+            this._invoicesService.treeArchived$.subscribe(tree => {
+                this._treeDataArchived = tree;
+                this.filteredTreeDataArchived = this._treeDataArchived.slice();
+            })
+        );
+        this.subs.add(
+            this._invoicesService.treeAll$.subscribe(tree => {
+                this._treeDataAll = tree;
+                this.filteredTreeDataAll = this._treeDataAll.slice();
+            })
+        );
     }
 
     ngOnInit(): void {
@@ -106,7 +129,8 @@ export class SidebarComponent implements OnInit {
     }
 
     filterTree(substr: string) {
-        this.filteredTreeData = this._invoicesService.filterInvoices(substr);
+        // FIXME: Filter all statuses
+        this.filteredTreeDataActive = this._invoicesService.filterInvoices(substr);
     }
 
     onTreeNodeClicked(node: TreeItem) {
@@ -122,6 +146,10 @@ export class SidebarComponent implements OnInit {
 
     onTreeNodeDblClicked(node: TreeItem) {
         // console.log(`onTreeNodeDblClicked`, node);
+    }
+
+    ngOnDestroy() {
+        this.subs.unsubscribe();
     }
 
 }

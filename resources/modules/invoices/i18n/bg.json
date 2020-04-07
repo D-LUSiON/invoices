@@ -30,5 +30,8 @@
     "Merge": "Добави към старите",
     "Overwrite": "Изтрий старите и добави",
     "Merge or Overwrite?": "Добавяне или Изтриване и добавяне?",
-    "What do you want to do with the imported results?": "Какво искате да направите с импортираните резултати?"
+    "What do you want to do with the imported results?": "Какво искате да направите с импортираните резултати?",
+    "Active Invoices": "Активни Фактури",
+    "Archived": "Архивирани",
+    "All": "Всички"
 }

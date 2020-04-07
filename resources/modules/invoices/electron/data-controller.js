@@ -41,8 +41,6 @@ class InvoicesController {
     startListeners() {
         ipcMain.on('invoices:all', (event, args) => {
             this.getAllInvoices().then((results) => {
-                console.log(`Invoices retrieved:`, results.length);
-
                 event.sender.send('invoices:all:response', results);
             });
         });

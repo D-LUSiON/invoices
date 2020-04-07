@@ -4,17 +4,22 @@ import { Invoice } from './classes/invoice';
 import { Tools, TreeData, TreeItem, ElectronClientService, StateManagerService, Document, Month, TranslationsService } from '@shared';
 import { tap } from 'rxjs/operators';
 import { ProvidersService } from '@providers';
+import { Status } from './classes';
 
 @Injectable({
     providedIn: 'root'
 })
 export class InvoicesService {
 
-    treeData = new TreeData([]);
+    treeDataActive = new TreeData([]);
+    treeDataArchived = new TreeData([]);
+    treeDataAll = new TreeData([]);
 
     invoices: Invoice[] = [];
 
-    tree$: BehaviorSubject<TreeData> = new BehaviorSubject(this.treeData);
+    treeActive$: BehaviorSubject<TreeData> = new BehaviorSubject(this.treeDataActive);
+    treeArchived$: BehaviorSubject<TreeData> = new BehaviorSubject(this.treeDataArchived);
+    treeAll$: BehaviorSubject<TreeData> = new BehaviorSubject(this.treeDataAll);
     invoices$: BehaviorSubject<Invoice[]> = new BehaviorSubject([]);
 
     constructor(
@@ -35,9 +40,12 @@ export class InvoicesService {
     private _manageInvoicesResults(results: object[]) {
         this.invoices = results.map(result => new Invoice(result));
         this.invoices$.next(this.invoices);
-        const treeData = this._createTree();
-        this.treeData = treeData;
-        this.tree$.next(this.treeData);
+        this.treeDataActive = this._createTree(this.invoices.filter(x => x.status !== Status.Archived));
+        this.treeActive$.next(this.treeDataActive);
+        this.treeDataArchived = this._createTree(this.invoices.filter(x => x.status === Status.Archived));
+        this.treeArchived$.next(this.treeDataArchived);
+        this.treeDataAll = this._createTree();
+        this.treeAll$.next(this.treeDataAll);
     }
 
     private _createTree(invoices?: Invoice[]) {
@@ -84,8 +92,9 @@ export class InvoicesService {
         return treeData;
     }
 
-    filterInvoices(str: string) {
-        const filtered = this.invoices.filter(inv => inv.title.toLowerCase().includes(str.toLowerCase()));
+    filterInvoices(str: string, invoices?: Invoice[]) {
+        if (!invoices) invoices = this.invoices;
+        const filtered = invoices.filter(inv => inv.title.toLowerCase().includes(str.toLowerCase()));
         return this._createTree(filtered);
     }
 
@@ -128,8 +137,8 @@ export class InvoicesService {
             this.invoices$.next(this.invoices);
 
             const treeData = this._createTree();
-            this.treeData = treeData;
-            this.tree$.next(this.treeData);
+            this.treeDataActive = treeData;
+            this.treeActive$.next(this.treeDataActive);
 
             this._stateManager.updateDocument(new Document({
                 id: invoice.id,

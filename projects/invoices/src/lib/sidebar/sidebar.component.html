@@ -15,7 +15,13 @@
     </div>
 </section>
 <lib-accordion [expandOnInit]="false" (groupExpanded)="groupExpanded($event)">
-    <lib-accordion-group heading="{{ 'Invoices'|translate:'invoices' }}" [expand]="expanded_idx === 0">
-        <lib-tree [nodes]="filteredTreeData" (nodeClick)="onTreeNodeClicked($event)" (nodeDblClick)="onTreeNodeDblClicked($event)"></lib-tree>
+    <lib-accordion-group heading="{{ 'Active Invoices'|translate:'invoices' }}" [expand]="expanded_idx === 0">
+        <lib-tree [nodes]="filteredTreeDataActive" (nodeClick)="onTreeNodeClicked($event)" (nodeDblClick)="onTreeNodeDblClicked($event)"></lib-tree>
+    </lib-accordion-group>
+    <lib-accordion-group heading="{{ 'Archived'|translate:'invoices' }}" [expand]="expanded_idx === 1">
+        <lib-tree [nodes]="filteredTreeDataArchived" (nodeClick)="onTreeNodeClicked($event)" (nodeDblClick)="onTreeNodeDblClicked($event)"></lib-tree>
+    </lib-accordion-group>
+    <lib-accordion-group heading="{{ 'All'|translate:'invoices' }}" [expand]="expanded_idx === 2">
+        <lib-tree [nodes]="filteredTreeDataAll" (nodeClick)="onTreeNodeClicked($event)" (nodeDblClick)="onTreeNodeDblClicked($event)"></lib-tree>
     </lib-accordion-group>
 </lib-accordion>
