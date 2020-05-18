@@ -36,12 +36,16 @@ class MainWindow {
                 }
             });
 
+            let userAgent = this.window.webContents.userAgent;
+            userAgent = userAgent.split(' ').filter(x => !x.startsWith(app.name.replace(/\s/g, '')) && !x.startsWith('Electron')).join(' ');
+            this.window.webContents.userAgent = userAgent;
+
             if (this.windowState.maximized)
                 this.window.maximize();
 
             this._manageWinPosition();
 
-            this.window.loadFile(`${process.env.ROOT_DIR}/${environment.html_src}/index.html`);
+            this.window.loadFile(`${process.env.ROOT_DIR}/${environment.html_src}/index.html`, { userAgent: 'Chrome' });
 
             this.window.once('ready-to-show', () => {
                 this.window.show();

@@ -37,7 +37,7 @@ export class InvoicesService {
         });
         this._settingsService.settings$.subscribe((settings) => {
             this.currency_sign = settings?.general?.currency_sign || '';
-        })
+        });
     }
 
     get tree() {

@@ -1,0 +1,14 @@
+<!-- <button type="button" class="btn btn-default" (click)="openSendingPreview()">Open edit</button> -->
+<section>
+    <div class="btn btn-icon btn-sm" (click)="newSending()">
+        <span class="ti ti-plus"></span> {{ 'New sending'|translate:'sending' }}
+    </div>
+</section>
+<lib-accordion [expandOnInit]="false" (groupExpanded)="groupExpanded($event)">
+    <lib-accordion-group heading="{{ 'Active invoices'|translate:'sending' }}" [expand]="expanded_idx === 0">
+        <lib-tree [nodes]="invoicesTreeData" (nodeClick)="previewInvoice($event)"></lib-tree>
+    </lib-accordion-group>
+    <lib-accordion-group heading="{{ 'Sendings'|translate:'sending' }}" [expand]="expanded_idx === 1">
+        <lib-tree [nodes]="sendingTreeData" (nodeClick)="previewSending($event)"></lib-tree>
+    </lib-accordion-group>
+</lib-accordion>

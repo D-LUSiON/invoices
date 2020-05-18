@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
-import { SendingComponent } from './sending.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { PreviewComponent } from './preview/preview.component';
 import { SharedModule } from '@shared';
+import { EditComponent } from './edit/edit.component';
 
 
 
 @NgModule({
-  declarations: [SendingComponent, SidebarComponent, PreviewComponent],
+  declarations: [SidebarComponent, PreviewComponent, EditComponent],
   imports: [
       SharedModule
   ],
-  exports: [SendingComponent]
+  exports: []
 })
 export class SendingModule {
     readonly title = 'Sending';
@@ -26,6 +26,6 @@ export class SendingModule {
     }
 
     get edit() {
-        return null;
+        return EditComponent;
     }
 }

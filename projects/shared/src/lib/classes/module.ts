@@ -2,6 +2,7 @@ export class Module {
     module_name: string = '';
     title: string = '';
     icon: string = '';
+    sidebar_position?: 'top' | 'bottom';
     active: boolean = false;
     component_sidebar?: any;
     component_preview?: any;
@@ -13,6 +14,7 @@ export class Module {
             if (data.hasOwnProperty('module_name')) this.module_name = data['module_name'];
             if (data.hasOwnProperty('title')) this.title = data['title'];
             if (data.hasOwnProperty('icon')) this.icon = data['icon'];
+            if (data.hasOwnProperty('sidebar_position')) this.sidebar_position = data['sidebar_position'];
             if (data.hasOwnProperty('active')) this.active = data['active'];
             if (data.hasOwnProperty('component_sidebar')) this.component_sidebar = data['component_sidebar'];
             if (data.hasOwnProperty('component_preview')) this.component_preview = data['component_preview'];

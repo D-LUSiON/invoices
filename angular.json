@@ -175,7 +175,7 @@
             "projectType": "library",
             "root": "projects/invoices",
             "sourceRoot": "projects/invoices/src",
-            "prefix": "lib",
+            "prefix": "lib-invoices",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-ng-packagr:build",
@@ -215,7 +215,7 @@
             "projectType": "library",
             "root": "projects/providers",
             "sourceRoot": "projects/providers/src",
-            "prefix": "lib",
+            "prefix": "lib-providers",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-ng-packagr:build",
@@ -255,7 +255,7 @@
             "projectType": "library",
             "root": "projects/sending",
             "sourceRoot": "projects/sending/src",
-            "prefix": "lib",
+            "prefix": "lib-sending",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-ng-packagr:build",
@@ -295,7 +295,7 @@
             "projectType": "library",
             "root": "projects/settings",
             "sourceRoot": "projects/settings/src",
-            "prefix": "lib",
+            "prefix": "lib-settings",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-ng-packagr:build",

@@ -1,0 +1,28 @@
+:host-context(lib-sending-preview) {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: calc(var(--spacing) * 2);
+
+    h1:not(.d-inline-block),
+    h2:not(.d-inline-block),
+    h3:not(.d-inline-block),
+    section:not(.d-inline-block),
+    .section:not(.d-inline-block) {
+        margin-bottom: calc(var(--spacing) * 2);
+    }
+
+    table {
+        tbody {
+            tr {
+                cursor: pointer;
+
+                &:hover {
+                    td {
+                        background-color: var(--bg-color-backgrounded);
+                    }
+                }
+            }
+        }
+    }
+}

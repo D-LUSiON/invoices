@@ -1,0 +1,49 @@
+<section>
+    <h1>{{ 'Sending'|translate:'sending' }} #{{ sending?.id }}, {{ 'made on'|translate:'sending' }} {{ sending?.sending_date|date:'MMM d, y' }}</h1>
+    <div class="section">
+        <h3 class="d-inline-block" translate="sending">Sent to:</h3> {{ sending?.send_to }}
+    </div>
+    <div class="section">
+        <h3 translate="sending">Message:</h3>
+        <fieldset>{{ sending?.message }}</fieldset>
+    </div>
+    <div class="section">
+        <h3 class="d-inline-block" translate="sending">Invoices count:</h3> {{ sending?.invoices?.length }}
+    </div>
+    <div class="section">
+        <h3 class="d-inline-block" translate="sending">Total sum:</h3> {{ sending?.invoices_total_sum }}{{ currency_sign }}
+    </div>
+    <div class="section">
+        <h3 class="d-inline-block" translate="sending">Total VAT:</h3> {{ sending?.invoices_total_vat }}{{ currency_sign }}
+    </div>
+    <div class="section">
+        <h3 class="d-inline-block" translate="sending">Payment amount:</h3> {{ sending?.invoices_payment_amount }}{{ currency_sign }}
+    </div>
+</section>
+<section>
+    <h3 translate="sending">Invoices</h3>
+    <table>
+        <thead>
+            <tr>
+                <th translate="sending">Number</th>
+                <th translate="sending">Invoice content</th>
+                <th translate="sending">Provider name</th>
+                <th translate="sending">Provider VAT</th>
+                <th translate="sending">Total sum</th>
+                <th translate="sending">Total VAT</th>
+                <th translate="sending">Payment amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let invoice of sending?.invoices; let idx = index" (click)="previewInvoice(invoice)">
+                <td>{{ invoice.number }}</td>
+                <td>{{ invoice.title }}</td>
+                <td>{{ invoice.provider.organization }}</td>
+                <td>{{ invoice.provider.vat }}</td>
+                <td class="text-right">{{ invoice.total_sum }}{{ currency_sign }}</td>
+                <td class="text-right">{{ invoice.total_vat }}{{ currency_sign }}</td>
+                <td class="text-right">{{ invoice.payment_amount }}{{ currency_sign }}</td>
+            </tr>
+        </tbody>
+    </table>
+</section>

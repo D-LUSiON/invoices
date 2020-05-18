@@ -1,0 +1,14 @@
+:host-context(lib-sending-sidebar) {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    section {
+        padding: calc(var(--spacing) / 2);
+        flex: 0 0 auto;
+    }
+
+    lib-accordion {
+        flex: 1 1 auto;
+    }
+}

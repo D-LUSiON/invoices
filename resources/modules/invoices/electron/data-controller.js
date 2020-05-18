@@ -33,14 +33,16 @@ class InvoicesController {
                     table.decimal('total_sum')
                     table.string('type', 255);
                     table.integer('status').defaultTo(0);
+                    table.integer('sending_id').unsigned();
+                    table.foreign('sending_id').references('Sending.id');
                 });
             }
         });
     }
 
     startListeners() {
-        ipcMain.on('invoices:all', (event, args) => {
-            this.getAllInvoices().then((results) => {
+        ipcMain.on('invoices:all', (event, filters) => {
+            this.getAllInvoices(filters || {}).then((results) => {
                 event.sender.send('invoices:all:response', results);
             });
         });
@@ -66,8 +68,9 @@ class InvoicesController {
         });
     }
 
-    getAllInvoices() {
+    getAllInvoices(filters) {
         return this.database
+            .where(filters || {})
             .select(
                 `Invoices.*`,
                 `Providers.organization`,
@@ -100,7 +103,7 @@ class InvoicesController {
                         return row;
                     });
                 }
-                return results;
+                return results || [];
             });
     }
 
