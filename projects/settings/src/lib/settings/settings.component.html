@@ -11,6 +11,16 @@
                 <span class="mdl2-ChevronRight"></span>
             </div>
         </div>
+        <div
+            class="settings-sidebar-row"
+            [class.active]="active_setting === 'about'"
+            (click)="activateSetting('about')"
+        >
+            <div class="setting-row-title">{{ 'About'|translate:'settings' }}</div>
+            <div class="setting-row-icon activated">
+                <span class="mdl2-ChevronRight"></span>
+            </div>
+        </div>
     </div>
     <div class="settings-main-container">
         <div class="setting-container" [class.active]="active_setting === 'general'" formGroupName="general">
@@ -58,27 +68,64 @@
             <div class="form-group">
                 <label translate="settings">Password</label>
                 <input type="password" class="form-control" formControlName="password">
+                <div style="margin-top: 10px;">
+                    <em translate="settings">More information on how to use App Passwords you can find <a href="https://support.google.com/accounts/answer/185833?hl=en" target="_blank" rel="noopener noreferrer" translate="settings">HERE</a></em>
+                </div>
             </div>
+            <!-- <div class="form-group">
+                <button type="button" class="btn btn-default" (click)="loginWithGoogle()">Login with Google</button>
+            </div> -->
         </div>
         <div class="setting-container" [class.active]="active_setting === 'accountant'" formGroupName="accountant">
             <div class="form-group">
                 <label translate="settings">Your accountant's email</label>
                 <input type="text" class="form-control" formControlName="email">
             </div>
-            <div class="form-group">
+            <div class="form-group fields-container">
                 <label translate="settings" translate="settings">Invoice fields to be included in the Excel file:</label>
                 <ng-container *ngIf="settings?.accountant?.invoice_fields?.length">
-                    <label *ngFor="let field of settings.accountant.invoice_fields; let idx = index">
+                    <label class="form-control-container" *ngFor="let field of settings.accountant.invoice_fields; let idx = index">
                         <input
                             #checkbox
                             type="checkbox"
+                            class="form-control-icon"
                             [checked]="field.checked"
                             [name]="field.name"
                             (change)="toggleField(idx, checkbox.checked)"
-                        > {{ field.title|translate:'settings' }}
+                        >
+                        <div class="wrapper-greed">{{ field.title|translate:'settings' }}</div>
+                        <div class="wrapper">
+                            <input
+                                type="text"
+                                class="form-control form-control-inline form-control-icon"
+                                [value]="field.width"
+                                (change)="changeInvoiceFieldWidth(field, $event.target.value)"
+                            >pt
+                        </div>
                     </label>
                 </ng-container>
             </div>
+        </div>
+        <div class="setting-container" [class.active]="active_setting === 'about'">
+            <h1>{{ 'Loaded modules'|translate:'settings' }}:</h1>
+            <section class="module-section" *ngFor="let module of modules_info">
+                <h2 class="module-name">{{ module.productName }}</h2>
+                <div class="module-info">
+                    <strong>{{ 'System name'|translate:'settings' }}:</strong> {{ module.name }}
+                </div>
+                <div class="module-info">
+                    <strong>{{ 'Version'|translate:'settings' }}:</strong> v{{ module.version }}
+                </div>
+                <div class="module-info">
+                    <strong>{{ 'Description'|translate:'settings' }}:</strong> {{ module.description }}
+                </div>
+                <div class="module-info">
+                    <strong>{{ 'Author'|translate:'settings' }}:</strong> {{ module.author }}
+                </div>
+                <div class="module-info">
+                    <strong>{{ 'License'|translate:'settings' }}:</strong> {{ module.license }}
+                </div>
+            </section>
         </div>
     </div>
 </form>

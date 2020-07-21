@@ -39,9 +39,13 @@ export class StateManagerService {
         this.loadedModules$.subscribe(loadedModules => {
             this._loadedModules = loadedModules;
         });
-        this.openedDocuments$.subscribe(openedDocuments => {
-            console.log(`openedDocuments`, openedDocuments);
-        });
+        // this.openedDocuments$.subscribe(openedDocuments => {
+        //     console.log(`openedDocuments`, openedDocuments);
+        // });
+    }
+
+    get current_active_tab_idx() {
+        return this._openedDocuments.findIndex(doc => doc.active);
     }
 
     getLastState() {
@@ -68,7 +72,6 @@ export class StateManagerService {
             });
 
             const idx = this._openedDocuments.findIndex(opened => opened.module === doc.module && opened.id === doc.id);
-            console.log(idx, doc, this._openedDocuments.find(opened => opened.module === doc.module && opened.id === doc.id), this._openedDocuments);
 
             if (idx === -1) {
                 doc.mode = (!doc.mode) ? 'preview' : doc.mode;
@@ -96,10 +99,15 @@ export class StateManagerService {
     }
 
     updateDocument(doc: Document) {
-        console.log(`updateDocument`, doc);
         const idx = this._openedDocuments.findIndex(d => d.id === doc.id && d.module === doc.module);
         if (idx > -1) {
             this._openedDocuments[idx].inputs = doc.inputs;
+            this.openedDocuments$.next(this._openedDocuments);
+        } else if (this._openedDocuments[this.current_active_tab_idx].module === doc.module) {
+            this._openedDocuments[this.current_active_tab_idx] = new Document({
+                ...this._openedDocuments[this.current_active_tab_idx],
+                ...doc
+            });
             this.openedDocuments$.next(this._openedDocuments);
         }
     }
@@ -110,27 +118,29 @@ export class StateManagerService {
     }
 
     activateTab(idx: number) {
-        console.log(`activateTab`, idx);
-
         this._openedDocuments.forEach((doc, i) => doc.active = i === idx);
         this.openedDocuments$.next(this._openedDocuments);
     }
 
     closeTab(idx: number) {
-        console.log(`closeTab idx: ${idx}`);
-
-        const active_idx = this._openedDocuments.findIndex(doc => doc.active);
-        if (idx === active_idx) {
-            if (idx === 0) {
-                if (this._openedDocuments.length > 1)
-                    this._openedDocuments[1].active = true;
-            } else if (idx === this._openedDocuments.length - 1) {
-                this._openedDocuments[this._openedDocuments.length - 2].active = true;
-            } else {
-                this._openedDocuments[idx - 1].active = true;
+        const active_idx = this.current_active_tab_idx;
+        if (idx > -1) {
+            if (idx === active_idx) {
+                if (idx === 0) {
+                    if (this._openedDocuments.length > 1)
+                        this._openedDocuments[1].active = true;
+                } else if (idx === this._openedDocuments.length - 1) {
+                    this._openedDocuments[this._openedDocuments.length - 2].active = true;
+                } else {
+                    this._openedDocuments[idx - 1].active = true;
+                }
             }
+            this._openedDocuments.splice(idx, 1);
+            this.openedDocuments$.next(this._openedDocuments);
         }
-        this._openedDocuments.splice(idx, 1);
-        this.openedDocuments$.next(this._openedDocuments);
+    }
+
+    closeCurrentTab() {
+        this.closeTab(this.current_active_tab_idx);
     }
 }

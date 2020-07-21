@@ -1,1 +1,91 @@
-edit works
+<form class="form-container" [formGroup]="sendingForm" novalidate (ngSubmit)="onSubmit()">
+    <section>
+        <div class="heading">
+            <h1 translate="sending">New sending</h1>
+            <div class="actions">
+                <button type="button" class="btn" *ngIf="sendingForm?.valid && sendingForm?.dirty; else formInvalid" (click)="onSubmit()">
+                    <div class="ti ti-save"></div>
+                </button>
+                <ng-template #formInvalid>
+                    <div class="msg msg-danger" *ngIf="sendingForm?.invalid && sendingForm?.dirty" translate>Invalid</div>
+                </ng-template>
+            </div>
+        </div>
+        <div class="section">
+            <h3 translate="sending">Send to:</h3>
+            <input type="text" class="form-control" formControlName="send_to">
+        </div>
+        <div class="section">
+            <h3 translate="sending">Subject:</h3>
+            <input type="text" class="form-control" formControlName="subject">
+        </div>
+        <div class="section">
+            <h3 translate="sending">Message:</h3>
+            <fieldset libContenteditable formControlName="message"></fieldset>
+        </div>
+    </section>
+    <section>
+        <h3 translate="sending">Invoices</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th translate="sending">
+                        <input
+                            type="checkbox"
+                            [checked]="checkSelectedAll()"
+                            (click)="selectAll()"
+                        >
+                        <!-- <label for="CheckAll"></label> -->
+                    </th>
+                    <th translate="sending">Number</th>
+                    <th translate="sending">Issue date</th>
+                    <th translate="sending">Invoice content</th>
+                    <th translate="sending">Provider name</th>
+                    <th translate="sending">Provider VAT</th>
+                    <th translate="sending">Total sum</th>
+                    <th translate="sending">Total VAT</th>
+                    <th translate="sending">Payment amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    *ngFor="let invoice of active_invoices; let idx = index"
+                    [class.selected]="checkAdded(invoice)"
+                    class="bg-third"
+                    (click)="selectInvoice(invoice)"
+                >
+                    <!-- <td>
+                        <label (click)="checkInvoice(invoice)">
+                            <input type="checkbox" [checked]="checkAdded(invoice)">
+                        </label>
+                    </td> -->
+                    <td>{{ idx + 1 }}</td>
+                    <td>{{ invoice.number }}</td>
+                    <td>{{ invoice.issue_date|date:'yyyy-MM-dd' }}</td>
+                    <td>{{ invoice.title }}</td>
+                    <td>{{ invoice.provider.organization }}</td>
+                    <td>{{ invoice.provider.vat }}</td>
+                    <td class="text-right">{{ invoice.total_sum }}{{ settings?.general?.currency_sign }}</td>
+                    <td class="text-right">{{ invoice.total_vat }}{{ settings?.general?.currency_sign }}</td>
+                    <td class="text-right">{{ invoice.payment_amount }}{{ settings?.general?.currency_sign }}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4"></td>
+                    <td colspan="2" class="text-third" translate="sending">Sum of selected:</td>
+                    <td class="text-right text-third">{{ selectedNoVAT }}{{ settings?.general?.currency_sign }}</td>
+                    <td class="text-right text-third">{{ selectedVAT }}{{ settings?.general?.currency_sign }}</td>
+                    <td class="text-right text-third">{{ selectedPayment }}{{ settings?.general?.currency_sign }}</td>
+                </tr>
+                <tr>
+                    <td colspan="4"></td>
+                    <td colspan="2" translate="sending">Total sum of invoices:</td>
+                    <td class="text-right">{{ totalNoVAT }}{{ settings?.general?.currency_sign }}</td>
+                    <td class="text-right">{{ totalVAT }}{{ settings?.general?.currency_sign }}</td>
+                    <td class="text-right">{{ totalPayment }}{{ settings?.general?.currency_sign }}</td>
+                </tr>
+            </tfoot>
+        </table>
+    </section>
+</form>

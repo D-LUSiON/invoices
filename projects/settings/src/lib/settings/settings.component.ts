@@ -23,53 +23,82 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     subs: Subscription = new Subscription();
 
-    invoice_fields: { name: string, title: string, checked: boolean }[] = [
+    invoice_fields: { name: string, title: string, width: number, checked: boolean }[] = [
         {
             name: 'number',
             title: this._translate.translate('Invoice number', 'settings'),
+            width: 20,
             checked: true
         },
         {
             name: 'issue_date',
             title: this._translate.translate('Invoice issue date', 'settings'),
+            width: 15,
             checked: true
+        },
+        {
+            name: 'title',
+            title: this._translate.translate('Title', 'settings'),
+            width: 15,
+            checked: false
+        },
+        {
+            name: 'type',
+            title: this._translate.translate('Type', 'settings'),
+            width: 15,
+            checked: false
+        },
+        {
+            name: 'notes',
+            title: this._translate.translate('Notes', 'settings'),
+            width: 30,
+            checked: false
         },
         {
             name: 'provider.name',
             title: this._translate.translate('Provider name', 'settings'),
+            width: 30,
             checked: false
         },
         {
             name: 'provider.address',
             title: this._translate.translate('Provider address', 'settings'),
+            width: 30,
             checked: false
         },
         {
             name: 'provider.vat',
             title: this._translate.translate('Provider VAT number', 'settings'),
+            width: 30,
             checked: true
         },
         {
             name: 'goods',
             title: this._translate.translate('Goods list', 'settings'),
+            width: 30,
             checked: false
         },
         {
             name: 'total_sum',
             title: this._translate.translate('Total sum without VAT', 'settings'),
+            width: 20,
             checked: true
         },
         {
             name: 'total_vat',
             title: this._translate.translate('Calculated VAT', 'settings'),
+            width: 20,
             checked: true
         },
         {
             name: 'payment_amount',
             title: this._translate.translate('Total sum with VAT', 'settings'),
+            width: 20,
             checked: true
         },
     ];
+
+    modules_info: { [key: string]: string }[] = [];
 
     constructor(
         private _fb: FormBuilder,
@@ -87,7 +116,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
                     ...settings,
                     accountant: {
                         ...(settings?.accountant || {}),
-                        invoice_fields: settings?.accountant?.invoice_fields || this.invoice_fields
+                        invoice_fields: (settings?.accountant?.invoice_fields || this.invoice_fields).map(x => { x.width = +x.width; return x; })
                     }
                 };
                 this.settingsForm.patchValue(this.settings);
@@ -135,6 +164,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
                     if (this.settingsForm.dirty)
                         this._settingsService.saveSettings(this.settings).subscribe(result => {
                             console.log(`Settings saved!`, result);
+                            this._settingsService.settings$.next(this.settings);
                         });
                 }, 500);
             }
@@ -158,6 +188,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     activateSetting(key: string) {
         this.active_setting = key;
+        if (this.active_setting === 'about')
+            this._settingsService.getModulesInfo().then((result: { [key: string]: string }[]) => {
+                this.modules_info = result;
+                console.log(this.modules_info);
+
+            });
     }
 
     toggleField(idx, checked: boolean) {
@@ -167,6 +203,24 @@ export class SettingsComponent implements OnInit, OnDestroy {
             'accountant': {
                 'invoice_fields': this.invoice_fields
             }
+        });
+    }
+
+    changeInvoiceFieldWidth(field, width) {
+        const idx = this.invoice_fields.findIndex(x => x.name === field.name);
+        this.invoice_fields[idx].width = +width;
+        console.log(`changeInvoiceFieldWidth`, field, width);
+
+        this.settingsForm.patchValue({
+            'accountant': {
+                'invoice_fields': this.invoice_fields
+            }
+        });
+    }
+
+    loginWithGoogle() {
+        this._electron.send('google:login', {}).subscribe((value) => {
+            console.log(`google:login`, value);
         });
     }
 

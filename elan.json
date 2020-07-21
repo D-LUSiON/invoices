@@ -1,5 +1,14 @@
 {
-    "blacklist": [],
+    "blacklist": [
+        "knex",
+        "sequelize",
+        "pg",
+        "pg-hstore",
+        "mysql2",
+        "mariadb",
+        "sqlite3",
+        "tedious"
+    ],
     "package": {
         "name": "invoices",
         "productName": "Invoices",
@@ -35,7 +44,10 @@
         "main": "3.0.0",
         "electron": "3.0.0",
         "angular": {
-            "invoices": "3.0.0"
+            "invoices-core": "3.0.0"
         }
+    },
+    "resources": {
+        "modules": "pack-dirs"
     }
 }

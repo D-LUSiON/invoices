@@ -4,12 +4,12 @@ const {
 
 class ProvidersController {
     constructor(db_instance) {
-        console.log(`Hello from ${this.constructor.name}!`);
         this.database = db_instance;
 
         this._createTable().then(() => {
             this.startListeners();
         });
+        console.log(`${this.constructor.name} initialized!`);
     }
 
     _createTable() {

@@ -23,14 +23,11 @@ export class SidebarComponent implements OnInit {
     ) {
         this._invoicesService.treeActive$.subscribe(tree => {
             this.invoicesTreeData = tree;
-            console.log(`invoicesTreeData`, this.invoicesTreeData);
 
         });
 
         this._sendingService.tree$.subscribe(tree => {
             this.sendingTreeData = tree;
-            console.log(`sendingTreeData`, this.sendingTreeData);
-
         });
     }
 
@@ -62,8 +59,6 @@ export class SidebarComponent implements OnInit {
     }
 
     previewSending(node: TreeItem) {
-        console.log(`previewSending`, node);
-
         this._stateManager.addDocument(new Document({
             title: this._translations.translate('Sending', 'sending'),
             module: 'Sending',

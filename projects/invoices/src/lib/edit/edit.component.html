@@ -1,7 +1,7 @@
 <div class="heading">
-    <h1>Invoice</h1>
+    <h1 translate="invoices">Invoice</h1>
     <div class="actions">
-        <div class="msg msg-danger" *ngIf="invoiceForm?.invalid; else saveButton">Invalid</div>
+        <div class="msg msg-danger" *ngIf="invoiceForm?.invalid; else saveButton" translate>Invalid</div>
         <ng-template #saveButton>
             <button type="button" class="btn" *ngIf="invoiceForm?.dirty" (click)="onSubmit()">
                 <div class="ti ti-save"></div>
@@ -14,20 +14,21 @@
         <div class="invoice-head">
             <div class="invoice-recipient">
                 <div class="form-group">
+                    <!-- FIXME: Get data from settings -->
                     <label translate="invoices">Receiver</label>
-                    <div class="form-control" readonly>Любомир Пейков</div>
+                    <div class="form-control" readonly>{{ sender?.name }}</div>
                 </div>
                 <div class="form-group">
                     <label translate="invoices">BULSTAT</label>
-                    <div class="form-control" readonly>7811051085</div>
+                    <div class="form-control" readonly>{{ sender?.bulstat }}</div>
                 </div>
                 <div class="form-group">
                     <label translate="invoices">VAT</label>
-                    <div class="form-control" readonly>BG7811051085</div>
+                    <div class="form-control" readonly>{{ sender?.vat }}</div>
                 </div>
                 <div class="form-group">
                     <label translate="invoices">Address</label>
-                    <div class="form-control" readonly>София, ул. 11-ти Август №29</div>
+                    <div class="form-control" readonly>{{ sender?.address }}</div>
                 </div>
             </div>
             <div class="invoice-heading">
@@ -42,7 +43,7 @@
                 </div>
                 <div class="form-group">
                     <label class="text-center" translate="invoices">Creation date</label>
-                    <div class="form-control text-center">{{ invoice.creation_date|date:'MMM d, y' }}</div>
+                    <div class="form-control text-center">{{ invoice.creation_date|date:'d' }} {{ (invoice.creation_date|date:'MMM')|translate }} {{ invoice.creation_date|date:'y' }}</div>
                 </div>
             </div>
             <div class="invoice-issuer">

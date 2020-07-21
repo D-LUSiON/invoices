@@ -9,6 +9,7 @@ import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { ConsoleLogPipe } from './pipes/log.pipe';
 import { TranslatePipe } from './pipes/translate.pipe';
 import { TranslateDirective } from './directives/translate.directive';
+import { ContenteditableDirective } from './directives/contenteditable.directive';
 
 @NgModule({
     declarations: [
@@ -20,6 +21,7 @@ import { TranslateDirective } from './directives/translate.directive';
         ConsoleLogPipe,
         TranslatePipe,
         TranslateDirective,
+        ContenteditableDirective,
     ],
     imports: [
         CommonModule,
@@ -39,6 +41,7 @@ import { TranslateDirective } from './directives/translate.directive';
         ConsoleLogPipe,
         TranslatePipe,
         TranslateDirective,
+        ContenteditableDirective,
     ]
 })
 export class SharedModule { }

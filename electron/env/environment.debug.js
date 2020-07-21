@@ -3,7 +3,7 @@ const package_json = require('./package.json');
 const environment = {
     name: package_json.name,
     description: package_json.description,
-    production: false,
+    production: true,
     single_instance: true,
     html_src: 'app',
     background_color: '#ffffff',

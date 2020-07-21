@@ -6,7 +6,6 @@ export class OpenedDocuments {
 
     constructor(items?: Document[]) {
         if (items) this.items = items;
-        console.log(this);
     }
 
     // get tabsData() {

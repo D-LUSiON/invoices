@@ -4,14 +4,10 @@ const {
 } = require('electron');
 const path = require('path');
 const fs = require('fs-extra');
-const http = require('http');
 const ini = require('ini');
-const readline = require('readline');
-const requireJSON = require('./require-json');
-const package_json = requireJSON(path.resolve('package.json'));
 const knex = require('knex');
 const environment = require('../environment');
-
+const loadModule = require('../tools/load-module');
 const DEFAULT_SETTINGS = {};
 
 class DataExchange {
@@ -48,7 +44,9 @@ class DataExchange {
                 if (dir.length) {
                     dir.forEach(trn_file => {
                         if (trn_file.endsWith('.json'))
-                            requireJSON(path.join(trn_path, trn_file)).then(translation => {
+                            fs.readJSON(path.join(trn_path, trn_file), {
+                                encoding: 'utf8',
+                            }).then((translation) => {
                                 this.moduleTranslations['_general'][trn_file.replace('.json', '')] = translation;
                             });
                     });
@@ -59,13 +57,27 @@ class DataExchange {
 
     _loadControllers() {
         const modules_path = path.resolve('resources', 'modules');
+        console.log(`Looking for modules in: ${modules_path}...`);
         fs.readdir(modules_path).then((dir) => {
+            console.log(`Modules found: ${dir.length}`);
             if (dir.length) {
                 dir.forEach(entry => {
-                    const ctrl_path = path.resolve(modules_path, entry, 'electron', 'data-controller.js');
-                    if (fs.statSync(path.resolve(modules_path, entry)).isDirectory() && fs.existsSync(ctrl_path)) {
-                        const Mod = require(ctrl_path);
-                        this.moduleControllers[entry] = new Mod(this.database);
+                    console.log(`Loading module: "${entry}"...`);
+                    const mod_info = path.resolve(modules_path, entry, 'electron', 'package.json');
+                    if (fs.existsSync(mod_info)) {
+                        this.moduleControllers[entry] = {
+                            info: fs.readJSONSync(mod_info),
+                        };
+
+                        if (this.moduleControllers[entry].info.main) {
+                            const ctrl_path = path.resolve(modules_path, entry, 'electron', this.moduleControllers[entry].info.main);
+
+                            if (fs.statSync(path.resolve(modules_path, entry)).isDirectory() && fs.existsSync(ctrl_path) && !fs.statSync(ctrl_path).isDirectory()) {
+                                const Mod = loadModule(ctrl_path);
+                                this.moduleControllers[entry].controller = new Mod(this.database);
+                                console.info(`${entry.charAt(0).toUpperCase()}${entry.substr(1)} module initialized!`);
+                            }
+                        }
                     }
 
                     const trans_path = path.resolve(modules_path, entry, 'i18n');
@@ -75,7 +87,7 @@ class DataExchange {
                             if (trn_files.length) {
                                 trn_files.forEach(trn_file => {
                                     if (trn_file.endsWith('.json'))
-                                        requireJSON(path.join(trans_path, trn_file)).then(translation => {
+                                        fs.readJSON(path.join(trans_path, trn_file)).then(translation => {
                                             this.moduleTranslations[entry][trn_file.replace('.json', '')] = translation;
                                         });
                                 });
@@ -84,6 +96,13 @@ class DataExchange {
                     }
                 });
             }
+        });
+    }
+
+    _initControllers() {
+        Object.keys(this.moduleControllers).forEach(entry => {
+            // TODO: Create method "init" in each module and execute it here
+            console.info(`${entry.charAt(0).toUpperCase()}${entry.substr(1)} module initialized!`);
         });
     }
 
@@ -154,54 +173,15 @@ class DataExchange {
                     event.sender.send('file:get:response', result);
                 });
         });
-    }
 
-    getTranslations() {
-    }
-
-    getTranslationLangs() {
-    }
-
-    getSettingsAll() {
-        // ipcMain.on('settings:all', (event, args) => {
-        //     this._loadCurrentSettings().then(() => {
-        //         const settings = { ...this.settings };
-        //         if (settings.sender && settings.sender.pasword)
-        //             delete settings.sender.pasword;
-        //         event.sender.send('settings:all:response', {
-        //             ...settings,
-        //             ...{
-        //                 cwd: process.cwd(),
-        //                 app_name: app.name,
-        //                 userData: app.getPath('userData'),
-        //                 version: package_json.version
-        //             }
-        //         });
-        //     });
-        // });
-    }
-
-    getDefaultSettings() {
-        // ipcMain.on('settings:all', (event, args) => {
-        //     event.sender.send('settings:default:all:response', DEFAULT_SETTINGS);
-        // });
-    }
-
-    saveSettings() {
-        // ipcMain.on('settings:save', (event, args) => {
-        //     fs.writeFile(this.settings_ini_path, ini.stringify(args), { encoding: 'utf-8' });
-        //     this._loadCurrentSettings().then(() => {
-        //         event.sender.send('settings:save:response', {
-        //             ...this.settings,
-        //             ...{
-        //                 cwd: process.cwd(),
-        //                 app_name: app.name,
-        //                 userData: app.getPath('userData'),
-        //                 version: package_json.version
-        //             }
-        //         });
-        //     });
-        // });
+        ipcMain.on('module-info:get', (event) => {
+            const result = Object.keys(this.moduleControllers).map(ctrl => this.moduleControllers[ctrl].info);
+            result.forEach(mod => {
+                delete mod.scripts;
+                delete mod.main;
+            });
+            event.sender.send('module-info:get:response', result);
+        });
     }
 
 }

@@ -1,9 +1,8 @@
 const { app, BrowserWindow, globalShortcut, screen } = require('electron');
 const environment = require('../environment');
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs-extra');
 const WindowState = require('./window-state');
-const requireJSON = require('./require-json');
 
 const WINDOW_STATE_PATH = path.join(app.getPath('userData'), 'window-state.json');
 
@@ -35,6 +34,8 @@ class MainWindow {
                     nodeIntegration: true
                 }
             });
+
+            this.window.setMenu(null);
 
             let userAgent = this.window.webContents.userAgent;
             userAgent = userAgent.split(' ').filter(x => !x.startsWith(app.name.replace(/\s/g, '')) && !x.startsWith('Electron')).join(' ');
@@ -151,7 +152,7 @@ class MainWindow {
     async _restoreOldWindowState() {
         if (fs.existsSync(WINDOW_STATE_PATH)) {
             try {
-                const window_state = await requireJSON(WINDOW_STATE_PATH);
+                const window_state = await fs.readJSON(WINDOW_STATE_PATH);
                 this.windowState = new WindowState({ ...window_state });
             } catch (error) {
                 this.windowState = new WindowState();

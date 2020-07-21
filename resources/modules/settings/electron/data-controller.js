@@ -7,13 +7,14 @@ const MachineID = require('node-machine-id');
 
 class SettingsController {
     constructor(db_instance) {
-        console.log(`Hello from ${this.constructor.name}!`);
         this.database = db_instance;
         this.machine_id = MachineID.machineIdSync();
+        this.googleAuth = null;
 
         this._createTable().then(() => {
             this.startListeners();
         });
+        console.log(`${this.constructor.name} initialized!`);
     }
 
     _createTable() {
@@ -58,6 +59,13 @@ class SettingsController {
                 event.sender.send('translations:current-lang:get:response', lang);
             });
         });
+
+        // ipcMain.on('google:login', (event, args) => {
+        //     this.googleAuth = new GoogleAuth();
+        //     this.googleAuth.login().then((result) => {
+        //         event.sender.send('google:login:response', result);
+        //     });
+        // });
     }
 
     getAllSettings() {

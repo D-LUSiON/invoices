@@ -26,6 +26,8 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     providers: Provider[] = [];
     choosen_provider: Provider = new Provider();
 
+    sender: { [key: string]: any } = {};
+
     @HostListener('window:keyup', ['$event']) saveAccelerator(e: KeyboardEvent) {
         if (e.ctrlKey && e.key.toLowerCase() === 's' && this.invoiceForm.valid) {
             this.onSubmit();
@@ -61,6 +63,7 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
 
         this.subs.add(
             this._settingsService.settings$.subscribe((settings) => {
+                this.sender = settings?.sender || {};
                 this.currency_sign = settings?.general?.currency_sign || '';
             })
         );
@@ -144,7 +147,7 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
 
     onSubmit() {
         this.invoice.update_date = new Date();
-        this._invoicesService.saveInvoice(this.invoice).subscribe(invoice => {
+        this._invoicesService.saveInvoice(this.invoice).subscribe((invoice) => {
             console.log(`Invoice saved:`, invoice);
             this.invoice = invoice;
             this.invoiceForm.patchValue(this.invoice);

@@ -159,6 +159,11 @@ select {
     &.ng-invalid:not(.ng-pristine) {
         border-color: var(--c-accent-secondary);
     }
+
+    &.form-control-inline {
+        display: inline;
+        width: auto;
+    }
 }
 
 .form-control-container {
@@ -217,6 +222,26 @@ select {
     text-align: right;
 }
 
+.text-primary {
+    color: var(--c-accent-primary);
+}
+
+.text-secondary {
+    color: var(--c-accent-secondary);
+}
+
+.text-third {
+    color: var(--c-accent-third);
+}
+
+.text-fourth {
+    color: var(--c-accent-fourth);
+}
+
+.text-fifth {
+    color: var(--c-accent-fifth);
+}
+
 .btn {
     display: inline-flex;
     align-items: center;
@@ -259,6 +284,10 @@ select {
             margin-right: calc(var(--spacing));
         }
     }
+
+    &.btn-danger {
+        background-color: var(--c-accent-secondary);
+    }
 }
 
 .msg {
@@ -277,20 +306,52 @@ select {
     }
 }
 
+[contenteditable] {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
 
-    thead {
-        th {
+    thead,
+    tfoot {
+        th,
+        td {
             border: 1px solid var(--c-main);
             padding: var(--spacing);
             background-color: var(--bg-color-accented);
             color: var(--text-color);
         }
+
+        th {
+            text-align: center;
+        }
+
+        td {
+            text-align: left;
+        }
     }
 
     tbody {
+        tr.selected {
+            &.bg-primary td {
+                background-color: var(--c-accent-primary);
+            }
+            &.bg-secondary td {
+                background-color: var(--c-accent-secondary);
+            }
+            &.bg-third td {
+                background-color: var(--c-accent-third);
+            }
+            &.bg-fourth td {
+                background-color: var(--c-accent-fourth);
+            }
+            &.bg-fifth td {
+                background-color: var(--c-accent-fifth);
+            }
+        }
         td {
             border: 1px solid var(--c-main);
             padding: var(--spacing);

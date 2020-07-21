@@ -2,6 +2,7 @@ import { Provider } from '@providers';
 import { Goods } from './goods';
 import { Tools } from '@shared';
 import { Status } from './status.enum';
+// import { Sending } from '@sending';
 
 export class Invoice {
     _id: string;
@@ -17,6 +18,9 @@ export class Invoice {
     goods: Goods[] = [];
     creation_date: Date = new Date();
     update_date: Date = new Date();
+    // sending_ids: number[] = [];
+    // sendings: Sending[] = [];
+    sendings: any[] = [];
 
     constructor(data?) {
         if (data) {
@@ -42,6 +46,9 @@ export class Invoice {
             if (data.hasOwnProperty('goods') && data['goods']) this.goods = data.goods.map(x => new Goods(x));
             if (data.hasOwnProperty('creation_date') && data['creation_date']) this.creation_date = new Date(data.creation_date);
             if (data.hasOwnProperty('update_date') && data['update_date']) this.update_date = new Date(data.update_date);
+            // if (data.hasOwnProperty('sending_ids') && data['sending_ids'] instanceof Array) this.sending_ids = [...data.sending_ids];
+            // if (data.hasOwnProperty('sendings') && data['sendings'] instanceof Array) this.sendings = data.sendings.map(x => new Sending(x));
+            if (data.hasOwnProperty('sendings') && data['sendings'] instanceof Array) this.sendings = [...data.sendings];
         }
     }
 
@@ -59,7 +66,7 @@ export class Invoice {
 
     }
 
-    get total_sum() {
+    get total_sum(): string {
         let sum = 0;
         this.goods.forEach(goods => {
             sum += goods.quantity * goods.price;
@@ -67,11 +74,11 @@ export class Invoice {
         return Tools.formatSum(sum);
     }
 
-    get total_vat() {
+    get total_vat(): string {
         return Tools.formatSum(parseFloat(this.total_sum) * 0.2);
     }
 
-    get payment_amount() {
+    get payment_amount(): string {
         return Tools.formatSum(parseFloat(this.total_sum) * 1.2);
     }
 
@@ -104,16 +111,38 @@ export class Invoice {
         return {
             id: this.id,
             number: this.number,
-            creation_date: this.creation_date,
-            update_date: this.update_date,
-            issue_date: this.issue_date,
+            creation_date: Tools.formatDate(this.creation_date, 'dd-MM-yyyy HH:mm'),
+            update_date: Tools.formatDate(this.update_date, 'dd-MM-yyyy HH:mm'),
+            issue_date: Tools.formatDate(this.issue_date, 'dd-MM-yyyy'),
+            issue_place: this.issue_place,
+            title: this.title,
+            notes: this.notes,
+            goods: this.goods,
+            provider: this.provider,
+            total_sum: this.total_sum,
+            total_vat: this.total_vat,
+            payment_amount: this.payment_amount,
+            type: this.type,
+            status: this.status,
+            // sending_ids: [...this.sending_ids],
+            sendings: [...this.sendings]
+        }
+    }
+
+    get dbSerialize() {
+        return {
+            id: this.id,
+            number: this.number,
+            creation_date: Tools.formatDate(this.creation_date, 'yyyy-MM-dd HH:mm'),
+            update_date: Tools.formatDate(this.update_date, 'yyyy-MM-dd HH:mm'),
+            issue_date: Tools.formatDate(this.issue_date, 'yyyy-MM-dd'),
             issue_place: this.issue_place,
             notes: this.notes,
             goods: this.goods,
             provider: this.provider,
             total_sum: this.total_sum,
             type: this.type,
-            status: this.status
+            status: this.status,
         }
     }
 

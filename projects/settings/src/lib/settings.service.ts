@@ -27,6 +27,12 @@ export class SettingsService {
         console.log(`Hello from settings service!`);
         this.getSaved();
         this.getAvailableLangs();
+
+        this.settings$.subscribe(settings => {
+            this._settings = settings;
+            console.log(`Settings changed:`, this._settings);
+
+        });
     }
 
     getSaved() {
@@ -49,6 +55,14 @@ export class SettingsService {
                 this._languages = langs;
                 this.languages$.next(this.languages);
                 resolve(this.languages);
+            });
+        });
+    }
+
+    getModulesInfo() {
+        return new Promise((resolve, reject) => {
+            this._electronClient.get('module-info').subscribe(modules => {
+                resolve(modules);
             });
         });
     }

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { Invoice } from './classes/invoice';
 import { Tools, TreeData, TreeItem, ElectronClientService, StateManagerService, Document, Month, TranslationsService } from '@shared';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { ProvidersService } from '@providers';
 import { Status } from './classes';
 import { SettingsService } from '@settings';
+import { OpenDialogReturnValue } from 'electron';
 
 @Injectable({
     providedIn: 'root'
@@ -26,13 +27,13 @@ export class InvoicesService {
     currency_sign: string = '';
 
     constructor(
-        private _electronClient: ElectronClientService,
+        private _electron: ElectronClientService,
         private _stateManager: StateManagerService,
         private _providersService: ProvidersService,
         private _translate: TranslationsService,
         private _settingsService: SettingsService,
     ) {
-        this._electronClient.getAll('invoices').subscribe(results => {
+        this._electron.getAll('invoices').subscribe(results => {
             this._manageInvoicesResults(results);
         });
         this._settingsService.settings$.subscribe((settings) => {
@@ -44,8 +45,9 @@ export class InvoicesService {
         return [];
     }
 
-    private _manageInvoicesResults(results: object[]) {
-        this.invoices = results.map(result => new Invoice(result));
+    private _manageInvoicesResults(results?: object[]) {
+        if (results && results instanceof Array)
+            this.invoices = results.map(result => new Invoice(result));
         this.invoices$.next(this.invoices);
         this.treeDataActive = this._createTree(this.invoices.filter(x => x.status !== Status.Archived));
         this.treeActive$.next(this.treeDataActive);
@@ -105,7 +107,70 @@ export class InvoicesService {
         return this._createTree(filtered);
     }
 
-    importInvoices(invoices: any[], mode: 'merge' | 'overwrite') {
+    importOldDatabase(result: OpenDialogReturnValue): Promise<[string, string]> {
+        return new Promise((resolve, reject) => {
+            if (result.filePaths[0].endsWith('.json') || result.filePaths[0].endsWith('.db')) {
+                this._electron.get('file', result.filePaths).subscribe((files: string[]) => {
+                    let imported_invoices = [];
+                    if (result.filePaths[0].endsWith('.json')) {
+                        try {
+                            imported_invoices = files.map(file => JSON.parse(file))[0];
+                        } catch (error) {
+                            reject([
+                                this._translate.translate('Error occured when importing!', 'invoices'),
+                                this._translate.translate(`Error parsing file contents!`, 'invoices')
+                            ])
+                        }
+                    } else if (result.filePaths[0].endsWith('.db')) {
+                        imported_invoices = files.map(file => {
+                            const file_rows = file.split('\n');
+                            const json = file_rows.filter(row => !!row).map(row => {
+                                try {
+                                    return JSON.parse(row);
+                                } catch (error) {
+                                    return row;
+                                }
+                            });
+                            return json;
+                        })[0];
+                    }
+
+                    const file_name = result.filePaths[0].split(/(\/|\\)/).pop();
+                    const file_path = result.filePaths[0].replace(file_name, '');
+
+                    if (imported_invoices.length) {
+                        this._electron.get('invoices:xlsx-files', file_path).subscribe(xlsx_files => {
+                            this._electron.remote.dialog.showMessageBox(this._electron.window, {
+                                type: 'question',
+                                buttons: [
+                                    this._translate.translate('Merge', 'invoices'),
+                                    this._translate.translate('Overwrite', 'invoices'),
+                                ],
+                                title: this._translate.translate('Merge or Overwrite?', 'invoices'),
+                                message: this._translate.translate('What do you want to do with the imported results?', 'invoices')
+                            }).then(result => {
+                                const mode = result.response ? 'overwrite' : 'merge';
+                                this.importInvoices(imported_invoices, xlsx_files, mode).subscribe(results => {
+                                    this._manageInvoicesResults(results);
+                                    resolve([
+                                        this._translate.translate('Import successful!', 'invoices'),
+                                        this._translate.translate(`Successful import from Invoices v2+ database!`, 'invoices')
+                                    ]);
+                                });
+                            });
+                        });
+                    }
+                });
+            } else {
+                reject([
+                    this._translate.translate('Error occured when importing!', 'invoices'),
+                    this._translate.translate(`File you've choosen could not be parsed!\nValid extensions are only .db and .json!`, 'invoices')
+                ]);
+            }
+        });
+    }
+
+    importInvoices(invoices: any[], xlsx_files: any[], mode: 'merge' | 'overwrite') {
         const providers = this._providersService.providers;
         invoices = invoices.map(x => {
             x.goods = [
@@ -116,13 +181,15 @@ export class InvoicesService {
                     price: x.total_sum
                 }
             ];
-            x.provider.id = providers.find(y => y.vat === x.provider.vat)?.id || null;
+            if (mode === 'merge')
+                x.provider.id = providers.find(y => y.vat === x.provider.vat)?.id || null;
             return new Invoice(x);
         });
 
-        return this._electronClient.save('invoices:multiple', {
+        return this._electron.save('invoices:multiple', {
             mode,
-            invoices: invoices.map(x => x.serialize)
+            invoices: invoices.map(x => x.dbSerialize),
+            xlsx_files
         }).pipe(
             tap((results) => {
                 this._manageInvoicesResults(results);
@@ -133,29 +200,43 @@ export class InvoicesService {
     }
 
     saveInvoice(invoice: Invoice) {
-        return this._electronClient.save('invoice', invoice).pipe(tap((data) => {
-            const idx = this.invoices.findIndex(inv => inv.id === data[0]);
-            if (!invoice.id && idx === -1) {
-                invoice.id = data[0];
-                this.invoices.push(invoice);
-            } else {
-                this.invoices[idx] = invoice;
-            }
-            this.invoices$.next(this.invoices);
+        return this._electron.save('invoice', invoice).pipe(map(([saved_invoice]) => {
+            console.log(`Received data:`, saved_invoice);
 
-            const treeData = this._createTree();
-            this.treeDataActive = treeData;
-            this.treeActive$.next(this.treeDataActive);
+            saved_invoice = new Invoice(saved_invoice);
+
+            const idx = this.invoices.findIndex(inv => inv.id === saved_invoice.id);
+
+            if (!invoice.id && idx === -1) {
+                this.invoices.push(saved_invoice);
+            } else {
+                this.invoices[idx] = saved_invoice;
+            }
+
+            this._manageInvoicesResults();
 
             this._stateManager.updateDocument(new Document({
-                id: invoice.id,
-                title: invoice.title,
+                id: saved_invoice.id,
+                title: saved_invoice.title,
                 module: 'Invoices',
                 inputs: {
-                    invoice: invoice
+                    invoice: saved_invoice
                 }
             }));
-            return invoice;
+            return saved_invoice;
+        }));
+    }
+
+    removeInvoice(invoice: Invoice) {
+        return this._electron.remove('invoice', invoice).pipe(tap((data) => {
+            if (data.error) {
+                return throwError(data.error);
+            } else {
+                const idx = this.invoices.findIndex(inv => inv.id === data[0]);
+                this.invoices.splice(idx, 1);
+                this.invoices$.next(this.invoices);
+                return invoice;
+            }
         }));
     }
 }

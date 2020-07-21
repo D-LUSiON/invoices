@@ -4,19 +4,19 @@
             <div class="invoice-recipient">
                 <div class="form-group">
                     <label translate="invoices">Receiver</label>
-                    <div class="form-control" readonly>Любомир Пейков</div>
+                    <div class="form-control" readonly>{{ sender.name }}</div>
                 </div>
                 <div class="form-group">
                     <label translate="invoices">BULSTAT</label>
-                    <div class="form-control" readonly>7811051085</div>
+                    <div class="form-control" readonly>{{ sender.bulstat }}</div>
                 </div>
                 <div class="form-group">
                     <label translate="invoices">VAT</label>
-                    <div class="form-control" readonly>BG7811051085</div>
+                    <div class="form-control" readonly>{{ sender.vat }}</div>
                 </div>
                 <div class="form-group">
                     <label translate="invoices">Address</label>
-                    <div class="form-control" readonly>София, ул. 11-ти Август №29</div>
+                    <div class="form-control" readonly>{{ sender.address }}</div>
                 </div>
             </div>
             <div class="invoice-heading">
@@ -27,12 +27,16 @@
                 </div>
                 <div class="form-group">
                     <label class="text-center" translate="invoices">Issue date</label>
-                    <div class="text-center">{{ invoice.issue_date|date:'MMM d, y' }}</div>
+                    <div class="text-center">{{ invoice.issue_date|date:'d' }} {{ (invoice.issue_date|date:'MMM')|translate }} {{ invoice.issue_date|date:'y' }}</div>
                 </div>
                 <div class="form-group">
                     <label class="text-center" translate="invoices">Creation date</label>
-                    <div class="form-control text-center">{{ invoice.creation_date|date:'MMM d, y' }}</div>
+                    <div class="form-control text-center">{{ invoice.creation_date|date:'d' }} {{ (invoice.creation_date|date:'MMM')|translate }} {{ invoice.creation_date|date:'y' }}</div>
                 </div>
+                <!-- <div class="form-group">
+                    <label class="text-center" translate="invoices">System ID:</label>
+                    <div class="form-control text-center">{{ invoice.id }}</div>
+                </div> -->
             </div>
             <div class="invoice-issuer">
                 <div class="form-group">
@@ -113,5 +117,8 @@
                 <div class="cell text-right">{{ invoice.payment_amount }} {{ currency_sign }}</div>
             </div>
         </div>
+    </div>
+    <div class="invoice-actions-container" *ngIf="!invoice.status">
+        <button class="btn btn-danger" (click)="removeInvoice()" translate="invoices">Remove invoice</button>
     </div>
 </div>

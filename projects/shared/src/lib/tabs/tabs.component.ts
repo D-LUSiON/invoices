@@ -1,6 +1,6 @@
 import { Component, OnChanges, HostListener, ElementRef, Input, Output, EventEmitter, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { Tab } from './tab';
-import { TranslationsService } from '../services';
+import { TranslationsService, StateManagerService } from '../services';
 
 @Component({
     selector: 'lib-tabs',
@@ -19,12 +19,20 @@ export class TabsComponent implements OnChanges {
         this._elRef.nativeElement.scrollLeft -= event.wheelDelta;
     }
 
+    @HostListener('window:keyup', ['$event']) saveAccelerator(e: KeyboardEvent) {
+        if (e.ctrlKey && e.key.toLowerCase() === 'w') {
+            e.preventDefault();
+            this._stateManager.closeCurrentTab();
+        }
+    }
+
     active_tab_idx: number;
     no_opened_documents_text: string = this._translate.translate('No opened documents');
 
     constructor(
         private _elRef: ElementRef,
-        private _translate: TranslationsService
+        private _translate: TranslationsService,
+        private _stateManager: StateManagerService,
     ) { }
 
     ngOnChanges(changes: SimpleChanges): void {

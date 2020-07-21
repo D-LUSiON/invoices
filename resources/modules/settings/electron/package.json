@@ -1,0 +1,16 @@
+{
+  "name": "settings-module",
+  "productName": "Settings module",
+  "version": "1.0.0",
+  "description": "Settings module for Invoices v3",
+  "main": "data-controller.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "crypto-js": "^4.0.0",
+    "node-machine-id": "^1.1.12"
+  }
+}

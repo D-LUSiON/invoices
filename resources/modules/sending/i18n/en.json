@@ -1,6 +1,25 @@
 {
     "Sending": "Sending",
     "New sending": "New sending",
-    "Active invoices": "Active invoices",
-    "Sendings": "Sendings"
+    "Unsent invoices": "Unsent invoices",
+    "Sendings": "Sendings",
+    "made on": "made on",
+    "Send to:": "Send to:",
+    "Subject:": "Subject:",
+    "Message:": "Message:",
+    "Invoices for": "Invoices for",
+    "Total sum:": "Total sum:",
+    "Total VAT:": "Total VAT:",
+    "Payment amount:": "Payment amount:",
+    "Invoices": "Invoices",
+    "Number": "Number",
+    "Issue date": "Issue date",
+    "Invoice content": "Invoice content",
+    "Provider name": "Provider name",
+    "Provider VAT": "Provider VAT",
+    "Total sum": "Total sum",
+    "Total VAT": "Total VAT",
+    "Payment amount": "Payment amount",
+    "Sum of selected:": "Sum of selected:",
+    "Total sum of invoices:": "Total sum of invoices:"
 }

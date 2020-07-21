@@ -1,6 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { Observable, Observer, BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -47,54 +48,26 @@ export class ElectronClientService {
     }
 
     getAll(event: string, filter?: any): Observable<any> {
-        return Observable.create((observer: Observer<any>) => {
-            this._electron.once(`${event}:all:response`, (e, response) => {
-                this._ngZone.run(() => {
-                    observer.next(response);
-                    observer.complete();
-                });
-            });
-            this._electron.send(`${event}:all`, filter);
-        });
+        const evt = `${event}:all`;
+        return this.send(evt, filter);
     }
 
     get(event: string, data?: any): Observable<any> {
-        return Observable.create((observer: Observer<any>) => {
-            this._electron.once(`${event}:get:response`, (e, response) => {
-                this._electron.removeAllListeners(`${event}:get:progress`);
-                this._ngZone.run(() => {
-                    observer.next(response);
-                    observer.complete();
-                });
-            });
-            this._electron.send(`${event}:get`, data);
-        });
+        const evt = `${event}:get`;
+        return this.send(evt, data).pipe(tap((response) => {
+            this._electron.removeAllListeners(`${event}:get:progress`);
+            return response;
+        }));
     }
 
     save(event: string, data: any): Observable<any> {
-        return Observable.create((observer: Observer<any>) => {
-            this._electron.once(`${event}:save:response`, (e, response) => {
-                this._ngZone.run(() => {
-                    observer.next(response);
-                    observer.complete();
-                });
-            });
-            this._electron.send(`${event}:save`, data);
-        });
+        const evt = `${event}:save`;
+        return this.send(evt, data);
     }
 
     remove(event: string, data: any): Observable<any> {
-        return Observable.create((observer: Observer<any>) => {
-            this._electron.once(`${event}:remove:response`, (e, response) => {
-                console.log(response);
-
-                this._ngZone.run(() => {
-                    observer.next(response ? response[0] : null);
-                    observer.complete();
-                });
-            });
-            this._electron.send(`${event}:remove`, data);
-        });
+        const evt = `${event}:remove`;
+        return this.send(evt, data);
     }
 
     /**
@@ -103,11 +76,11 @@ export class ElectronClientService {
      * @param event {string}
      * @param data {any}
      */
-    send(event: string, data: any): Observable<any> {
+    send(event: string, data?: any): Observable<any> {
         return Observable.create((observer: Observer<any>) => {
             this._electron.once(`${event}:response`, (e, response) => {
                 this._ngZone.run(() => {
-                    observer.next(response ? response : null);
+                    observer.next(response);
                     observer.complete();
                 });
             });

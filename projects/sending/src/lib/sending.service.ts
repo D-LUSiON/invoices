@@ -17,7 +17,6 @@ export class SendingService {
     constructor(
         private _electronClient: ElectronClientService,
     ) {
-        console.log(`Hello from sending service!`);
         this.getSaved();
     }
 
@@ -36,12 +35,22 @@ export class SendingService {
     getSaved() {
         return new Promise((resolve, reject) => {
             this._electronClient.getAll('sending').subscribe(sendings => {
+                console.log(`getAll sendings`, sendings);
+
                 this._sendings = sendings.map(x => new Sending(x));
-                this.sortByDate();
+                // this.sortByDate();
                 this.sendings$.next(this._sendings);
                 this._createTree();
                 resolve(this._sendings);
             });
+        });
+    }
+
+    save(sending: Sending) {
+        return new Promise((resolve, reject) => {
+            this._electronClient.save('sending', sending.serializeDb).subscribe((response) => {
+                resolve(response);
+            })
         });
     }
 
@@ -51,7 +60,8 @@ export class SendingService {
         this._sendings.forEach(sending => {
             treeData.push({
                 id: sending.id,
-                title: Tools.formatDate(sending.sending_date, 'YYYY-MM-dd'),
+                // title: Tools.formatDate(sending.sending_date, 'YYYY-MM-dd'),
+                title: sending.subject,
                 branch: false,
                 obj: sending
             });

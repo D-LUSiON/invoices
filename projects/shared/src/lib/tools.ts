@@ -17,6 +17,36 @@ export class Tools {
             date = new Date(date);
         }
 
+        const month_names_full = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December',
+        ];
+
+        const month_names_short = [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec',
+        ];
+
         const date_elements = {
             YYYY: date.getFullYear(),
             yyyy: date.getFullYear(),
@@ -33,13 +63,17 @@ export class Tools {
             ss: ((date.getSeconds() < 10) ? '0' + date.getSeconds() : date.getSeconds()),
             s: date.getSeconds(),
             mss: ((date.getMilliseconds() / 1000).toFixed(3)).split('.').pop(),
+            LL: month_names_full[+date.getMonth()],
+            L: month_names_short[+date.getMonth()],
         };
 
         let formatted = format.split('').join('');
 
         for (let key in date_elements) {
             if (date_elements.hasOwnProperty(key)) {
-                formatted = formatted.replace(new RegExp(key, 'g'), date_elements[key]);
+                // console.log(`key`, key, new RegExp(`${key}`, 'g'), date_elements[key], formatted.replace(new RegExp(`${key}`, 'g'), date_elements[key]));
+
+                formatted = formatted.replace(new RegExp(`${key}`, 'g'), date_elements[key]);
             }
         }
 

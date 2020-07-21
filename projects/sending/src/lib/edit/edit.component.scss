@@ -1,3 +1,46 @@
 :host-context(lib-sending-edit) {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     padding: calc(var(--spacing) * 2);
+
+    h1:not(.d-inline-block),
+    h2:not(.d-inline-block),
+    h3:not(.d-inline-block),
+    section:not(.d-inline-block),
+    .section:not(.d-inline-block) {
+        margin-bottom: calc(var(--spacing) * 2);
+    }
+
+    .heading {
+        position: sticky;
+        top: 0;
+        display: flex;
+        align-items: center;
+        margin-bottom: calc(var(--spacing) * 2);
+        background-color: var(--bg-color-accented);
+
+        h1 {
+            flex: 1 1 auto;
+        }
+        .actions {
+            flex: 0 0 auto;
+            display: flex;
+            justify-content: stretch;
+        }
+    }
+
+    table {
+        tbody {
+            tr {
+                cursor: pointer;
+
+                &:hover {
+                    td {
+                        background-color: var(--bg-color-backgrounded);
+                    }
+                }
+            }
+        }
+    }
 }

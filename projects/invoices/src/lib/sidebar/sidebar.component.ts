@@ -79,52 +79,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
             properties: ['openFile']
         });
         if (!result.canceled) {
-            if (result.filePaths[0].endsWith('.json') || result.filePaths[0].endsWith('.db')) {
-                this._electron.get('file', result.filePaths).subscribe((files: string[]) => {
-                    let imported_invoices = [];
-                    if (result.filePaths[0].endsWith('.json')) {
-                        try {
-                            imported_invoices = files.map(file => JSON.parse(file))[0];
-                        } catch (error) {
-                            console.log(`Error parsing file contents!`);
-                        }
-                    } else if (result.filePaths[0].endsWith('.db')) {
-                        imported_invoices = files.map(file => {
-                            const file_rows = file.split('\n');
-                            const json = file_rows.filter(row => !!row).map(row => {
-                                try {
-                                    return JSON.parse(row);
-                                } catch (error) {
-                                    return row;
-                                }
-                            });
-                            return json;
-                        })[0];
-                    }
-
-                    if (imported_invoices.length) {
-                        this._electron.remote.dialog.showMessageBox(this._electron.window, {
-                            type: 'question',
-                            buttons: [
-                                this._translate.translate('Merge', 'invoices'),
-                                this._translate.translate('Overwrite', 'invoices'),
-                            ],
-                            title: this._translate.translate('Merge or Overwrite?', 'invoices'),
-                            message: this._translate.translate('What do you want to do with the imported results?', 'invoices')
-                        }).then(result => {
-                            const mode = result.response ? 'overwrite' : 'merge';
-                            this._invoicesService.importInvoices(imported_invoices, mode).subscribe(results => {
-                                console.log(`FINALLY!`);
-                            });
-                        });
-                    }
+            this._invoicesService.importOldDatabase(result).then(([title, message]) => {
+                this._electron.remote.dialog.showMessageBox(this._electron.window, {
+                    title,
+                    message
                 });
-            } else {
-                this._electron.remote.dialog.showErrorBox(
-                    this._translate.translate('Error occured when importing!'),
-                    this._translate.translate(`File you've choosen could not be parsed!\nValid extensions are only .db and .json!`)
-                );
-            }
+            }).catch(([title, content]) => {
+                this._electron.remote.dialog.showErrorBox(title, content);
+            });
         }
     }
 

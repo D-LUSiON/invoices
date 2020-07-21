@@ -1,0 +1,12 @@
+{
+  "name": "providers-module",
+  "productName": "Providers module",
+  "version": "1.0.0",
+  "description": "Providers module for Invoices v3",
+  "main": "data-controller.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
+}

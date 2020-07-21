@@ -26,7 +26,6 @@ export class DesktopComponent implements OnInit, AfterViewInit {
         private readonly _componentFactoryResolver: ComponentFactoryResolver,
     ) {
         this._translations.current_lang$.subscribe((lang) => {
-            console.log(`Lang changed in desktop.component: ${lang}`);
             this.loaded = false;
             setTimeout(() => { this.loaded = true; });
             this.updateSidebar();
@@ -99,7 +98,6 @@ export class DesktopComponent implements OnInit, AfterViewInit {
         if (activeDocument) {
             const component = this._componentFactoryResolver.resolveComponentFactory(activeDocument.component);
             activeDocument.instance = this._mainContentContainerRef.createComponent(component);
-            console.log(`activeDocument`, activeDocument);
 
             Object.keys(activeDocument.inputs).forEach(key => {
                 activeDocument.instance.instance[key] = activeDocument.inputs[key];

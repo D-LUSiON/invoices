@@ -2,11 +2,12 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    padding: var(--spacing);
 
     .invoice-container {
         width: 100%;
         max-width: 950px;
-        margin: var(--spacing);
+
         padding: calc(var(--spacing) * 2);
         border: 1px solid var(--c-main);
 
@@ -74,5 +75,11 @@
                 }
             }
         }
+    }
+
+    .invoice-actions-container {
+        display: flex;
+        align-items: flex-end;
+        margin-top: calc(var(--spacing) * 2);
     }
 }

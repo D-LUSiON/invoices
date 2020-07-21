@@ -3,19 +3,26 @@ const MainWindow = require('./main-window');
 const DataExchange = require('./data-exchange');
 const { app } = require('electron');
 const path = require('path');
-const requireJSON = require('./require-json');
+const fs = require('fs-extra');
 
 class Application {
     constructor() {
+        app.allowRendererProcessReuse = true;
         if (!environment.production) {
-            requireJSON(path.resolve('package.json')).then(package_json => {
+            fs.readJSON(path.resolve('package.json')).then(package_json => {
                 app.name = `${package_json.productName || package_json.name} (development mode)`;
                 const user_data_path = app.getPath('userData').split(/\/|\\/);
                 user_data_path.pop();
 
                 app.setPath('userData', `${path.join(...user_data_path, (package_json.productName || package_json.name).split(/\s/).join(''))}-dev`);
+                this.preInit();
             });
-        }
+        } else
+            this.preInit();
+    }
+
+    preInit() {
+        console.log(`Using userData path: ${app.getPath('userData')}`);
 
         this.mainWindow = new MainWindow();
 
@@ -35,21 +42,26 @@ class Application {
                     }
                 });
             }
-            this.init();
+            if (app.isReady())
+                this.init();
+            else
+                app.on('ready', () => {
+                    this.init();
+                });
         }
     }
 
     init() {
-        app.allowRendererProcessReuse = true;
         // Create window on electron intialization
-        app.on('ready', () => {
-            this.mainWindow.createWindow();
-            this.dataExchange = new DataExchange(app);
-        });
+
+        this.mainWindow.createWindow();
+        this.dataExchange = new DataExchange(app);
 
         // Quit when all windows are closed.
         app.on('window-all-closed', () => {
             // On macOS specific close process
+            console.log(`"window-all-closed" emitted!`);
+
             if (process.platform !== 'darwin') {
                 app.quit();
             }

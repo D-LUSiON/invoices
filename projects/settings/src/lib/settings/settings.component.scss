@@ -41,4 +41,46 @@
             }
         }
     }
+
+    .fields-container {
+        .form-control-container {
+            display: flex;
+            align-items: center;
+
+            input[type=checkbox] {
+                flex: 0 0 auto;
+                margin-right: var(--spacing);
+            }
+
+            .wrapper {
+                flex: 0 0 auto;
+                margin-right: calc(var(--spacing) * 2);
+                // padding-right: calc(var(--spacing) * 2);
+                // border-right: 1px solid var(--c-main);
+                border-left: 1px solid var(--c-main);
+
+                input[type=text] {
+                    width: 40px;
+                    display: inline-block;
+                    text-align: right;
+                }
+            }
+
+            .wrapper-greed {
+                flex: 1 1 auto;
+            }
+        }
+    }
+
+    .module-section {
+        margin-bottom: calc(var(--spacing) * 2);
+        h2.module-name {
+            border-bottom: 1px solid var(--bg-color-inv);
+            padding: var(--spacing) 0;
+            margin-bottom: var(--spacing);
+        }
+        .module-info {
+
+        }
+    }
 }
