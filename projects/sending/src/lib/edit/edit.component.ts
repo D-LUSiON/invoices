@@ -77,11 +77,6 @@ export class EditComponent implements OnInit, OnDestroy {
             'message': this._fb.control(''),
             'invoices': this._fb.control([], [Validators.required]),
         });
-
-        // this.sendingForm.valueChanges.subscribe(changes => {
-        //     this.active_invoices = [...this.active_invoices];
-        //     console.log(`Form changed:`, this.sendingForm.value);
-        // });
     }
 
     checkAdded(invoice: Invoice) {
@@ -138,6 +133,7 @@ export class EditComponent implements OnInit, OnDestroy {
 
             const sending = new Sending({
                 ...this.sendingForm.value,
+                message: this.sendingForm.value['message'].split(/\n/g).map(line => line ? `<p>${line}</p>` : '<br/>').join(''),
                 invoices: this.active_invoices.filter(x => this.sendingForm.value['invoices'].includes(x.id)),
                 invoice_fields: [...(this.settings?.accountant?.invoice_fields || [])]
             });

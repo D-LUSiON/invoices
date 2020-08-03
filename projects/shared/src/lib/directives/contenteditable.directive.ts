@@ -4,12 +4,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Directive({
     // tslint:disable-next-line:directive-selector
-    selector: '[libContenteditable]',
+    selector: '[libContenteditable][formControlName],[libContenteditable][formControl],[libContenteditable][ngModel]',
     // selector: '[contenteditable][formControlName],[contenteditable][formControl],[contenteditable][ngModel]',
     providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ContenteditableDirective), multi: true }],
 })
 export class ContenteditableDirective implements ControlValueAccessor {
-    @Input() propValueAccessor = 'textContent';
+    @Input() propValueAccessor = 'innerText';
     @HostBinding('attr.contenteditable') @Input() contenteditable = true;
 
     private _onChange: (value: string) => void;
