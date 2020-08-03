@@ -39,28 +39,32 @@ class DataExchange {
         const modules_path = path.resolve('resources', 'modules');
         console.info(`Looking for modules in: ${modules_path}...`);
         fs.readdir(modules_path).then((dir) => {
-            console.info(`Modules found: ${dir.length}`);
             if (dir.length) {
                 dir.forEach(entry => {
-                    console.info(`Loading module: "${entry}"...`);
-                    const mod_info = path.resolve(modules_path, entry, 'electron', 'package.json');
-                    if (fs.existsSync(mod_info)) {
-                        this.moduleControllers[entry] = {
-                            module_path: path.join(modules_path, entry),
-                            info: fs.readJSONSync(mod_info),
-                            translations: {}
-                        };
+                    if (fs.statSync(path.resolve(modules_path, entry)).isDirectory()) {
+                        const entry_key = entry.replace(/\.asar/, '');
+                        const mod_info = path.resolve(modules_path, entry, 'electron', 'package.json');
+                        if (fs.existsSync(mod_info)) {
+                            this.moduleControllers[entry_key] = {
+                                module_path: path.join(modules_path, entry),
+                                info: fs.readJSONSync(mod_info),
+                                translations: {}
+                            };
 
-                        if (this.moduleControllers[entry].info.main) {
-                            const ctrl_path = path.resolve(modules_path, entry, 'electron', this.moduleControllers[entry].info.main);
+                            if (this.moduleControllers[entry_key].info.main) {
+                                const ctrl_path = path.resolve(modules_path, entry, 'electron', this.moduleControllers[entry_key].info.main);
 
-                            if (fs.statSync(path.resolve(modules_path, entry)).isDirectory() && fs.existsSync(ctrl_path) && !fs.statSync(ctrl_path).isDirectory()) {
-                                const Mod = loadModule(ctrl_path);
-                                this.moduleControllers[entry].controller = new Mod(this.database);
+                                if (fs.statSync(path.resolve(modules_path, entry)).isDirectory() && fs.existsSync(ctrl_path) && !fs.statSync(ctrl_path).isDirectory()) {
+                                    console.info(`Loading module: "${entry_key}"...`);
+                                    const Mod = loadModule(ctrl_path);
+                                    this.moduleControllers[entry_key].controller = new Mod(this.database);
+                                }
+                            } else {
+                                console.error(`Module "${entry_key}" entry point doesn't exist! Please, define it in module package.json "main" key!`);
                             }
-                        } else {
-                            console.error(`Module "${entry}" entry point doesn't exist! Please, define it in module package.json "main" key!`);
                         }
+                    } else {
+                        console.info(`Entry "${entry}" is a file, skipping...`);
                     }
                 });
             }
@@ -124,6 +128,8 @@ class DataExchange {
                                         this.moduleControllers[module].translations[trn_file.replace('.json', '')] = translation;
                                         if (idx === all_keys.length - 1)
                                             resolve();
+                                    }).catch((error) => {
+                                        console.error(`Error loading translations file ${trn_file} for ${module}:`, error);
                                     });
                                 }
                             });
