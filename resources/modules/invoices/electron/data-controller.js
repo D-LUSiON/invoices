@@ -9,18 +9,14 @@ class InvoicesController {
     constructor(db_instance) {
         this.database = db_instance;
         this.table_name = 'Invoices';
-
         this.max_inserts = 50;
-
-        this._createTable().then(() => {
-            this.startListeners();
-        }).catch(err => {
-            console.log(`InvoicesController -> Create database SQL Error:`, err);
-        });
-        console.log(`${this.constructor.name} initialized!`);
     }
 
-    _createTable() {
+    init() {
+        this.startListeners();
+    }
+
+    checkDBCreated() {
         return this.database.schema.hasTable(this.table_name).then((exists) => {
             if (!exists) {
                 return this.database.schema.createTable(this.table_name, (table) => {
@@ -37,8 +33,6 @@ class InvoicesController {
                     table.decimal('total_sum')
                     table.string('type', 255);
                     table.integer('status').defaultTo(0);
-                    // table.integer('sending_id').unsigned();
-                    // table.foreign('sending_id').references('Sendings_Invoices.id');
                 });
             }
         });

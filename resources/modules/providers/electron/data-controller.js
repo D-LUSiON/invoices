@@ -5,14 +5,13 @@ const {
 class ProvidersController {
     constructor(db_instance) {
         this.database = db_instance;
-
-        this._createTable().then(() => {
-            this.startListeners();
-        });
-        console.log(`${this.constructor.name} initialized!`);
     }
 
-    _createTable() {
+    init() {
+        this.startListeners();
+    }
+
+    checkDBCreated() {
         return this.database.schema.hasTable('Providers').then((exists) => {
             if (!exists) {
                 return this.database.schema.createTable('Providers', (table) => {

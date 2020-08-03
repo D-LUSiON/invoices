@@ -17,11 +17,14 @@ class SendingController {
         this.database = db_instance;
         this.table_name = 'Sendings';
         this.bridge_table = `${this.table_name}_Invoices`;
+    }
 
+    init() {
         this.machine_id = MachineID.machineIdSync();
 
         this.settings = {};
         this.translations = [];
+
         this.getSettings().then((settings) => {
             this.settings = settings;
             this.translations = fs.readJSONSync(
@@ -34,16 +37,10 @@ class SendingController {
             );
         });
 
-        this._createTable()
-            .then(() => this._createBridgeTable())
-            .then(() => {
-                this.startListeners();
-            }).catch(err => {
-                console.error(`SendingController -> Create database SQL Error:`, err);
-            });
+        this.startListeners();
     }
 
-    async _createTable() {
+    async checkDBCreated() {
         const sending_exists = await this.database.schema.hasTable(this.table_name);
         if (!sending_exists) {
             await this.database.schema.createTable(this.table_name, (table) => {
@@ -54,6 +51,7 @@ class SendingController {
                 table.text('message');
             });
         }
+        return this._createBridgeTable();
     }
 
     async _createBridgeTable() {
@@ -434,7 +432,7 @@ class SendingController {
                 fs.mkdirp(path.resolve(backup_path));
 
             const file_name = path.resolve(backup_path, `${new Date().getTime()}.xlsx`);
-            resolve(file_name);
+            // resolve(file_name);
 
             this.workbook.xlsx.writeFile(file_name).then(() => {
                 resolve(file_name);

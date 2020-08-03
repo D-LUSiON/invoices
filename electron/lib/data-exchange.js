@@ -35,6 +35,60 @@ class DataExchange {
         this.startListeners();
     }
 
+    _loadControllers() {
+        const modules_path = path.resolve('resources', 'modules');
+        console.info(`Looking for modules in: ${modules_path}...`);
+        fs.readdir(modules_path).then((dir) => {
+            console.info(`Modules found: ${dir.length}`);
+            if (dir.length) {
+                dir.forEach(entry => {
+                    console.info(`Loading module: "${entry}"...`);
+                    const mod_info = path.resolve(modules_path, entry, 'electron', 'package.json');
+                    if (fs.existsSync(mod_info)) {
+                        this.moduleControllers[entry] = {
+                            module_path: path.join(modules_path, entry),
+                            info: fs.readJSONSync(mod_info),
+                            translations: {}
+                        };
+
+                        if (this.moduleControllers[entry].info.main) {
+                            const ctrl_path = path.resolve(modules_path, entry, 'electron', this.moduleControllers[entry].info.main);
+
+                            if (fs.statSync(path.resolve(modules_path, entry)).isDirectory() && fs.existsSync(ctrl_path) && !fs.statSync(ctrl_path).isDirectory()) {
+                                const Mod = loadModule(ctrl_path);
+                                this.moduleControllers[entry].controller = new Mod(this.database);
+                            }
+                        } else {
+                            console.error(`Module "${entry}" entry point doesn't exist! Please, define it in module package.json "main" key!`);
+                        }
+                    }
+                });
+            }
+        }).then(() => {
+            this._checkDatabases()
+                .then(() => this._loadTranslations())
+                .then(() => {
+                    this._initControllers();
+                });
+        });
+    }
+
+    async _checkDatabases() {
+        const controllers = Object.keys(this.moduleControllers);
+        for (let idx = 0; idx < controllers.length; idx++) {
+            const key = controllers[idx];
+            console.info(`Checking DB for ${key}...`);
+            await this.moduleControllers[key].controller.checkDBCreated();
+        }
+    }
+
+    _initControllers() {
+        Object.keys(this.moduleControllers).forEach(entry => {
+            this.moduleControllers[entry].controller.init();
+            console.info(`${entry.charAt(0).toUpperCase()}${entry.substr(1)} module initialized!`);
+        });
+    }
+
     _loadGeneralTranslations() {
         this.moduleTranslations['_general'] = {};
         // FIXME: Test this when compiled
@@ -55,66 +109,48 @@ class DataExchange {
         }
     }
 
-    _loadControllers() {
-        const modules_path = path.resolve('resources', 'modules');
-        console.log(`Looking for modules in: ${modules_path}...`);
-        fs.readdir(modules_path).then((dir) => {
-            console.log(`Modules found: ${dir.length}`);
-            if (dir.length) {
-                dir.forEach(entry => {
-                    console.log(`Loading module: "${entry}"...`);
-                    const mod_info = path.resolve(modules_path, entry, 'electron', 'package.json');
-                    if (fs.existsSync(mod_info)) {
-                        this.moduleControllers[entry] = {
-                            info: fs.readJSONSync(mod_info),
-                        };
-
-                        if (this.moduleControllers[entry].info.main) {
-                            const ctrl_path = path.resolve(modules_path, entry, 'electron', this.moduleControllers[entry].info.main);
-
-                            if (fs.statSync(path.resolve(modules_path, entry)).isDirectory() && fs.existsSync(ctrl_path) && !fs.statSync(ctrl_path).isDirectory()) {
-                                const Mod = loadModule(ctrl_path);
-                                this.moduleControllers[entry].controller = new Mod(this.database);
-                                console.info(`${entry.charAt(0).toUpperCase()}${entry.substr(1)} module initialized!`);
-                            }
+    _loadTranslations() {
+        return new Promise((resolve, reject) => {
+            Object.keys(this.moduleControllers).forEach((module, idx, all_keys) => {
+                const trans_path = path.resolve(this.moduleControllers[module].module_path, 'i18n');
+                this.moduleControllers[module].translations = {};
+                if (fs.existsSync(trans_path) && fs.statSync(trans_path).isDirectory()) {
+                    fs.readdir(trans_path).then((trn_files) => {
+                        if (trn_files.length) {
+                            trn_files.forEach(trn_file => {
+                                if (trn_file.endsWith('.json')) {
+                                    console.info(`Loading translations file ${trn_file} for ${module}...`);
+                                    fs.readJSON(path.join(trans_path, trn_file)).then(translation => {
+                                        this.moduleControllers[module].translations[trn_file.replace('.json', '')] = translation;
+                                        if (idx === all_keys.length - 1)
+                                            resolve();
+                                    });
+                                }
+                            });
                         }
-                    }
-
-                    const trans_path = path.resolve(modules_path, entry, 'i18n');
-                    this.moduleTranslations[entry] = {};
-                    if (fs.existsSync(trans_path) && fs.statSync(trans_path).isDirectory()) {
-                        fs.readdir(trans_path).then((trn_files) => {
-                            if (trn_files.length) {
-                                trn_files.forEach(trn_file => {
-                                    if (trn_file.endsWith('.json'))
-                                        fs.readJSON(path.join(trans_path, trn_file)).then(translation => {
-                                            this.moduleTranslations[entry][trn_file.replace('.json', '')] = translation;
-                                        });
-                                });
-                            }
-                        });
-                    }
-                });
-            }
+                    });
+                } else {
+                    if (idx === all_keys.length - 1)
+                        resolve();
+                }
+            });
         });
     }
 
-    _initControllers() {
-        Object.keys(this.moduleControllers).forEach(entry => {
-            // TODO: Create method "init" in each module and execute it here
-            console.info(`${entry.charAt(0).toUpperCase()}${entry.substr(1)} module initialized!`);
-        });
-    }
-
-    _loadTranslations(module) {
+    _resolveTranslations(module) {
         return new Promise((resolve, reject) => {
             if (module) {
-                if (this.moduleTranslations[module])
-                    resolve(this.moduleTranslations[module]);
+                if (this.moduleControllers[module] && this.moduleControllers[module].translations)
+                    resolve(this.moduleControllers[module].translations);
                 else
                     resolve({});
             } else {
-                resolve(this.moduleTranslations);
+                const translations = {};
+                translations['_general'] = { ...this.moduleTranslations['_general'] };
+                Object.keys(this.moduleControllers).forEach(module => {
+                    translations[module] = this.moduleControllers[module].translations;
+                });
+                resolve(translations);
             }
         });
     }
@@ -122,8 +158,8 @@ class DataExchange {
     _getAvailableLanguages() {
         return new Promise((resolve, reject) => {
             let langs = [];
-            Object.keys(this.moduleTranslations).forEach(mod => {
-                langs = [...langs, ...Object.keys(this.moduleTranslations[mod])];
+            Object.keys(this.moduleControllers).forEach(module => {
+                langs = [...langs, ...Object.keys(this.moduleControllers[module].translations || {})];
             });
             resolve([...new Set(langs)]);
         });
@@ -150,7 +186,7 @@ class DataExchange {
 
     startListeners() {
         ipcMain.on('translations:all', (event, args) => {
-            this._loadTranslations(args && args.scope ? args.scope : null).then(result => {
+            this._resolveTranslations(args && args.scope ? args.scope : null).then(result => {
                 event.sender.send('translations:all:response', result);
             });
         });
