@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const WindowState = require('./window-state');
 
-const WINDOW_STATE_PATH = path.join(app.getPath('userData'), 'window-state.json');
+const WINDOW_STATE_PATH = path.join(app.getPath('userData'), 'WindowState');
 
 class MainWindow {
     constructor() {
@@ -24,6 +24,7 @@ class MainWindow {
                 y: this.windowState.y,
                 resizable: environment.resizable,
                 maximizable: environment.maximizable,
+                maximized: this.windowState.maximized,
                 frame: environment.frame,
                 title: app.name,
                 titleBarStyle: environment.titlebar_style,
@@ -99,9 +100,9 @@ class MainWindow {
             }
             move_timeout = setTimeout(() => {
                 this.windowState = new WindowState({
-                    ...this.window.getBounds(),
-                    maximized: false,
-                })
+                    ...(this.window.isMaximized() ? this.windowState.serialize() : this.window.getBounds()),
+                    maximized: this.window.isMaximized(),
+                });
                 this._saveWindowState();
             }, save_timeout);
         });
@@ -114,9 +115,9 @@ class MainWindow {
             }
             resize_timeout = setTimeout(() => {
                 this.windowState = new WindowState({
-                    ...this.window.getBounds(),
-                    maximized: this.windowState.maximized,
-                })
+                    ...(this.window.isMaximized() ? this.windowState.serialize() : this.window.getBounds()),
+                    maximized: this.window.isMaximized(),
+                });
                 this._saveWindowState();
             }, save_timeout);
         });
@@ -129,9 +130,9 @@ class MainWindow {
             }
             restore_timeout = setTimeout(() => {
                 this.windowState = new WindowState({
-                    ...this.window.getBounds(),
+                    ...this.windowState.serialize(),
                     maximized: false,
-                })
+                });
                 this._saveWindowState();
             }, save_timeout);
         });
@@ -143,7 +144,10 @@ class MainWindow {
                 maximize_timeout = null;
             }
             maximize_timeout = setTimeout(() => {
-                this.windowState.maximized = this.window.isMaximized();
+                this.windowState = new WindowState({
+                    ...this.windowState.serialize(),
+                    maximized: true,
+                });
                 this._saveWindowState();
             }, save_timeout);
         });
@@ -155,10 +159,22 @@ class MainWindow {
                 const window_state = await fs.readJSON(WINDOW_STATE_PATH);
                 this.windowState = new WindowState({ ...window_state });
             } catch (error) {
-                this.windowState = new WindowState();
+                const { screen_width, screen_height } = screen.getPrimaryDisplay().workAreaSize
+                this.windowState = new WindowState({
+                    width: environment.min_width,
+                    height: environment.min_height,
+                    x: (screen_width - environment.min_width) / 2,
+                    y: (screen_height - environment.min_height) / 2,
+                });
             }
         } else {
-            this.windowState = new WindowState();
+            const { screen_width, screen_height } = screen.getPrimaryDisplay().workAreaSize
+            this.windowState = new WindowState({
+                width: environment.min_width,
+                height: environment.min_height,
+                x: (screen_width - environment.min_width) / 2,
+                y: (screen_height - environment.min_height) / 2,
+            });
         }
     }
 
@@ -168,7 +184,6 @@ class MainWindow {
                 ...this.window.getBounds(),
                 maximized: this.window.isMaximized(),
             });
-
         fs.writeFile(WINDOW_STATE_PATH, JSON.stringify(this.windowState.serialize()), 'utf8', (err) => {
             if (err)
                 console.error(`Error writing "${WINDOW_STATE_PATH}"!`);

@@ -1,5 +1,4 @@
 const environment = require('../environment');
-const MainWindow = require('./main-window');
 const DataExchange = require('./data-exchange');
 const { app } = require('electron');
 const path = require('path');
@@ -24,6 +23,7 @@ class Application {
     preInit() {
         console.log(`Using userData path: ${app.getPath('userData')}`);
 
+        const MainWindow = require('./main-window');
         this.mainWindow = new MainWindow();
 
         this.single_instance = app.requestSingleInstanceLock();
