@@ -42,5 +42,7 @@
     "Import successful!": "Импортирането е успешно!",
     "Successful import from Invoices v2+ database!": "Успешно импортиране от база данни на Invoices v2+!",
     "Error occured when importing!": "Възникна греша при импортиране!",
-    "File you've choosen could not be parsed!\nValid extensions are only .db and .json!": "Файлът, който избрахте, не може да бъде прочетен!\nВалидни разширения са само .db и .json!"
+    "File you've choosen could not be parsed!\nValid extensions are only .db and .json!": "Файлът, който избрахте, не може да бъде прочетен!\nВалидни разширения са само .db и .json!",
+    "Invoice saved successfuly!": "Фактурата е успешно записана!",
+    "Error saving invoice!": "Грешка при записване на фактурата!"
 }

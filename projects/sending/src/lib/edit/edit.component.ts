@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from '@settings';
 import { Subscription } from 'rxjs';
 import { Invoice, InvoicesService, Status } from '@invoices';
-import { Tools, TranslationsService } from '@shared';
+import { Tools, TranslationsService, StateManagerService } from '@shared';
 import { SendingService } from '../sending.service';
 import { Sending } from '../classes';
 import { send } from 'process';
@@ -32,6 +32,7 @@ export class EditComponent implements OnInit, OnDestroy {
 
     constructor(
         private _fb: FormBuilder,
+        private _stateManager: StateManagerService,
         private _sendingService: SendingService,
         private _settingsService: SettingsService,
         private _invoicesService: InvoicesService,
@@ -39,7 +40,6 @@ export class EditComponent implements OnInit, OnDestroy {
     ) {
         this.subs.add(
             this._settingsService.settings$.subscribe((settings) => {
-                console.log(`settings`, settings);
                 this.settings = settings;
                 if (this.sendingForm)
                     this.sendingForm.patchValue({
@@ -129,17 +129,23 @@ export class EditComponent implements OnInit, OnDestroy {
 
     onSubmit() {
         if (this.sendingForm.valid) {
-            console.log(`this.settings?.accountant?.invoice_fields`, this.settings?.accountant?.invoice_fields);
-
             const sending = new Sending({
                 ...this.sendingForm.value,
                 message: this.sendingForm.value['message'].split(/\n/g).map(line => line ? `<p>${line}</p>` : '<br/>').join(''),
                 invoices: this.active_invoices.filter(x => this.sendingForm.value['invoices'].includes(x.id)),
                 invoice_fields: [...(this.settings?.accountant?.invoice_fields || [])]
             });
-            console.log(`Sending value:`, sending);
             this._sendingService.save(sending).then((response) => {
-                console.log(`Save sending received response:`, response);
+                this._stateManager.notification$.next({
+                    type: 'success',
+                    message: this._translate.translate('Sending saved successfuly!', 'sending')
+                });
+            }).catch((err) => {
+                console.error(`Error saving provider`, sending, err);
+                this._stateManager.notification$.next({
+                    type: 'error',
+                    message: this._translate.translate('Error saving sending!', 'sending')
+                });
             });
         }
     }

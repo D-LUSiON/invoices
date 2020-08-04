@@ -17,7 +17,6 @@ export class PreviewComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes) {
-        console.log(`provider preview changes`, changes);
 
     }
 

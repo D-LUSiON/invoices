@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { ProvidersService } from '../providers.service';
-import { StateManagerService } from '@shared';
+import { StateManagerService, TranslationsService } from '@shared';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Provider } from '../classes';
 
@@ -24,18 +24,17 @@ export class EditComponent implements OnInit, OnChanges {
     constructor(
         private _providersService: ProvidersService,
         private _stateManager: StateManagerService,
+        private _translateService: TranslationsService,
         private _fb: FormBuilder
     ) {
         this._initForm();
     }
 
     ngOnInit(): void {
-        console.log(`initial provider`, this.provider);
         this.providerForm.patchValue(this.provider);
     }
 
     ngOnChanges(changes) {
-        console.log(`provider edit change`, changes);
     }
 
     private _initForm() {
@@ -55,12 +54,19 @@ export class EditComponent implements OnInit, OnChanges {
 
     onSubmit() {
         this._providersService.saveProvider(this.provider).subscribe(provider => {
-            console.log(`Provider saved:`, provider);
             this.provider = provider;
             this.providerForm.patchValue(this.provider);
             this.providerForm.markAsPristine();
+            this._stateManager.notification$.next({
+                type: 'success',
+                message: this._translateService.translate('Provider saved successfuly!', 'providers')
+            });
         }, err => {
-            console.log(`Error saving provider`, this.provider, err);
+            console.error(`Error saving provider`, this.provider, err);
+            this._stateManager.notification$.next({
+                type: 'error',
+                message: this._translateService.translate('Error saving provider!', 'providers')
+            });
         })
     }
 

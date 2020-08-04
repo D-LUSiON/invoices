@@ -118,6 +118,10 @@ export class InvoicesService {
                         try {
                             imported_invoices = files.map(file => JSON.parse(file))[0];
                         } catch (error) {
+                            this._stateManager.notification$.next({
+                                type: 'error',
+                                message: this._translate.translate(`Error parsing file contents!`, 'invoices')
+                            });
                             reject([
                                 this._translate.translate('Error occured when importing!', 'invoices'),
                                 this._translate.translate(`Error parsing file contents!`, 'invoices')
@@ -155,7 +159,10 @@ export class InvoicesService {
                                 this.importInvoices(imported_invoices, xlsx_files, mode).subscribe(results => {
                                     this._manageInvoicesResults(results);
                                     this._providersService.getSaved();
-                                    // this._sendingService.getSaved();
+                                    this._stateManager.notification$.next({
+                                        type: 'success',
+                                        message: this._translate.translate(`Successful import from Invoices v2+ database!`, 'invoices')
+                                    });
                                     resolve([
                                         this._translate.translate('Import successful!', 'invoices'),
                                         this._translate.translate(`Successful import from Invoices v2+ database!`, 'invoices')
@@ -166,6 +173,10 @@ export class InvoicesService {
                     }
                 });
             } else {
+                this._stateManager.notification$.next({
+                    type: 'error',
+                    message: this._translate.translate(`File you've choosen could not be parsed!\nValid extensions are only .db and .json!`, 'invoices')
+                });
                 reject([
                     this._translate.translate('Error occured when importing!', 'invoices'),
                     this._translate.translate(`File you've choosen could not be parsed!\nValid extensions are only .db and .json!`, 'invoices')
@@ -176,18 +187,30 @@ export class InvoicesService {
 
     importInvoices(invoices: any[], xlsx_files: any[], mode: 'merge' | 'overwrite') {
         const providers = this._providersService.providers;
-        invoices = invoices.map(x => {
-            x.goods = [
-                {
-                    title: x.notes,
-                    measure: 'бр.',
-                    quantity: 1,
-                    price: x.total_sum
-                }
-            ];
+
+        invoices = invoices.map(invoice => {
+            if ((invoice.notes as string).includes('; '))
+                invoice.goods = invoice.notes.split('; ').map(row => {
+                    const [title, measure, quantity_price]: [string, string, string] = row.split(', ');
+                    return {
+                        title,
+                        measure,
+                        quantity: quantity_price && quantity_price.includes('*') ? quantity_price.split(' * ')[0] : '1',
+                        price: quantity_price && quantity_price.includes('*') ? quantity_price.split(' * ')[1] : invoice.total_sum,
+                    };
+                });
+            else
+                invoice.goods = [
+                    {
+                        title: invoice.notes,
+                        measure: 'бр.',
+                        quantity: 1,
+                        price: invoice.total_sum
+                    }
+                ];
             if (mode === 'merge')
-                x.provider.id = providers.find(y => y.vat === x.provider.vat)?.id || null;
-            return new Invoice(x);
+                invoice.provider.id = providers.find(y => y.vat === invoice.provider.vat)?.id || null;
+            return new Invoice(invoice);
         });
 
         return this._electron.save('invoices:multiple', {
@@ -205,8 +228,6 @@ export class InvoicesService {
 
     saveInvoice(invoice: Invoice) {
         return this._electron.save('invoice', invoice).pipe(map(([saved_invoice]) => {
-            console.log(`Received data:`, saved_invoice);
-
             saved_invoice = new Invoice(saved_invoice);
 
             const idx = this.invoices.findIndex(inv => inv.id === saved_invoice.id);

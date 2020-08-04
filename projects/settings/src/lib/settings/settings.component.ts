@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SettingsService } from '../settings.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { ElectronClientService, TranslationsService } from '@shared';
+import { ElectronClientService, TranslationsService, StateManagerService } from '@shared';
 
 @Component({
     selector: 'lib-settings',
@@ -104,6 +104,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         private _fb: FormBuilder,
         private _electron: ElectronClientService,
         private _translate: TranslationsService,
+        private _stateManager: StateManagerService,
         private _settingsService: SettingsService,
     ) {
         this.settings.accountant = {
@@ -163,8 +164,18 @@ export class SettingsComponent implements OnInit, OnDestroy {
                 save_timeout = setTimeout(() => {
                     if (this.settingsForm.dirty)
                         this._settingsService.saveSettings(this.settings).subscribe(result => {
-                            console.log(`Settings saved!`, result);
                             this._settingsService.settings$.next(this.settings);
+                            this._stateManager.notification$.next({
+                                type: 'success',
+                                message: this._translate.translate('Settings saved successfuly!', 'settings'),
+                                timeout: 3000
+                            });
+                        }, err => {
+                            console.error(`Error saving settings`, this.settings, err);
+                            this._stateManager.notification$.next({
+                                type: 'error',
+                                message: this._translate.translate('Error saving settings!', 'settings')
+                            });
                         });
                 }, 500);
             }
@@ -191,8 +202,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
         if (this.active_setting === 'about')
             this._settingsService.getModulesInfo().then((result: { [key: string]: string }[]) => {
                 this.modules_info = result;
-                console.log(this.modules_info);
-
             });
     }
 
@@ -209,18 +218,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
     changeInvoiceFieldWidth(field, width) {
         const idx = this.invoice_fields.findIndex(x => x.name === field.name);
         this.invoice_fields[idx].width = +width;
-        console.log(`changeInvoiceFieldWidth`, field, width);
 
         this.settingsForm.patchValue({
             'accountant': {
                 'invoice_fields': this.invoice_fields
             }
-        });
-    }
-
-    loginWithGoogle() {
-        this._electron.send('google:login', {}).subscribe((value) => {
-            console.log(`google:login`, value);
         });
     }
 

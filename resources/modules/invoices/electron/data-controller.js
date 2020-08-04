@@ -108,6 +108,7 @@ class InvoicesController {
                 filters[new_key] = filters[key];
                 delete filters[key];
             });
+        console.log(`getAllInvoices filters:`, filters);
         let results = await this.database
             .where(filters || {})
             .select(
@@ -167,7 +168,7 @@ class InvoicesController {
                     provider: invoice.provider.id || null,
                     total_sum: invoice.total_sum,
                     type: invoice.type,
-                }).where('id', '=', invoice.id).then(([result]) => {
+                }).where('id', '=', invoice.id).then((result) => {
                     this.getAllInvoices({ id: invoice.id }).then((saved_invoice) => {
                         resolve(saved_invoice);
                     });

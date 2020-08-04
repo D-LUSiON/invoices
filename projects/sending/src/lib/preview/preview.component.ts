@@ -30,7 +30,6 @@ export class PreviewComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        console.log(`Preview sending`, this.sending);
     }
 
     previewInvoice(invoice: Invoice) {

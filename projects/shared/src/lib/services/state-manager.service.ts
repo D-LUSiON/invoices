@@ -29,6 +29,18 @@ export class StateManagerService {
     sidebar$: BehaviorSubject<Module[]> = new BehaviorSubject(this._loadedModules);
     openedDocuments$: BehaviorSubject<Document[]> = new BehaviorSubject(this._openedDocuments);
 
+    private _notification_timeout: number = 5000;
+    private _notification: {
+        type: 'info' | 'success' | 'warning' | 'error',
+        message: string,
+        timeout?: number
+    }
+    notification$: BehaviorSubject<{
+        type: 'info' | 'success' | 'warning' | 'error',
+        message: string,
+        timeout?: number
+    }> = new BehaviorSubject(this._notification);
+
     constructor(
         private _electronClient: ElectronClientService,
         private _modulesProvider: ModulesProviderService,
@@ -39,9 +51,16 @@ export class StateManagerService {
         this.loadedModules$.subscribe(loadedModules => {
             this._loadedModules = loadedModules;
         });
-        // this.openedDocuments$.subscribe(openedDocuments => {
-        //     console.log(`openedDocuments`, openedDocuments);
-        // });
+
+        this.notification$.subscribe(notification => {
+            this._notification = notification;
+            if (notification) {
+                setTimeout(() => {
+                    this._notification = null;
+                    this.notification$.next(this._notification);
+                }, notification.timeout || this._notification_timeout);
+            }
+        });
     }
 
     get current_active_tab_idx() {

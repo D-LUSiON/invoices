@@ -19,6 +19,11 @@ export class DesktopComponent implements OnInit, AfterViewInit {
 
     loaded: boolean = true;
 
+    notification: {
+        type: 'info' | 'success' | 'warning' | 'error',
+        message: string
+    };
+
     constructor(
         private _translations: TranslationsService,
         private _modulesProvider: ModulesProviderService,
@@ -42,6 +47,10 @@ export class DesktopComponent implements OnInit, AfterViewInit {
                 this.openedDocuments = [...opened_documents];
                 this.renderContent(this.openedDocuments.find(d => d.active));
             }
+        });
+
+        this._stateManager.notification$.subscribe(notification => {
+            this.notification = notification;
         });
     }
 

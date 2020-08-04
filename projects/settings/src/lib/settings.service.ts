@@ -24,7 +24,6 @@ export class SettingsService {
         private _electronClient: ElectronClientService,
         private _stateManager: StateManagerService,
     ) {
-        console.log(`Hello from settings service!`);
         this.getSaved();
         this.getAvailableLangs();
 

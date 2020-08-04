@@ -48,7 +48,17 @@ export class PreviewComponent implements OnDestroy {
 
         if (!result.response)
             this._invoicesService.removeInvoice(this.invoice).subscribe((data) => {
+                this._stateManager.notification$.next({
+                    type: 'success',
+                    message: this._translate.translate('Invoice deleted successfuly!', 'invoices')
+                });
                 this._stateManager.closeCurrentTab();
+            }, err => {
+                console.error(`Error deleting invoice!`, this.invoice, err);
+                this._stateManager.notification$.next({
+                    type: 'error',
+                    message: this._translate.translate('Error deleting invoice!', 'invoices')
+                });
             });
     }
 

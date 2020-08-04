@@ -67,10 +67,7 @@ export class ProvidersService {
     }
 
     saveProvider(provider: Provider) {
-        console.log(`Saving provider`, provider);
-
         return this._electronClient.save('provider', provider).pipe(tap((data) => {
-            console.log(data);
             const idx = this._providers.findIndex(prov => prov.id === data[0]);
             if (!provider.id && idx === -1) {
                 provider.id = data[0];

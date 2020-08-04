@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, HostListener, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { Invoice } from '../classes/invoice';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Tools, StateManagerService } from '@shared';
+import { Tools, StateManagerService, TranslationsService } from '@shared';
 import { ProvidersService, Provider } from '@providers';
 import { InvoicesService } from '../invoices.service';
 import { Goods } from '../classes';
@@ -41,10 +41,9 @@ export class EditComponent implements OnInit, OnDestroy {
         private _providersService: ProvidersService,
         private _stateManager: StateManagerService,
         private _settingsService: SettingsService,
+        private _translateService: TranslationsService,
         private _fb: FormBuilder
     ) {
-        console.log(`Invoices edit constructor`);
-
         this.subs.add(
             this._providersService.providers$.subscribe(providers => {
                 if (providers.length) {
@@ -142,12 +141,19 @@ export class EditComponent implements OnInit, OnDestroy {
     onSubmit() {
         this.invoice.update_date = new Date();
         this._invoicesService.saveInvoice(this.invoice).subscribe((invoice) => {
-            console.log(`Invoice saved:`, invoice);
             this.invoice = invoice;
             this.invoiceForm.patchValue(this.invoice);
             this.invoiceForm.markAsPristine();
+            this._stateManager.notification$.next({
+                type: 'success',
+                message: this._translateService.translate('Invoice saved successfuly!', 'invoices')
+            });
         }, err => {
-            console.log(`Error saving invoice`, this.invoice, err);
+            console.error(`Error saving invoice`, this.invoice, err);
+            this._stateManager.notification$.next({
+                type: 'error',
+                message: this._translateService.translate('Error saving invoice!', 'invoices')
+            });
         })
     }
 

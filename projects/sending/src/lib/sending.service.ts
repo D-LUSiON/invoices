@@ -35,10 +35,7 @@ export class SendingService {
     getSaved() {
         return new Promise((resolve, reject) => {
             this._electronClient.getAll('sending').subscribe(sendings => {
-                console.log(`getAll sendings`, sendings);
-
                 this._sendings = sendings.map(x => new Sending(x));
-                // this.sortByDate();
                 this._createTree();
                 this.sendings$.next(this._sendings);
                 resolve(this._sendings);
