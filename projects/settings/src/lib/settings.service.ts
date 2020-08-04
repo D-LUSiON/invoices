@@ -30,8 +30,6 @@ export class SettingsService {
 
         this.settings$.subscribe(settings => {
             this._settings = settings;
-            console.log(`Settings changed:`, this._settings);
-
         });
     }
 

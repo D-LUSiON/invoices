@@ -43,7 +43,7 @@
     "tslint": "~5.18.0",
     "typescript": "~3.7.5"
   },
-  "productName": "invoices",
+  "productName": "Invoices",
   "description": "Application for managing VAT invoices",
   "author": "D-LUSiON",
   "license": "MIT",

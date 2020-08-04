@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, HostListener, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, HostListener, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { Invoice } from '../classes/invoice';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Tools, StateManagerService } from '@shared';
@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
     styleUrls: ['./edit.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditComponent implements OnInit, OnChanges, OnDestroy {
+export class EditComponent implements OnInit, OnDestroy {
 
     @Input() invoice: Invoice = new Invoice();
     @Output() invoiceChange: EventEmitter<Invoice> = new EventEmitter();
@@ -45,21 +45,20 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
     ) {
         console.log(`Invoices edit constructor`);
 
-        this._providersService.providers$.subscribe(providers => {
-            if (providers.length) {
-                this.providers = providers;
-                if (this.invoice.provider?.id) {
-                    this.choosen_provider = this.invoice.provider;
+        this.subs.add(
+            this._providersService.providers$.subscribe(providers => {
+                if (providers.length) {
+                    this.providers = providers;
+                    if (this.invoice.provider?.id) {
+                        this.choosen_provider = this.invoice.provider;
 
-                    this.invoiceForm.patchValue({
-                        provider: this.choosen_provider
-                    });
+                        this.invoiceForm.patchValue({
+                            provider: this.choosen_provider
+                        });
+                    }
                 }
-            }
-        });
-        this._providersService.getSaved().then((providers: Provider[]) => {
-            this.providers = providers;
-        });
+            })
+        );
 
         this.subs.add(
             this._settingsService.settings$.subscribe((settings) => {
@@ -76,9 +75,6 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
             ...this.invoice,
             'issue_date': Tools.formatDate(this.invoice.issue_date, 'YYYY-MM-dd')
         });
-    }
-
-    ngOnChanges(changes) {
     }
 
     private _initForm() {
@@ -140,9 +136,7 @@ export class EditComponent implements OnInit, OnChanges, OnDestroy {
             month = date.getMonth() + 1,
             day = date.getDate();
 
-        return `${year}-${month < 10 ? '0' + month : month}-${
-            day < 10 ? '0' + day : day
-            }`;
+        return `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
     }
 
     onSubmit() {

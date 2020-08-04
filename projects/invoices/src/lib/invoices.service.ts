@@ -7,6 +7,7 @@ import { ProvidersService } from '@providers';
 import { Status } from './classes';
 import { SettingsService } from '@settings';
 import { OpenDialogReturnValue } from 'electron';
+// import { SendingService } from '@sending';
 
 @Injectable({
     providedIn: 'root'
@@ -30,6 +31,7 @@ export class InvoicesService {
         private _electron: ElectronClientService,
         private _stateManager: StateManagerService,
         private _providersService: ProvidersService,
+        // private _sendingService: SendingService,
         private _translate: TranslationsService,
         private _settingsService: SettingsService,
     ) {
@@ -152,6 +154,8 @@ export class InvoicesService {
                                 const mode = result.response ? 'overwrite' : 'merge';
                                 this.importInvoices(imported_invoices, xlsx_files, mode).subscribe(results => {
                                     this._manageInvoicesResults(results);
+                                    this._providersService.getSaved();
+                                    // this._sendingService.getSaved();
                                     resolve([
                                         this._translate.translate('Import successful!', 'invoices'),
                                         this._translate.translate(`Successful import from Invoices v2+ database!`, 'invoices')

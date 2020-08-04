@@ -39,8 +39,8 @@ export class SendingService {
 
                 this._sendings = sendings.map(x => new Sending(x));
                 // this.sortByDate();
-                this.sendings$.next(this._sendings);
                 this._createTree();
+                this.sendings$.next(this._sendings);
                 resolve(this._sendings);
             });
         });

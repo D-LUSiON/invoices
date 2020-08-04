@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { Invoice } from '../classes/invoice';
 import { SettingsService } from '@settings';
 import { Subscription } from 'rxjs';
@@ -10,7 +10,7 @@ import { StateManagerService, TranslationsService, ElectronClientService } from 
     templateUrl: './preview.component.html',
     styleUrls: ['./preview.component.scss']
 })
-export class PreviewComponent implements OnInit, OnDestroy {
+export class PreviewComponent implements OnDestroy {
 
     @Input() invoice: Invoice;
 
@@ -33,9 +33,6 @@ export class PreviewComponent implements OnInit, OnDestroy {
                 this.sender = settings?.sender || {};
             })
         );
-    }
-
-    ngOnInit(): void {
     }
 
     async removeInvoice() {

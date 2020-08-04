@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { InvoicesService } from '../invoices.service';
 import { TreeData, TreeItem, Document, StateManagerService, TranslationsService, ElectronClientService } from '@shared';
 import { Invoice } from '../classes/invoice';
@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements OnInit, OnDestroy {
+export class SidebarComponent implements OnDestroy {
 
     private _treeDataActive: TreeData = new TreeData([]);
     filteredTreeDataActive: TreeData = new TreeData([]);
@@ -48,9 +48,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
                 this.filteredTreeDataAll = this._treeDataAll.slice();
             })
         );
-    }
-
-    ngOnInit(): void {
     }
 
     groupExpanded(group_idx: number) {

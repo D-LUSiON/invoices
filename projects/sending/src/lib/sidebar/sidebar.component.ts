@@ -23,7 +23,7 @@ export class SidebarComponent implements OnInit {
     ) {
         this._invoicesService.treeActive$.subscribe(tree => {
             this.invoicesTreeData = tree;
-
+            this._sendingService.getSaved();
         });
 
         this._sendingService.tree$.subscribe(tree => {
