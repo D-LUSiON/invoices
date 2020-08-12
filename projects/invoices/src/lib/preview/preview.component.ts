@@ -2,7 +2,8 @@ import { Component, Input, OnDestroy } from '@angular/core';
 import { Invoice } from '../classes/invoice';
 import { SettingsService } from '@settings';
 import { Subscription } from 'rxjs';
-import { InvoicesService } from '../invoices.service';
+import { InvoicesService } from '@invoices';
+// import { InvoicesService } from '@invoices';
 import { StateManagerService, TranslationsService, ElectronClientService } from '@shared';
 
 @Component({
@@ -33,6 +34,10 @@ export class PreviewComponent implements OnDestroy {
                 this.sender = settings?.sender || {};
             })
         );
+        setTimeout(() => {
+            console.log(this.invoice);
+        }, 500);
+
     }
 
     async removeInvoice() {

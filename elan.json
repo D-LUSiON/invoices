@@ -14,7 +14,7 @@
         "productName": "Invoices",
         "description": "Application for managing VAT invoices",
         "author": "D-LUSiON",
-        "version": "3.0.0",
+        "version": "3.0.1",
         "license": "MIT",
         "keywords": [
             "invoices",
@@ -41,10 +41,10 @@
         "eBuildDir": ""
     },
     "versions": {
-        "main": "3.0.0",
-        "electron": "3.0.0",
+        "main": "3.0.1",
+        "electron": "3.0.1",
         "angular": {
-            "invoices-core": "3.0.0"
+            "invoices-core": "3.0.1"
         }
     },
     "resources": {

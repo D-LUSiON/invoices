@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TreeData, StateManagerService, Document, TreeItem } from '@shared';
 import { Provider } from '../classes';
-import { ProvidersService } from '../providers.service';
+import { ProvidersService } from '@providers';
 
 @Component({
     selector: 'inv-sidebar',

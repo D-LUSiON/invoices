@@ -1,4 +1,4 @@
-const { app, BrowserWindow, globalShortcut, screen } = require('electron');
+const { app, BrowserWindow, globalShortcut, screen, shell } = require('electron');
 const environment = require('../environment');
 const path = require('path');
 const fs = require('fs-extra');
@@ -71,6 +71,11 @@ class MainWindow {
                     });
                 });
             }
+
+            this.window.webContents.on('new-window', function (event, url) {
+                event.preventDefault();
+                shell.openExternal(url);
+            });
 
             // open the DevTools with Ctrl-F12
             globalShortcut.register('CommandOrControl+F12', () => {

@@ -6,7 +6,8 @@ const path = require('path');
 const Excel = require('exceljs');
 
 class InvoicesController {
-    constructor(db_instance) {
+    constructor(db_instance, ErrorLoggerClass) {
+        this.errorLogger = new ErrorLoggerClass(this.constructor.name);
         this.database = db_instance;
         this.table_name = 'Invoices';
         this.max_inserts = 50;
@@ -16,26 +17,46 @@ class InvoicesController {
         this.startListeners();
     }
 
-    checkDBCreated() {
-        return this.database.schema.hasTable(this.table_name).then((exists) => {
-            if (!exists) {
-                return this.database.schema.createTable(this.table_name, (table) => {
-                    table.increments('id').primary();
-                    table.string('number', 255);
-                    table.datetime('creation_date').defaultTo(this.database.fn.now());
-                    table.datetime('update_date').defaultTo(this.database.fn.now());
-                    table.date('issue_date');
-                    table.string('issue_place', 255);
-                    table.text('notes');
-                    table.json('goods');
+    async checkDBCreated() {
+        const exists = await this.database.schema.hasTable(this.table_name)
+        if (!exists) {
+            await this.database.schema.createTable(this.table_name, (table) => {
+                table.increments('id').primary();
+                table.string('number', 255);
+                table.datetime('creation_date').defaultTo(this.database.fn.now());
+                table.datetime('update_date').defaultTo(this.database.fn.now());
+                table.date('issue_date');
+                table.string('issue_place', 255);
+                table.text('notes');
+                table.json('goods');
+                table.boolean('unit_prices_with_vat').defaultTo(false);
+                table.integer('provider').unsigned();
+                table.foreign('provider').references('Providers.id');
+                table.decimal('total_sum')
+                table.string('type', 255);
+                table.integer('status').defaultTo(0);
+            });
+        } else {
+            const columns = await this.database(this.table_name).columnInfo();
+            await this.database.schema.table(this.table_name, (table) => {
+                if (!columns['id']) table.increments('id').primary();
+                if (!columns['number']) table.string('number', 255);
+                if (!columns['creation_date']) table.datetime('creation_date').defaultTo(this.database.fn.now());
+                if (!columns['update_date']) table.datetime('update_date').defaultTo(this.database.fn.now());
+                if (!columns['issue_date']) table.date('issue_date');
+                if (!columns['issue_place']) table.string('issue_place', 255);
+                if (!columns['notes']) table.text('notes');
+                if (!columns['goods']) table.json('goods');
+                if (!columns['unit_prices_with_vat']) table.boolean('unit_prices_with_vat').defaultTo(false);
+                if (!columns['provider']) {
                     table.integer('provider').unsigned();
                     table.foreign('provider').references('Providers.id');
-                    table.decimal('total_sum')
-                    table.string('type', 255);
-                    table.integer('status').defaultTo(0);
-                });
-            }
-        });
+                }
+                if (!columns['total_sum']) table.decimal('total_sum')
+                if (!columns['type']) table.string('type', 255);
+                if (!columns['status']) table.integer('status').defaultTo(0);
+            });
+        }
     }
 
     startListeners() {
@@ -56,6 +77,7 @@ class InvoicesController {
                 event.sender.send('invoice:save:response', res);
             }).catch(error => {
                 console.log(error)
+                this.errorLogger.logError(`Error saving invoice`, error);
                 event.sender.send('invoice:save:response', { error, invoice });
             });
         });
@@ -71,6 +93,7 @@ class InvoicesController {
                 event.sender.send('invoice:remove:response', { deleted_rows, invoice });
             }).catch(error => {
                 console.log(error)
+                this.errorLogger.logError(`Error deleting invoice`, error);
                 event.sender.send('invoice:remove:response', { error, invoice });
             });
         });
@@ -108,7 +131,6 @@ class InvoicesController {
                 filters[new_key] = filters[key];
                 delete filters[key];
             });
-        console.log(`getAllInvoices filters:`, filters);
         let results = await this.database
             .where(filters || {})
             .select(

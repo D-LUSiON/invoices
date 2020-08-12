@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { TreeData, TreeItem, Tools, ElectronClientService, StateManagerService, Document } from '@shared';
 import { Provider } from './classes';
 import { tap } from 'rxjs/operators';
@@ -68,6 +68,10 @@ export class ProvidersService {
 
     saveProvider(provider: Provider) {
         return this._electronClient.save('provider', provider).pipe(tap((data) => {
+            if (data.error) {
+                return throwError(data);
+            }
+
             const idx = this._providers.findIndex(prov => prov.id === data[0]);
             if (!provider.id && idx === -1) {
                 provider.id = data[0];

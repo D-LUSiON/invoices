@@ -18,6 +18,9 @@
     <lib-accordion-group heading="{{ 'Active Invoices'|translate:'invoices' }}" [expand]="expanded_idx === 0">
         <lib-tree [nodes]="filteredTreeDataActive" (nodeClick)="onTreeNodeClicked($event)" (nodeDblClick)="onTreeNodeDblClicked($event)"></lib-tree>
     </lib-accordion-group>
+    <lib-accordion-group heading="{{ 'Sent'|translate:'invoices' }}" [expand]="expanded_idx === 1">
+        <lib-tree [nodes]="filteredTreeDataSent" (nodeClick)="onTreeNodeClicked($event)" (nodeDblClick)="onTreeNodeDblClicked($event)"></lib-tree>
+    </lib-accordion-group>
     <lib-accordion-group heading="{{ 'Archived'|translate:'invoices' }}" [expand]="expanded_idx === 1">
         <lib-tree [nodes]="filteredTreeDataArchived" (nodeClick)="onTreeNodeClicked($event)" (nodeDblClick)="onTreeNodeDblClicked($event)"></lib-tree>
     </lib-accordion-group>

@@ -3,11 +3,13 @@ const {
     ipcMain
 } = require('electron');
 const path = require('path');
-const fs = require('fs-extra');
+const fs = require('fs');
+const fse = require('fs-extra');
 const ini = require('ini');
 const knex = require('knex');
 const environment = require('../environment');
 const loadModule = require('../tools/load-module');
+const errorLogger = require('../tools/error-logger');
 const DEFAULT_SETTINGS = {};
 
 class DataExchange {
@@ -38,26 +40,26 @@ class DataExchange {
     _loadControllers() {
         const modules_path = path.resolve('resources', 'modules');
         console.info(`Looking for modules in: ${modules_path}...`);
-        fs.readdir(modules_path).then((dir) => {
+        fse.readdir(modules_path).then((dir) => {
             if (dir.length) {
                 dir.forEach(entry => {
-                    if (fs.statSync(path.resolve(modules_path, entry)).isDirectory()) {
+                    if (fse.statSync(path.resolve(modules_path, entry)).isDirectory()) {
                         const entry_key = entry.replace(/\.asar/, '');
                         const mod_info = path.resolve(modules_path, entry, 'electron', 'package.json');
-                        if (fs.existsSync(mod_info)) {
+                        if (fse.existsSync(mod_info)) {
                             this.moduleControllers[entry_key] = {
                                 module_path: path.join(modules_path, entry),
-                                info: fs.readJSONSync(mod_info),
+                                info: fse.readJSONSync(mod_info),
                                 translations: {}
                             };
 
                             if (this.moduleControllers[entry_key].info.main) {
                                 const ctrl_path = path.resolve(modules_path, entry, 'electron', this.moduleControllers[entry_key].info.main);
 
-                                if (fs.statSync(path.resolve(modules_path, entry)).isDirectory() && fs.existsSync(ctrl_path) && !fs.statSync(ctrl_path).isDirectory()) {
+                                if (fse.statSync(path.resolve(modules_path, entry)).isDirectory() && fse.existsSync(ctrl_path) && !fse.statSync(ctrl_path).isDirectory()) {
                                     console.info(`Loading module: "${entry_key}"...`);
                                     const Mod = loadModule(ctrl_path);
-                                    this.moduleControllers[entry_key].controller = new Mod(this.database);
+                                    this.moduleControllers[entry_key].controller = new Mod(this.database, errorLogger);
                                 }
                             } else {
                                 console.error(`Module "${entry_key}" entry point doesn't exist! Please, define it in module package.json "main" key!`);
@@ -96,13 +98,14 @@ class DataExchange {
     _loadGeneralTranslations() {
         this.moduleTranslations['_general'] = {};
         // FIXME: Test this when compiled
-        const trn_path = path.resolve(environment.html_src, 'assets', 'i18n');
-        if (fs.existsSync(trn_path) && fs.statSync(trn_path).isDirectory()) {
-            fs.readdir(trn_path).then((dir) => {
+        const trn_path = path.resolve(environment.production ? 'resources/app.asar' : '', environment.html_src, 'assets', 'i18n');
+        console.log(`General translations path (${fse.existsSync(trn_path)}): ${trn_path}`);
+        if (fse.existsSync(trn_path)) {
+            fse.readdir(trn_path).then((dir) => {
                 if (dir.length) {
                     dir.forEach(trn_file => {
                         if (trn_file.endsWith('.json'))
-                            fs.readJSON(path.join(trn_path, trn_file), {
+                            fse.readJSON(path.join(trn_path, trn_file), {
                                 encoding: 'utf8',
                             }).then((translation) => {
                                 this.moduleTranslations['_general'][trn_file.replace('.json', '')] = translation;
@@ -118,13 +121,13 @@ class DataExchange {
             Object.keys(this.moduleControllers).forEach((module, idx, all_keys) => {
                 const trans_path = path.resolve(this.moduleControllers[module].module_path, 'i18n');
                 this.moduleControllers[module].translations = {};
-                if (fs.existsSync(trans_path) && fs.statSync(trans_path).isDirectory()) {
-                    fs.readdir(trans_path).then((trn_files) => {
+                if (fse.existsSync(trans_path) && fse.statSync(trans_path).isDirectory()) {
+                    fse.readdir(trans_path).then((trn_files) => {
                         if (trn_files.length) {
                             trn_files.forEach(trn_file => {
                                 if (trn_file.endsWith('.json')) {
                                     console.info(`Loading translations file ${trn_file} for ${module}...`);
-                                    fs.readJSON(path.join(trans_path, trn_file)).then(translation => {
+                                    fse.readJSON(path.join(trans_path, trn_file)).then(translation => {
                                         this.moduleControllers[module].translations[trn_file.replace('.json', '')] = translation;
                                         if (idx === all_keys.length - 1)
                                             resolve();
@@ -174,10 +177,10 @@ class DataExchange {
     _loadCurrentSettings() {
         return new Promise((resolve, reject) => {
             if (!this.settings) this.settings = { ...DEFAULT_SETTINGS };
-            if (!fs.existsSync(this.settings_ini_path))
-                fs.writeFileSync(this.settings_ini_path, ini.stringify(this.settings), { encoding: 'utf-8' });
+            if (!fse.existsSync(this.settings_ini_path))
+                fse.writeFileSync(this.settings_ini_path, ini.stringify(this.settings), { encoding: 'utf-8' });
 
-            fs.readFile(this.settings_ini_path, { encoding: 'utf-8' }, (err, sett_ini_file) => {
+            fse.readFile(this.settings_ini_path, { encoding: 'utf-8' }, (err, sett_ini_file) => {
                 const sett_ini_parsed = ini.parse(sett_ini_file, 'utf-8');
                 Object.keys(sett_ini_parsed).forEach(key => {
                     if (!isNaN(sett_ini_parsed[key]) && !['true', 'false'].includes((sett_ini_parsed[key] || '').toString()))
@@ -206,12 +209,12 @@ class DataExchange {
         ipcMain.on('file:get', (event, args) => {
             if (args instanceof Array)
                 Promise.all(
-                    args.map(file => fs.readFile(file, 'utf8'))
+                    args.map(file => fse.readFile(file, 'utf8'))
                 ).then(result => {
                     event.sender.send('file:get:response', [...result]);
                 });
             else
-                fs.readFile(args, 'utf8').then(result => {
+                fse.readFile(args, 'utf8').then(result => {
                     event.sender.send('file:get:response', result);
                 });
         });

@@ -3,7 +3,8 @@ import { Invoice } from '../classes/invoice';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Tools, StateManagerService, TranslationsService } from '@shared';
 import { ProvidersService, Provider } from '@providers';
-import { InvoicesService } from '../invoices.service';
+import { InvoicesService } from '@invoices';
+// import { InvoicesService } from '@invoices';
 import { Goods } from '../classes';
 import { SettingsService } from '@settings';
 import { Subscription } from 'rxjs';
@@ -27,6 +28,8 @@ export class EditComponent implements OnInit, OnDestroy {
     choosen_provider: Provider = new Provider();
 
     sender: { [key: string]: any } = {};
+
+    unit_prices_with_vat: boolean = false;
 
     @HostListener('window:keyup', ['$event']) saveAccelerator(e: KeyboardEvent) {
         if (e.ctrlKey && e.key.toLowerCase() === 's' && this.invoiceForm.valid) {
@@ -88,6 +91,7 @@ export class EditComponent implements OnInit, OnDestroy {
             'type': this._fb.control(this.invoice.type),
             'notes': this._fb.control(this.invoice.notes),
             'provider': this._fb.control(this.invoice.provider, [Validators.required]),
+            'unit_prices_with_vat': this._fb.control(this.invoice.unit_prices_with_vat),
             'goods': this._buildGoodsRows,
             'creation_date': this._fb.control(this.invoice.creation_date),
             'update_date': this._fb.control(this.invoice.update_date),

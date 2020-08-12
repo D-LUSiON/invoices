@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SettingsService } from '../settings.service';
+import { SettingsService } from '@settings';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ElectronClientService, TranslationsService, StateManagerService } from '@shared';
@@ -20,6 +20,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
     active_setting: string = '';
 
     settings_keys: string[] = [];
+
+    readonly save_delay: number = 1000;
 
     subs: Subscription = new Subscription();
 
@@ -177,7 +179,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
                                 message: this._translate.translate('Error saving settings!', 'settings')
                             });
                         });
-                }, 500);
+                }, this.save_delay);
             }
         });
     }

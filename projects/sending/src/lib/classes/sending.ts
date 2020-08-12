@@ -1,4 +1,4 @@
-import { Invoice } from '@invoices';
+import { Invoice, Status } from '@invoices';
 import { Tools } from '@shared';
 
 export class Sending {
@@ -33,12 +33,25 @@ export class Sending {
 
     get invoices_total_vat() {
         const invoices_vats = this.invoices.map(x => +x.total_vat);
-        return invoices_vats.length ? +(invoices_vats.reduce((accumulator, currentValue) => accumulator + currentValue).toFixed(2)): '0.00';
+        return invoices_vats.length ? +(invoices_vats.reduce((accumulator, currentValue) => accumulator + currentValue).toFixed(2)) : '0.00';
     }
 
     get invoices_payment_amount() {
         const invoices_payments = this.invoices.map(x => +x.payment_amount);
-        return invoices_payments.length ? +(invoices_payments.reduce((accumulator, currentValue) => accumulator + currentValue).toFixed(2)): '0.00';
+        return invoices_payments.length ? +(invoices_payments.reduce((accumulator, currentValue) => accumulator + currentValue).toFixed(2)) : '0.00';
+    }
+
+    get message_sanitazed() {
+        return this.message.replace(/\<p\>/g, '').replace(/(\<\/p\>|\<br\/\>)/g, '\n');
+    }
+
+    get status(): Status {
+        let status = Status.Archived;
+        this.invoices.forEach(invoice => {
+            if (invoice.status < status)
+            status = invoice.status;
+        });
+        return status
     }
 
     get serialize() {

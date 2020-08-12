@@ -30,6 +30,7 @@ export class StateManagerService {
     openedDocuments$: BehaviorSubject<Document[]> = new BehaviorSubject(this._openedDocuments);
 
     private _notification_timeout: number = 5000;
+    private _notification_timeout_on_error: number = this._notification_timeout * 2;
     private _notification: {
         type: 'info' | 'success' | 'warning' | 'error',
         message: string,
@@ -54,7 +55,7 @@ export class StateManagerService {
 
         this.notification$.subscribe(notification => {
             this._notification = notification;
-            if (notification) {
+            if (notification && notification.type !== 'error') {
                 setTimeout(() => {
                     this._notification = null;
                     this.notification$.next(this._notification);

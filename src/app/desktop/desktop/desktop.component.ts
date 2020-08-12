@@ -173,4 +173,8 @@ export class DesktopComponent implements OnInit, AfterViewInit {
         }));
     }
 
+    closeErrorNotification() {
+        this._stateManager.notification$.next(null);
+    }
+
 }

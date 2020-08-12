@@ -43,6 +43,10 @@ export class PreviewComponent implements OnInit, OnDestroy {
         }));
     }
 
+    archiveSending() {
+
+    }
+
     ngOnDestroy() {
         this.subs.unsubscribe();
     }

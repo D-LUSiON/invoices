@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { InvoicesService } from '../invoices.service';
+import { InvoicesService } from '@invoices';
 import { TreeData, TreeItem, Document, StateManagerService, TranslationsService, ElectronClientService } from '@shared';
 import { Invoice } from '../classes/invoice';
 import { Subscription } from 'rxjs';
@@ -13,6 +13,9 @@ export class SidebarComponent implements OnDestroy {
 
     private _treeDataActive: TreeData = new TreeData([]);
     filteredTreeDataActive: TreeData = new TreeData([]);
+
+    private _treeDataSent: TreeData = new TreeData([]);
+    filteredTreeDataSent: TreeData = new TreeData([]);
 
     private _treeDataArchived: TreeData = new TreeData([]);
     filteredTreeDataArchived: TreeData = new TreeData([]);
@@ -34,6 +37,12 @@ export class SidebarComponent implements OnDestroy {
             this._invoicesService.treeActive$.subscribe(tree => {
                 this._treeDataActive = tree;
                 this.filteredTreeDataActive = this._treeDataActive.slice();
+            })
+        );
+        this.subs.add(
+            this._invoicesService.treeSent$.subscribe(tree => {
+                this._treeDataSent = tree;
+                this.filteredTreeDataSent = this._treeDataSent.slice();
             })
         );
         this.subs.add(

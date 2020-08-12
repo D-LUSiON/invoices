@@ -49,6 +49,9 @@
         [class.info]="notification?.type === 'info'"
         [class.success]="notification?.type === 'success'"
         [class.warning]="notification?.type === 'warning'"
-        [class.danger]="notification?.type === 'danger'"
-    >{{ notification?.message }}</div>
+        [class.error]="notification?.type === 'error'"
+    >
+        <div>{{ notification?.message }}</div>
+        <div class="notification-close mdl2-ChromeClose" *ngIf="notification?.type === 'error'" (click)="closeErrorNotification()"></div>
+    </div>
 </div>

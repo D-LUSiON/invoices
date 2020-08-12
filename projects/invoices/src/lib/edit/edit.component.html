@@ -70,6 +70,9 @@
             </div>
         </div>
         <div class="invoice-goods-container">
+            <div class="invoice-goods-heading">
+                {{ 'Unit prices are with VAT'|translate:'invoices' }} <input type="checkbox" formControlName="unit_prices_with_vat">
+            </div>
             <table>
                 <thead>
                     <tr>

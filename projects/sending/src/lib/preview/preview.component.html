@@ -5,7 +5,7 @@
     </div>
     <div class="section">
         <h3 translate="sending">Message:</h3>
-        <fieldset>{{ sending?.message }}</fieldset>
+        <fieldset [innerHTML]="sending?.message"></fieldset>
     </div>
     <div class="section">
         <h3 class="d-inline-block" translate="sending">Total sum:</h3> {{ sending?.invoices_total_sum }}{{ currency_sign }}
@@ -45,4 +45,7 @@
             </tr>
         </tbody>
     </table>
+</section>
+<section *ngIf="sending?.status !== 2">
+    <button class="btn btn-danger" (click)="archiveSending()" translate="invoices">Archive sending</button>
 </section>

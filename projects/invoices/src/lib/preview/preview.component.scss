@@ -3,6 +3,8 @@
     flex-wrap: wrap;
     justify-content: center;
     padding: var(--spacing);
+    flex-direction: column;
+    align-items: center;
 
     .invoice-container {
         width: 100%;
@@ -43,6 +45,14 @@
 
         .invoice-goods-container {
             margin-bottom: calc(var(--spacing) * 2);
+
+            .invoice-goods-heading {
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                margin-bottom: var(--spacing);
+                color: var(--c-accent-fourth)
+            }
         }
 
         .invoice-sum-container {

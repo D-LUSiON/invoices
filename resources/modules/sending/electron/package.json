@@ -1,7 +1,7 @@
 {
   "name": "sending-module",
   "productName": "Sending module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sending module for Invoices v3",
   "main": "data-controller.js",
   "scripts": {
@@ -13,6 +13,7 @@
     "crypto-js": "^4.0.0",
     "exceljs": "^4.1.0",
     "fs-extra": "^9.0.1",
+    "gmail-send": "^1.8.10",
     "node-machine-id": "^1.1.12"
   }
 }

@@ -15,12 +15,14 @@ import { OpenDialogReturnValue } from 'electron';
 export class InvoicesService {
 
     treeDataActive = new TreeData([]);
+    treeDataSent = new TreeData([]);
     treeDataArchived = new TreeData([]);
     treeDataAll = new TreeData([]);
 
     invoices: Invoice[] = [];
 
     treeActive$: BehaviorSubject<TreeData> = new BehaviorSubject(this.treeDataActive);
+    treeSent$: BehaviorSubject<TreeData> = new BehaviorSubject(this.treeDataSent);
     treeArchived$: BehaviorSubject<TreeData> = new BehaviorSubject(this.treeDataArchived);
     treeAll$: BehaviorSubject<TreeData> = new BehaviorSubject(this.treeDataAll);
     invoices$: BehaviorSubject<Invoice[]> = new BehaviorSubject([]);
@@ -50,11 +52,18 @@ export class InvoicesService {
     private _manageInvoicesResults(results?: object[]) {
         if (results && results instanceof Array)
             this.invoices = results.map(result => new Invoice(result));
+
         this.invoices$.next(this.invoices);
-        this.treeDataActive = this._createTree(this.invoices.filter(x => x.status !== Status.Archived));
+
+        this.treeDataActive = this._createTree(this.invoices.filter(x => x.status === Status.New));
         this.treeActive$.next(this.treeDataActive);
+
+        this.treeDataSent = this._createTree(this.invoices.filter(x => x.status === Status.Sent));
+        this.treeSent$.next(this.treeDataSent);
+
         this.treeDataArchived = this._createTree(this.invoices.filter(x => x.status === Status.Archived));
         this.treeArchived$.next(this.treeDataArchived);
+
         this.treeDataAll = this._createTree();
         this.treeAll$.next(this.treeDataAll);
     }
@@ -259,7 +268,7 @@ export class InvoicesService {
             } else {
                 const idx = this.invoices.findIndex(inv => inv.id === data[0]);
                 this.invoices.splice(idx, 1);
-                this.invoices$.next(this.invoices);
+                this._manageInvoicesResults(this.invoices);
                 return invoice;
             }
         }));

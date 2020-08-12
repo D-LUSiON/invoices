@@ -58,6 +58,9 @@
             </div>
         </div>
         <div class="invoice-goods-container">
+            <div class="invoice-goods-heading" *ngIf="invoice.unit_prices_with_vat">
+                {{ 'Unit prices are with VAT'|translate:'invoices' }}
+            </div>
             <table>
                 <thead>
                     <tr>

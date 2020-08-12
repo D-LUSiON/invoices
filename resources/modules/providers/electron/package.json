@@ -1,7 +1,7 @@
 {
   "name": "providers-module",
   "productName": "Providers module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Providers module for Invoices v3",
   "main": "data-controller.js",
   "scripts": {

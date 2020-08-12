@@ -16,13 +16,14 @@ export class Invoice {
     notes?: string = '';
     provider?: Provider = new Provider();
     goods: Goods[] = [];
+    unit_prices_with_vat: boolean = false;
     creation_date: Date = new Date();
     update_date: Date = new Date();
     // sending_ids: number[] = [];
     // sendings: Sending[] = [];
     sendings: any[] = [];
 
-    constructor(data?) {
+    constructor(data?, unit_prices_with_vat: boolean = false) {
         if (data) {
             if (data.hasOwnProperty('_id')) this._id = data._id;
             if (data.hasOwnProperty('id')) this.id = data.id;
@@ -44,6 +45,7 @@ export class Invoice {
             if (data.hasOwnProperty('notes')) this.notes = data.notes;
             if (data.hasOwnProperty('provider')) this.provider = new Provider(data.provider);
             if (data.hasOwnProperty('goods') && data['goods']) this.goods = data.goods.map(x => new Goods(x));
+            if (data.hasOwnProperty('unit_prices_with_vat')) this.unit_prices_with_vat = !!data['unit_prices_with_vat'];
             if (data.hasOwnProperty('creation_date') && data['creation_date']) this.creation_date = new Date(data.creation_date);
             if (data.hasOwnProperty('update_date') && data['update_date']) this.update_date = new Date(data.update_date);
             // if (data.hasOwnProperty('sending_ids') && data['sending_ids'] instanceof Array) this.sending_ids = [...data.sending_ids];
@@ -69,7 +71,7 @@ export class Invoice {
     get total_sum(): string {
         let sum = 0;
         this.goods.forEach(goods => {
-            sum += goods.quantity * goods.price;
+            sum += goods.quantity * (goods.price / (this.unit_prices_with_vat ? 1.2 : 1));
         });
         return Tools.formatSum(sum);
     }
@@ -118,6 +120,7 @@ export class Invoice {
             title: this.title,
             notes: this.notes,
             goods: this.goods,
+            unit_prices_with_vat: this.unit_prices_with_vat,
             provider: this.provider,
             total_sum: this.total_sum,
             total_vat: this.total_vat,

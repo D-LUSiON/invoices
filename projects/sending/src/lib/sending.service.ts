@@ -46,7 +46,10 @@ export class SendingService {
     save(sending: Sending) {
         return new Promise((resolve, reject) => {
             this._electronClient.save('sending', sending.serializeDb).subscribe((response) => {
-                resolve(response);
+                if (response.error)
+                    reject(response.error);
+                else
+                    resolve(response);
             })
         });
     }

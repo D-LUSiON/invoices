@@ -23,6 +23,9 @@ class Application {
     preInit() {
         console.log(`Using userData path: ${app.getPath('userData')}`);
 
+        app.setAppLogsPath(path.join(app.getPath('userData'), 'logs'));
+        console.log(`Using logs path: ${app.getPath('logs')}`);
+
         const MainWindow = require('./main-window');
         this.mainWindow = new MainWindow();
 

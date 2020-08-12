@@ -49,7 +49,10 @@ export class EditComponent implements OnInit, OnDestroy {
         );
         this.subs.add(
             this._invoicesService.invoices$.subscribe((invoices) => {
-                this.active_invoices = invoices?.filter(invoice => invoice.status === Status.New) || [];
+                const this_month = new Date();
+                this_month.setDate(1);
+                this_month.setHours(0, 0, 0, 0);
+                this.active_invoices = invoices?.filter(invoice => invoice.status === Status.New && invoice.issue_date.getTime() < this_month.getTime()) || [];
                 const invoices_totals = this.active_invoices.map(x => +x.total_sum);
                 this.totalNoVAT = Tools.formatSum(invoices_totals.length ? invoices_totals.reduce((acc, val) => (acc || 0) + val) : 0);
 
@@ -64,6 +67,7 @@ export class EditComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        // FIXME: Make it like InvoiceEditController
     }
 
     private _initForm() {
@@ -140,11 +144,11 @@ export class EditComponent implements OnInit, OnDestroy {
                     type: 'success',
                     message: this._translate.translate('Sending saved successfuly!', 'sending')
                 });
-            }).catch((err) => {
+            }).catch((err: TypeError) => {
                 console.error(`Error saving provider`, sending, err);
                 this._stateManager.notification$.next({
                     type: 'error',
-                    message: this._translate.translate('Error saving sending!', 'sending')
+                    message: `${this._translate.translate('Error saving sending!', 'sending')} - ${err.message}`
                 });
             });
         }

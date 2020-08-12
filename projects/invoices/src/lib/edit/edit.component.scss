@@ -64,6 +64,17 @@
 
             .invoice-goods-container {
                 margin-bottom: calc(var(--spacing) * 2);
+
+                .invoice-goods-heading {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    margin-bottom: var(--spacing);
+
+                    input[type=checkbox] {
+                        margin-left: var(--spacing);
+                    }
+                }
             }
 
             .invoice-sum-container {

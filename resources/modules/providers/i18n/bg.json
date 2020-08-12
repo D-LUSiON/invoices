@@ -5,5 +5,9 @@
     "Organization name": "Име на фирмата",
     "VAT": "ДДС Номер",
     "Address": "Адрес",
-    "Accountable person": "Материално отговорно лице"
+    "Accountable person": "Материално отговорно лице",
+    "Provider VAT registration": "Регистрация на доставчик по ЗДДС",
+    "Does this provider has VAT registration?": "Доставчика има ли регистрация по ЗДДС?",
+    "Yes": "Да",
+    "No": "Не"
 }

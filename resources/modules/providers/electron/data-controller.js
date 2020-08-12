@@ -3,8 +3,9 @@ const {
 } = require('electron');
 
 class ProvidersController {
-    constructor(db_instance) {
+    constructor(db_instance, ErrorLoggerClass) {
         this.database = db_instance;
+        this.errorLogger = new ErrorLoggerClass(this.constructor.name);
     }
 
     init() {
@@ -42,6 +43,10 @@ class ProvidersController {
         ipcMain.on('provider:save', (event, provider) => {
             this.saveProvider(provider).then(res => {
                 event.sender.send('provider:save:response', res);
+            }).catch(error => {
+                console.log(`Error saving provider`, error)
+                this.errorLogger.logError(`Error saving provider`, error);
+                event.sender.send('provider:save:response', { error, provider });
             });
         });
     }
@@ -59,6 +64,8 @@ class ProvidersController {
                     vat: provider.vat,
                 }).into('providers').then(result => {
                     resolve(result);
+                }).catch((error) => {
+                    reject(error);
                 });
             }
         });

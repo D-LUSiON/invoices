@@ -9,8 +9,10 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ContenteditableDirective), multi: true }],
 })
 export class ContenteditableDirective implements ControlValueAccessor {
-    @Input() propValueAccessor = 'innerText';
+    @Input() propValueAccessor: 'innerText' | 'innerHTML' = 'innerText';
     @HostBinding('attr.contenteditable') @Input() contenteditable = true;
+
+
 
     private _onChange: (value: string) => void;
     private _onTouched: () => void;
@@ -26,6 +28,28 @@ export class ContenteditableDirective implements ControlValueAccessor {
         if (typeof this._onChange == 'function') {
             this._onChange(this._elementRef.nativeElement[this.propValueAccessor]);
         }
+    }
+
+    @HostListener('paste', ['$event'])
+    callOnPaste(e: ClipboardEvent) {
+        setTimeout(() => {
+            console.log(`Text pasted (${this.propValueAccessor})`, e, e.target[this.propValueAccessor]
+                .replace(/\sstyle="(.+?)"/g, '')
+                .replace(/\<br(?:\/|)\>/g, '\n')
+                .replace(/\<p\>\<\/p\>/g, '\n')
+                .replace(/\n{2,}/g, '\n')
+            );
+
+            let text = e.target[this.propValueAccessor];
+            text = text.replace(/\sstyle="(.+?)"/g, '')
+                .replace(/\<br(?:\/|)\>/g, '\n')
+                .replace(/\<p\>\<\/p\>/g, '\n')
+                .replace(/\n{3,}/g, '\n\n');
+            this._elementRef.nativeElement[this.propValueAccessor] = text;
+
+            if (typeof this._onChange == 'function')
+                this._onChange(this._elementRef.nativeElement[this.propValueAccessor]);
+        });
     }
 
     @HostListener('blur')
