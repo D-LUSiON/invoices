@@ -1,29 +1,31 @@
 import { NgModule } from '@angular/core';
-import { EditComponent } from './edit/edit.component';
-import { PreviewComponent } from './preview/preview.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
 import { SharedModule } from '@shared';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { PreviewComponent } from './preview/preview.component';
+import { EditComponent } from './edit/edit.component';
+
+
 
 @NgModule({
     declarations: [
-        EditComponent,
+        SidebarComponent,
         PreviewComponent,
-        SidebarComponent
+        EditComponent
     ],
     imports: [
         SharedModule
     ],
     exports: [
-        EditComponent,
+        SidebarComponent,
         PreviewComponent,
-        SidebarComponent
+        EditComponent
     ]
 })
-export class InvoicesModule {
-    readonly title = 'Invoices';
-    readonly icon = 'mdl2-ReportDocument';
+export class IncomesModule {
+    readonly title = 'Incomes';
+    readonly icon = 'mdl2-Bank';
     readonly sidebar_position = 'top';
-    readonly sidebar_index = 0;
+    readonly sidebar_index = 1;
 
     get sidebar() {
         return SidebarComponent;

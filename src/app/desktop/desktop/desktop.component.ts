@@ -63,7 +63,6 @@ export class DesktopComponent implements OnInit, AfterViewInit {
 
     preloadModules() {
         const loadedModules = [];
-
         Object.keys(this._modulesProvider.modules).forEach((module_name: string, idx: number) => {
             const module = new Module({
                 module_name,

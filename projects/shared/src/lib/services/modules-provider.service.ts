@@ -21,8 +21,9 @@ export class ModulesProviderService {
                 ]
             )
             .then((modules) => {
+                const module_names_uppercased = this.module_names.map(mod_name => `${mod_name.charAt(0).toUpperCase()}${mod_name.substr(1)}Module`);
                 modules.forEach(m => {
-                    const key = Object.keys(m).find(m_key => m_key.match(/Module$/));
+                    const key = Object.keys(m).find(m_key => module_names_uppercased.includes(m_key));
                     this.modules[key] = new m[key]();
                 });
             });

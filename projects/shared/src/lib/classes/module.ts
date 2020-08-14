@@ -3,6 +3,7 @@ export class Module {
     title: string = '';
     icon: string = '';
     sidebar_position?: 'top' | 'bottom';
+    sidebar_index: number = 65535;
     active: boolean = false;
     component_sidebar?: any;
     component_preview?: any;
@@ -15,6 +16,7 @@ export class Module {
             if (data.hasOwnProperty('title')) this.title = data['title'];
             if (data.hasOwnProperty('icon')) this.icon = data['icon'];
             if (data.hasOwnProperty('sidebar_position')) this.sidebar_position = data['sidebar_position'];
+            if (data.hasOwnProperty('sidebar_index')) this.sidebar_index = data['sidebar_index'];
             if (data.hasOwnProperty('active')) this.active = data['active'];
             if (data.hasOwnProperty('component_sidebar')) this.component_sidebar = data['component_sidebar'];
             if (data.hasOwnProperty('component_preview')) this.component_preview = data['component_preview'];

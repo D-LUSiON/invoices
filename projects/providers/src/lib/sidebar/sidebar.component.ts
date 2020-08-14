@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TreeData, StateManagerService, Document, TreeItem } from '@shared';
+import { TreeData, StateManagerService, Document, TreeItem, TranslationsService } from '@shared';
 import { Provider } from '../classes';
 import { ProvidersService } from '@providers';
 
@@ -18,6 +18,7 @@ export class SidebarComponent implements OnInit {
     constructor(
         private _providersService: ProvidersService,
         private _stateManager: StateManagerService,
+        private _translateService: TranslationsService,
     ) {
         this._providersService.tree$.subscribe(tree => {
             this._treeData = tree;
@@ -35,7 +36,7 @@ export class SidebarComponent implements OnInit {
     newProvider() {
         this._stateManager.addDocument(new Document({
             id: 0,
-            title: `New provider`,
+            title: this._translateService.translate(`New provider`, 'providers'),
             module: 'Providers',
             mode: 'edit',
             inputs: {

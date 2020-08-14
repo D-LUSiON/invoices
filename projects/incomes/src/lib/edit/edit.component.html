@@ -1,0 +1,40 @@
+<div class="form-container">
+    <div class="heading">
+        <h1 translate="incomes">Income</h1>
+        <div class="actions">
+            <div class="msg msg-danger" *ngIf="incomeForm?.invalid; else saveButton" translate>Invalid</div>
+            <ng-template #saveButton>
+                <button type="button" class="btn" *ngIf="incomeForm?.dirty" (click)="onSubmit()">
+                    <div class="ti ti-save"></div>
+                </button>
+            </ng-template>
+        </div>
+    </div>
+    <form [formGroup]="incomeForm" novalidate (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label translate="incomes">Provider<span class="msg msg-danger">*</span></label>
+            <lib-autocomplete [results]="providers" labelField="organization" idField="id" formControlName="provider"></lib-autocomplete>
+        </div>
+        <div class="form-group">
+            <label translate="incomes">Bank account<span class="msg msg-danger">*</span></label>
+            <input type="text" class="form-control" placeholder="{{ 'Bank account'|translate:'incomes' }}" formControlName="bank_account">
+        </div>
+        <div class="form-group">
+            <label translate="incomes">Amount<span class="msg msg-danger">*</span></label>
+            <input type="number" class="form-control" placeholder="{{ 'Amount'|translate:'incomes' }}" formControlName="amount">
+        </div>
+        <div class="form-group">
+            <label translate="incomes">
+                <input type="checkbox" formControlName="tax_included"> Tax included
+            </label>
+        </div>
+        <div class="form-group">
+            <label translate="incomes">Date received</label>
+            <input type="date" class="form-control text-center" placeholder="{{ 'Date received'|translate:'incomes' }}" formControlName="date" [max]="today">
+        </div>
+        <div class="invoice-notes-container">
+            <label translate="incomes">Notes</label>
+            <textarea class="form-control invoice-notes" formControlName="notes"></textarea>
+        </div>
+    </form>
+</div>

@@ -1,6 +1,8 @@
 [
     "invoices",
-    "providers",
+    "incomes",
     "sending",
+    "providers",
+    "statistics",
     "settings"
 ]

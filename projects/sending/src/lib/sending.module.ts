@@ -16,6 +16,8 @@ import { EditComponent } from './edit/edit.component';
 export class SendingModule {
     readonly title = 'Sending';
     readonly icon = 'mdl2-CheckList';
+    readonly sidebar_position = 'top';
+    readonly sidebar_index = 2;
 
     get sidebar() {
         return SidebarComponent;

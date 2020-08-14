@@ -113,9 +113,9 @@ export class Invoice {
         return {
             id: this.id,
             number: this.number,
-            creation_date: Tools.formatDate(this.creation_date, 'dd-MM-yyyy HH:mm'),
-            update_date: Tools.formatDate(this.update_date, 'dd-MM-yyyy HH:mm'),
-            issue_date: Tools.formatDate(this.issue_date, 'dd-MM-yyyy'),
+            creation_date: this.creation_date_formatted,
+            update_date: this.update_date_formatted,
+            issue_date: this.issue_date_formatted,
             issue_place: this.issue_place,
             title: this.title,
             notes: this.notes,

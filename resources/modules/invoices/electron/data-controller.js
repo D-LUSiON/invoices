@@ -18,7 +18,7 @@ class InvoicesController {
     }
 
     async checkDBCreated() {
-        const exists = await this.database.schema.hasTable(this.table_name)
+        const exists = await this.database.schema.hasTable(this.table_name);
         if (!exists) {
             await this.database.schema.createTable(this.table_name, (table) => {
                 table.increments('id').primary();
@@ -67,7 +67,7 @@ class InvoicesController {
         });
 
         ipcMain.on('invoice:get', (event, args) => {
-            this.database('invoices').where('id', args['id']).select().then(results => {
+            this.database(this.table_name).where('id', args['id']).select().then(results => {
                 event.sender.send('invoice:response', results);
             });
         });
@@ -181,7 +181,7 @@ class InvoicesController {
     saveInvoice(invoice) {
         return new Promise((resolve, reject) => {
             if (invoice.id) {
-                this.database('invoices').update({
+                this.database(this.table_name).update({
                     number: invoice.number,
                     issue_date: invoice.issue_date,
                     issue_place: invoice.issue_place,
@@ -207,7 +207,7 @@ class InvoicesController {
                     provider: invoice.provider.id || null,
                     total_sum: invoice.total_sum,
                     type: invoice.type,
-                }).into('invoices').then(([result]) => {
+                }).into(this.table_name).then(([result]) => {
                     invoice.id = result;
                     this.getAllInvoices({ id: invoice.id }).then((saved_invoice) => {
                         resolve(saved_invoice);

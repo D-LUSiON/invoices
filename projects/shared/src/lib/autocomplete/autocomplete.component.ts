@@ -110,7 +110,7 @@ export class AutocompleteComponent implements ControlValueAccessor, OnInit, OnCh
 
     writeValue(value: any) {
         this.value = {
-            label: value[this.labelField],
+            label: value ? value[this.labelField] : '',
             value
         };
         // this.value = this.results.find(x => x[this.idField] === this.value);

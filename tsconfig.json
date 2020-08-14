@@ -1,60 +1,70 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ],
-    "paths": {
-      "@env": [
-        "src/environments/environment"
-      ],
-      "@app": [
-        "src/app/*",
-        "src/app"
-      ],
-      "@shared": [
-        "src/modules/shared/*",
-        "src/modules/shared/shared",
-        "src/modules/shared"
-      ],
-      "@invoices": [
-        "resources/modules/invoices/ng/*",
-        "resources/modules/invoices/ng/invoices",
-        "resources/modules/invoices/ng"
-      ],
-      "@providers": [
-        "resources/modules/providers/ng/*",
-        "resources/modules/providers/ng/providers",
-        "resources/modules/providers/ng"
-      ],
-      "@sending": [
-        "resources/modules/sending/ng/*",
-        "resources/modules/sending/ng/sending",
-        "resources/modules/sending/ng"
-      ],
-      "@settings": [
-        "resources/modules/settings/ng/*",
-        "resources/modules/settings/ng/settings",
-        "resources/modules/settings/ng"
-      ],
+    "compileOnSave": false,
+    "compilerOptions": {
+        "baseUrl": "./",
+        "outDir": "./dist/out-tsc",
+        "sourceMap": true,
+        "declaration": false,
+        "downlevelIteration": true,
+        "experimentalDecorators": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "importHelpers": true,
+        "target": "es2015",
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "lib": [
+            "es2018",
+            "dom"
+        ],
+        "paths": {
+            "@env": [
+                "src/environments/environment"
+            ],
+            "@app": [
+                "src/app/*",
+                "src/app"
+            ],
+            "@shared": [
+                "src/modules/shared/*",
+                "src/modules/shared/shared",
+                "src/modules/shared"
+            ],
+            "@invoices": [
+                "resources/modules/invoices/ng/*",
+                "resources/modules/invoices/ng/invoices",
+                "resources/modules/invoices/ng"
+            ],
+            "@providers": [
+                "resources/modules/providers/ng/*",
+                "resources/modules/providers/ng/providers",
+                "resources/modules/providers/ng"
+            ],
+            "@sending": [
+                "resources/modules/sending/ng/*",
+                "resources/modules/sending/ng/sending",
+                "resources/modules/sending/ng"
+            ],
+            "@settings": [
+                "resources/modules/settings/ng/*",
+                "resources/modules/settings/ng/settings",
+                "resources/modules/settings/ng"
+            ],
+            "@incomes": [
+                "resources/modules/incomes/ng/*",
+                "resources/modules/incomes/ng/incomes",
+                "resources/modules/incomes/ng"
+            ],
+            "@statistics": [
+                "resources/modules/statistics/ng/*",
+                "resources/modules/statistics/ng/statistics",
+                "resources/modules/statistics/ng"
+            ]
+        }
+    },
+    "angularCompilerOptions": {
+        "fullTemplateTypeCheck": true,
+        "strictInjectionParameters": true
     }
-  },
-  "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
-  }
 }

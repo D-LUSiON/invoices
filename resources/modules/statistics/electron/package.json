@@ -1,0 +1,13 @@
+{
+    "name": "statistics-module",
+    "productName": "Statistics module",
+    "version": "1.0.0",
+    "description": "Statistics module for Invoices v3",
+    "main": "data-controller.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "D-LUSiON",
+    "license": "MIT",
+    "dependencies": {}
+  }

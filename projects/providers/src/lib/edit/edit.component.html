@@ -13,19 +13,19 @@
     <form [formGroup]="providerForm" novalidate (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label translate="providers">Organization name<span class="msg msg-danger">*</span></label>
-            <input type="text" class="form-control" placeholder="Organization name" formControlName="organization">
+            <input type="text" class="form-control" placeholder="{{ 'Organization name'|translate:'providers' }}" formControlName="organization">
         </div>
         <div class="form-group">
             <label translate="providers">VAT<span class="msg msg-danger">*</span></label>
-            <input type="text" class="form-control" placeholder="VAT" formControlName="vat">
+            <input type="text" class="form-control" placeholder="{{ 'VAT'|translate:'providers' }}" formControlName="vat">
         </div>
         <div class="form-group">
             <label translate="providers">Address</label>
-            <input type="text" class="form-control" placeholder="Address" formControlName="address">
+            <input type="text" class="form-control" placeholder="{{ 'Address'|translate:'providers' }}" formControlName="address">
         </div>
         <div class="form-group">
             <label translate="providers">Accountable person</label>
-            <input type="text" class="form-control" placeholder="Accountable person" formControlName="acc_person">
+            <input type="text" class="form-control" placeholder="{{ 'Accountable person'|translate:'providers' }}" formControlName="acc_person">
         </div>
     </form>
 </div>

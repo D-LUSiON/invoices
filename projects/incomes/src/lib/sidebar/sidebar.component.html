@@ -1,0 +1,18 @@
+<section class="top-buttons">
+    <div class="btn btn-icon btn-sm" (click)="newIncome()" translate="incomes">
+        <span class="ti ti-plus"></span> New income
+    </div>
+</section>
+<section>
+    <div class="form-control-container">
+        <div class="form-control-icon">
+            <span class="mdl2 mdl2-Search"></span>
+        </div>
+        <input type="text" #search class="form-control" (keyup)="filterTree(search.value)">
+    </div>
+</section>
+<lib-accordion [expandOnInit]="false" (groupExpanded)="groupExpanded($event)">
+    <lib-accordion-group heading="{{ 'All incomes'|translate:'incomes' }}" [expand]="expanded_idx === 0">
+        <lib-tree [nodes]="filteredTreeDataAll" (nodeClick)="onTreeNodeClicked($event)" (nodeDblClick)="onTreeNodeDblClicked($event)"></lib-tree>
+    </lib-accordion-group>
+</lib-accordion>

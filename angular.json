@@ -330,6 +330,86 @@
                     }
                 }
             }
+        },
+        "incomes": {
+            "projectType": "library",
+            "root": "projects/incomes",
+            "sourceRoot": "projects/incomes/src",
+            "prefix": "lib",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-ng-packagr:build",
+                    "options": {
+                        "tsConfig": "projects/incomes/tsconfig.lib.json",
+                        "project": "projects/incomes/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "projects/incomes/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/incomes/src/test.ts",
+                        "tsConfig": "projects/incomes/tsconfig.spec.json",
+                        "karmaConfig": "projects/incomes/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "projects/incomes/tsconfig.lib.json",
+                            "projects/incomes/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        },
+        "statistics": {
+            "projectType": "library",
+            "root": "projects/statistics",
+            "sourceRoot": "projects/statistics/src",
+            "prefix": "lib",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-ng-packagr:build",
+                    "options": {
+                        "tsConfig": "projects/statistics/tsconfig.lib.json",
+                        "project": "projects/statistics/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "projects/statistics/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/statistics/src/test.ts",
+                        "tsConfig": "projects/statistics/tsconfig.spec.json",
+                        "karmaConfig": "projects/statistics/karma.conf.js"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "projects/statistics/tsconfig.lib.json",
+                            "projects/statistics/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
         }
     },
     "defaultProject": "invoices-core"

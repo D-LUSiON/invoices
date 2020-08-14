@@ -83,8 +83,10 @@ class DataExchange {
         const controllers = Object.keys(this.moduleControllers);
         for (let idx = 0; idx < controllers.length; idx++) {
             const key = controllers[idx];
-            console.info(`Checking DB for ${key}...`);
-            await this.moduleControllers[key].controller.checkDBCreated();
+            if (typeof this.moduleControllers[key].controller.checkDBCreated === 'function') {
+                console.info(`Checking DB for ${key}...`);
+                await this.moduleControllers[key].controller.checkDBCreated();
+            }
         }
     }
 
@@ -132,6 +134,7 @@ class DataExchange {
                                         if (idx === all_keys.length - 1)
                                             resolve();
                                     }).catch((error) => {
+                                        this.moduleControllers[module].translations[trn_file.replace('.json', '')] = {};
                                         console.error(`Error loading translations file ${trn_file} for ${module}:`, error);
                                     });
                                 }

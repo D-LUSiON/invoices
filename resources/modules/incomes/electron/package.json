@@ -1,0 +1,13 @@
+{
+    "name": "incomes-module",
+    "productName": "Incomes module",
+    "version": "1.0.0",
+    "description": "Incomes module for Invoices v3",
+    "main": "data-controller.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "D-LUSiON",
+    "license": "MIT",
+    "dependencies": {}
+  }
